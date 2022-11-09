@@ -9,13 +9,31 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/native-stack": "^6.9.1",
+    "axios": "^1.1.2",
     "expo": "~46.0.13",
+    "expo-camera": "^12.3.0",
+    "expo-location": "~14.3.0",
+    "expo-media-library": "^14.2.0",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
+    "formik": "^2.2.9",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
-    "react-native-web": "~0.18.7"
+    "react-native-dropdown-select-list": "^1.0.23",
+    "react-native-gesture-handler": "~2.5.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-maps": "0.31.1",
+    "react-native-paper": "^5.0.0-rc.6",
+    "react-native-picker-select": "^8.0.4",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-uuid": "^2.0.1",
+    "react-native-vector-image": "^0.3.3",
+    "react-native-web": "~0.18.7",
+    "socket.io-client": "^4.5.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
