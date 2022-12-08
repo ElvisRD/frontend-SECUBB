@@ -1,31 +1,33 @@
 import { StyleSheet } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 const styles = StyleSheet.create({
    
     containerModal: {
         width: "100%",
-        height: "100%",
     },
     containerBotonCerrar: {
-        marginTop: "10%",
+        position: "absolute",
+        top: hp(6),
+        justifyContent: "center",
+        zIndex: 2,
         width: "100%",
-        height: "4%"
+        height: hp(6),
     },
     botonCerrar: {
         position: "absolute",
-        right: "6%"
-    },
-    textCerrar: {
-        fontSize: 20
+        padding: wp(1),
+        right: wp(5),
     },
     tituloAlertas: {
-        fontSize: 35,
-        paddingLeft: "5%"
+        fontSize: wp(10),
+        paddingLeft: wp(5)
         
     },
     containerBotonesAlerta: {
         width: "100%",
+        marginTop: hp(5),
         height: "100%",
         flexDirection: "column"
     },

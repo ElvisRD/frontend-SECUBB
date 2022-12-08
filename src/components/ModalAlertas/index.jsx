@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react"
 import { View, Text, StyleSheet, TouchableOpacity  } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import ModalReportarAlerta from "../ModalReportarAlerta";
 
@@ -28,7 +29,7 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
             <View style={styles.containerModal}>
                         <View style={styles.containerBotonCerrar}>
                             <TouchableOpacity style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}}>
-                                <Text style={styles.textCerrar}>X</Text>
+                               <IconAD name="close" size={30} color="black" />
                             </TouchableOpacity> 
                         </View>
                         <View  style={styles.containerBotonesAlerta}>
@@ -37,7 +38,7 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
                             </View>
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>
-                                    <TouchableOpacity style={styles.alertaLuz} onPress={()=>{clickAlerta("Problema de iluminacion")}}>
+                                    <TouchableOpacity style={styles.alertaLuz} onPress={()=>{clickAlerta("Problema de iluminación")}}>
                                         <Icon
                                             name="lightbulb"
                                             size= {40}

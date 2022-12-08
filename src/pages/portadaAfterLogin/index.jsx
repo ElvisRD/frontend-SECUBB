@@ -6,33 +6,15 @@ import {obtenerAlertas} from "../../data/alertas";
 import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
 import { daLikeAlertaRedux } from "../../redux/actions/likesActions";
 import { useDispatch } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { guardarUsuario } from "../../redux/actions/usuarioActions";
 
-export default function Portada({navigation}){
+
+export default function PortadaAfterLogin({setPortadaVisible}){
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-       const obtenerDatosStorage = async() => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('usuario')
-          if(jsonValue !== null){
-            dispatch(guardarUsuario(JSON.parse(jsonValue)));
-            getAlertas();
-            /* setTimeout(() => {
-              navigation.navigate("Home")
-            }, 1500); */
-            navigation.navigate("Home", {portadaAfterVisible: false})
-          }else{
-            navigation.navigate("Login")
-          }
-        } catch(e) {
-          console.log("error al obtener datos");
-        }
-       }
-
-       const getAlertas = () => {
+      const getAlertas = () => {
+        setPortadaVisible(true)
         obtenerAlertas(true).then((result) => {
           dispatch(guardarAlertasRedux(result))
            result.map(alerta => {
@@ -49,18 +31,20 @@ export default function Portada({navigation}){
                }
               
            })
+           setPortadaVisible(false)
         }).catch((err) => {
            console.log("no se encontraron alertas");
         });
        }
 
-       obtenerDatosStorage();
+       getAlertas(); 
+
     }, [])
 
 
     return (
         <View style={styles.containerPortada}>
-            <Text>Portada</Text>
+            <Text>Preparando datos...</Text>
         </View>
     )
     

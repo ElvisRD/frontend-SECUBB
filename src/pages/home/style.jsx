@@ -1,4 +1,5 @@
 import { StyleSheet} from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
     container: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: "0%",
         width: "100%",
-        height: "6.5%",
+        height: hp(7.5),
         flexDirection: "row",
         justifyContent: "space-around",
         backgroundColor: "white",
@@ -26,20 +27,19 @@ const styles = StyleSheet.create({
     },
     containerBoton: {
         borderRadius: 100,
-        paddingHorizontal: "3%",
+        width: 55,
+        height: 55,
+        marginTop: "1%",
         alignItems: "center",
     },
      
     boton: {
         alignItems: "center",
-        paddingTop: "1.2%",
         justifyContent: "center"
        
     },
     textBoton: {
-        position: "absolute",
-        fontSize: 10,
-        top: "60%",
+        fontSize: 9, 
     }
 });
 

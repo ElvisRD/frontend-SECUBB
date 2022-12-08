@@ -1,0 +1,11 @@
+
+const URL_CONNECT_BACKEND = 'http://192.168.50.16:3002' // UBB http://10.3.13.77:3002  CASA 192.168.50.16:3002
+const GOOGLE_MAPS_APIKEY = ''
+const TIME_ZONE_CHILE = 
+
+module.exports = {
+    URL_CONNECT_BACKEND 
+}
+
+
+

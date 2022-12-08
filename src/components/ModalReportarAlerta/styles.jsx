@@ -22,9 +22,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         marginLeft: "5%"
     },
-    textCerrar: {
-        fontSize: 20
-    },
     containerInputsModal: {
         marginTop: "5%",
         alignItems: "center"

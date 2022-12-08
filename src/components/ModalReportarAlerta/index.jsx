@@ -7,22 +7,23 @@ import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles";
 import { Formik } from "formik";
 import Camara from "../Camara"
-import axios from 'axios';
+import {crearAlerta} from "../../data/alertas"
+import {useDispatch} from "react-redux"
+import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
+import {guardarImagen} from "../../data/imagenes"
 
 export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta}){
     const [visibleCamara, setVisibleCamara] = useState(false);
     const [imagen, setImagen] = useState("");
+    const dispatch = useDispatch();
     
     const valoresIniciales = {
       tipo: tipoAlerta,
       descripcion: "",
       latitude: 0,
       longitude: 0,
-      ubicacion: "",
-      imagen: "",
-      fecha: "",
-      hora: ""
+      ubicacion: ""
     }
     
     return(
@@ -45,16 +46,6 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                   validationSchema={validaciones}
                   onSubmit={async (values) => {
 
-                    values.imagen=imagen;
-                    
-                    let today = new Date();
-
-                    let fecha=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
-                    let hora = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
-
-                    values.fecha=fecha;
-                    values.hora=hora;
-
                     values.longitude = coordenadasAlerta.longitude
                     values.latitude = coordenadasAlerta.latitude
 
@@ -62,27 +53,49 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       tipo: values.tipo,
                       descripcion: values.descripcion,
                       ubicacion: values.ubicacion,
-                      imagen: values.imagen,
                       latitude: values.latitude,
                       longitude: values.longitude,
-                      hora: values.hora,
-                      fecha: values.fecha,
                       activa: true,
                       usuarioId: 1
                       
-                    }
+                    }               
+                    
+                    let nuevaAlerta = null;
 
+                 
 
+                    await crearAlerta(body).then((result) => {
+                      nuevaAlerta=result.alerta
+                    }).catch((err) => {
+                      console.log(err);
+                    }); 
 
-                    try{
-                      await axios.post('http://10.3.3.49:3002/api/alerta',body) //http://192.168.50.16:3002/api/alerta
-                    }catch(er){
-                      console.log(er);
-                    }
+                    let tiposinEspacios = values.tipo.replace(/ /g,"_");
 
-                    socket.emit("alerta", values)
+                    if(imagen !== ""){
 
+                      const data = new FormData();
+
+                      data.append('archivo', {
+                      uri: imagen,
+                      type: 'image/jpeg',
+                      name: 'imagen.jpg',
+                      });
+                     
+                      guardarImagen(nuevaAlerta.id, data, tiposinEspacios).then((result) => {
+                        console.log(result);
+                      }).catch((err) => {
+                        console.log(err);
+                      }); 
+                    }    
+                    
+                    await socket.emit("alerta", nuevaAlerta);
+
+                    dispatch(guardarAlertaRedux(nuevaAlerta));
+                  
                     setModalReportar(false);
+                   
+                    setImagen("");
                     setIsVisibleModal(false);
    
                   }} 
@@ -91,7 +104,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
               <>
                 <View style={styles.containerInputsModal}>
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" label="Tipo alerta" value={values.tipoAlerta} disabled/>
+                    <TextInput mode="outlined" label="Tipo alerta" value={values.tipo} disabled/>
                   </View>
                   
                   

@@ -33,7 +33,6 @@ export default function Camara({setVisibleCamara, setImagen}){
             try{
                 const foto = await camaraRef.current.takePictureAsync();
                 setFoto(foto.uri)
-                console.log(foto);
             } catch (e){
                 console.log(e);
             }

@@ -5,16 +5,19 @@ import ModalAlerts from "../ModalAlertas";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 import styles from "./styles"
-import io from "socket.io-client"
-import axios from "axios"
+import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function Mapa({coords, setPortadaVisible}) {
+
+
+export default function Mapa({ setPortadaVisible, socket}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [alertas, setAlertas] = useState([]);
-    const socket = io("http://10.3.3.49:3002")
+    const alertasRedux = useSelector(state => state.alertas.alertas)
+   
 
     const [initialRegion, setInitialRegion] = useState({
         latitude: -36.726520,
@@ -24,61 +27,58 @@ export default function Mapa({coords, setPortadaVisible}) {
 
     })
 
+    const coordenadas = {
+        la1: -36.726392,
+        log1: -72.986794,
+        lat2: -36.726407,
+        log2: -72.986749,
+        lat3: -36.726378,
+        log3: -72.986747,
+    }
+
+    /* useEffect(() => {
+        if(alertasNuevas !== ""){
+            alertasNuevas.map(alerta => {
+                setAlertas(oldAlertas => [...oldAlertas, alerta])
+            })
+           
+        }         
+
+    }, [alertasNuevas]) */
+
     useEffect(() => {
-       if(coords !== undefined){
-            setPortadaVisible(false)
-       }
-    }, [coords])
+        if(alertasRedux !== undefined){
+           setAlertas(alertasRedux);
+        }  
+    }, [alertasRedux])
+    
     
 
-    const [spinner, setSpinner] = useState(false);
+    /* const [spinner, setSpinner] = useState(false); */
 
-    const markerOrigin = () => {
-        return (
-            <Marker
-                coordinate={coords} >
-                <Icon name="circle" size={10} />
-            </Marker>
-         )
-        
-    } 
-
-
-    useEffect(() => {
-      const socket = io("http://10.3.3.49:3002") //http://192.168.50.16:3002
+    /* useEffect(() => {
       socket.on("alerta", (alert) => {
-        setAlertas(oldAlert => [...oldAlert, alert])
+       
       })
-    }, [])
-
-     useEffect(() => {
-      const getAlertas = async() => {
-        const alertsArray = [];
+    }, []) */
+ 
+    const eliminarToken = async () => {
         try {
-            const alerts = await axios.post(`http://10.3.3.49:3002/api/alertas?activa=true`, //http://192.168.50.16:3002/api/alertas
-                {
-                    activa: true
-                },
-            )
-            
-            alerts.data.map(alert => {
-                alertsArray.push(alert)
-            })  
-             setAlertas(alertsArray);   
-         
-        } catch(err) {
-            console.log(err);
-        } 
-      }
-
-      getAlertas();
-    }, []) 
+          await AsyncStorage.removeItem('usuario')
+          console.log("el usuario fue removido");
+        } catch(e) {
+            console.log("error al remover el usuario");
+        }
+      
+    }
+    
     
     const handleClickMap = () => {
         
         if(coordenadasAlerta === null){
            setCoordenadasAlerta(initialRegion)
         }
+
         setIsVisibleModal(true)
     }
 
@@ -87,7 +87,7 @@ export default function Mapa({coords, setPortadaVisible}) {
                 if(tipo === "Actividad sospechosa"){
                     return <IconFA5 name="map-marker-alt" size={40} color="red"/>
                 }
-                if(tipo === "Problema de iluminacion"){
+                if(tipo === "Problema de iluminación"){
                     return <IconFA5 name="map-marker-alt" size={40} color="blue"/>
                 }
                 if(tipo === "Perros rondando"){
@@ -114,9 +114,10 @@ export default function Mapa({coords, setPortadaVisible}) {
                 initialRegion={initialRegion}  
                 style={styles.mapa}
                 onRegionChangeComplete={(e)=>{setCoordenadasAlerta(e)}}
-                
+                /* showsUserLocation={true}
+                userLocationUpdateInterval={1000000}
+                userLocationPriority="high" */
             >
-{/*               {coords !== undefined ? (markerOrigin()):(null)}  */}
               
               { alertas.length !== 0 ? (
                     alertas.map((alert,i) => 
@@ -133,6 +134,7 @@ export default function Mapa({coords, setPortadaVisible}) {
                     
                 )):(null)
               }
+
             </MapView>
 
             <Icon
@@ -149,10 +151,20 @@ export default function Mapa({coords, setPortadaVisible}) {
                     size= {40}
                 />
             </TouchableOpacity> 
+
+            <TouchableOpacity style={styles.botonRuta} onPress={eliminarToken}>
+                <Icon
+                    name="plus"
+                    color="white"
+                    size= {40}
+                />
+            </TouchableOpacity> 
+
         </View>
         </>
 
     )
+            
 
 }
 

@@ -2,17 +2,11 @@ import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
-    containerMenu: {
-        position: "absolute",
+    containerNoticias: {
         backgroundColor: "white",
         width: "100%",
-        zIndex: 3,
-        height: "100%"
     },
-    menu: {
-        width: "100%",
-        height: "100%",
-    },
+    
     containerBotonCerrar: {
         position: "absolute",
         top: hp(6),
@@ -27,35 +21,33 @@ const styles = StyleSheet.create({
         padding: wp(1),
         right: wp(5),
     },
-    menuTitle: {
+    containerTitle: {
+        width: "100%",
         marginTop: hp(5),
     },
     title: {
         fontSize: wp(10),
-        paddingLeft: "5%",
+        paddingLeft: wp(5)
     },
-    containerOpciones: {
-        backgroundColor: "white",
-        marginTop: hp(2.5),
-    
-    },
-    opcionPerfil: {
+    noticias: {
         width: "100%",
-        paddingVertical: "4%",
-        paddingLeft: "6%",
+        height: hp(92.5),
+        paddingBottom: hp(1),
+        marginTop: hp(2),
     },
-    textOpcion: {
-        fontSize: wp(5),
-    },
-    containerBotonCerrarSesion: {
-        position: "absolute",
-        bottom: hp(9),
+    containerNoticiasActuales: {
         width: "100%",
-        alignItems: "center"
+        marginBottom: hp(10),
     },
-    botonCerrarSesion: {
-        width: "50%"
+    containerNoAlertas: {
+        width: "100%",
+        marginTop: hp(1),
+        paddingLeft: wp(5),
+    },
+    textoNoAlertas: {
+        fontSize: wp(4),
     }
+    
 })
 
 export default styles;

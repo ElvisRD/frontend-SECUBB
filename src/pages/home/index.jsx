@@ -2,43 +2,66 @@ import React,{useState, useEffect} from 'react';
 import styles from "./style";
 import { View, Text,TouchableOpacity } from 'react-native';
 import Mapa from "../../components/Mapa/"
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import Menu from "../../components/Menu/"
-import Noticias from "../../components/Noticias/"
+import Alertas from "../../components/Alertas"
 import * as Location from 'expo-location';
 import Portada from "../portada";
+import {URL_CONNECT_BACKEND} from "../../../env"
+import { useDispatch } from 'react-redux';
+import { guardarAlertaRedux} from '../../redux/actions/alertasActions';
+import { guardarComentarioRedux } from '../../redux/actions/comentariosActions';
+import { daLikeAlertaRedux, borrarLikeAlertaRedux } from '../../redux/actions/likesActions';
+import PortadaAfterLogin from '../portadaAfterLogin';
+import io from "socket.io-client"
 
+const socket = io(URL_CONNECT_BACKEND);
 
-export default function Home() {
+export default function Home({navigation, route}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
+  
   const [isVisibleMapa, setIsVisibleMapa] = useState(true);
-  const [portadaVisible, setPortadaVisible] = useState(true);
+  const [portadaVisible, setPortadaVisible] = useState(route.params.portadaAfterVisible);
   const [isVisibleNoticias, setIsVisibleNoticias] = useState(false);
-  const [coordsUsuario, setCoordsUsuario] = useState();
+ 
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
-    const posisionActual = async() => {
-        setPortadaVisible(true)
-         let {status} = await Location.requestForegroundPermissionsAsync()
-         if(status === 'granted'){
-            const position = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Low})
-            setCoordsUsuario({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                latitudeDelta: 0.001,
-                longitudeDelta: 0.001
-          })
-         
-         }else{
-            console.log("permiso denegado");
-         }
-       
+
+    console.log("se conecto al socket");
+    
+    socket.on("comentario", (comentario) => {
+      dispatch(guardarComentarioRedux(comentario))
+    }) 
+
+    socket.on("alerta", (alerta) => {
+      dispatch(guardarAlertaRedux(alerta))
+    })
+
+    socket.on("daLikeAlerta", (like) => {
+      console.log("se dio like a la alerta "+ like.alertaId);
+      dispatch(daLikeAlertaRedux(like))
+    })
+
+    socket.on("daDislikeAlerta", (dislike) => {
+      console.log("se dio dislike a la alerta "+ dislike.alertaId);
+      dispatch(borrarLikeAlertaRedux(dislike))
+    })  
+
+    return () => {
+      socket.off("comentario");
+      socket.off("daLikeAlerta");
+      socket.off("daDislikeAlerta");
+      socket.off("alerta")
     }
+    
+  }, [])
 
 
-    posisionActual();
-}, [])
+
+
 
 
   function handlePressButtons(nombre){
@@ -68,35 +91,33 @@ export default function Home() {
   return (
 
     <>
-     {portadaVisible ? <Portada />:(null)}
-
+    {
+       portadaVisible ? <PortadaAfterLogin setPortadaVisible={setPortadaVisible} />:(null)
+    }
+   
       <View style={styles.container}>
         <View style={styles.containerMapa}>
 
           {isVisibleMenu ? (
-              <Menu />
+              <Menu handlePressButtons={handlePressButtons}/>
             ):(null)}
 
             {isVisibleNoticias ? (
-              <Noticias />
+              <Alertas handlePressButtons={handlePressButtons} socket={socket}/>
             ): (null)}
 
-          <Mapa coords={coordsUsuario} setPortadaVisible={setPortadaVisible}/>
+          <Mapa setPortadaVisible={setPortadaVisible} socket={socket}/>
         </View>
         <View style={styles.containerBotones}> 
-
-  
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("mapa")}} >
-            <Icon
-                name="map-o"
+            <IconMCI
+                name="map-outline"
                 style={styles.boton}
-                size= {26}
+                size= {35}
             />
             <Text style={styles.textBoton} >Mapa</Text>
           </TouchableOpacity>
 
-        
-        
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("noticias")}} >
             <IconMCI
                 name="clipboard-alert-outline"
@@ -105,12 +126,10 @@ export default function Home() {
             />
             <Text style={styles.textBoton}>Alertas</Text>
           </TouchableOpacity>
-        
-       
-        
+          
           <TouchableOpacity style={styles.containerBoton}>
             <IconMCI
-                name="account-outline"
+                name="panorama-fisheye"
                 style={styles.boton}
                 size= {35}
             />
