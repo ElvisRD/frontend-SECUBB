@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Pressable, Image } from 'react-native';
 import styles from "./styles"
 import { Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {like,dislike} from "../../data/likeAlerta";
+import {like,dislike} from "../../data/alertas";
 import { useSelector, useDispatch } from "react-redux";
 import { daLikeAlertaRedux, borrarLikeAlertaRedux } from "../../redux/actions/likesActions";
 
@@ -17,7 +17,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
     const [contadorLikes, setContadorLikes] = useState(0);
     const dispatch = useDispatch();
     const comentariosRedux = useSelector(state => state.comentarios.comentarios)
-    const likesRedux = useSelector(state => state.likesAlerta.usuarios)
+    const likesAlertaRedux = useSelector(state => state.likesAlerta.usuarios)
     const usuarioRedux = useSelector(state => state.usuario.usuario)
 
 
@@ -40,9 +40,9 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
     }
 
     useEffect(() => {
-        if(likesRedux !== null){
+        if(likesAlertaRedux !== null){
             let cont = 0;
-            likesRedux.map(like => {
+            likesAlertaRedux.map(like => {
                 if(like.alertaId === alerta.id){
                     cont++;
                     if(like.usuarioId === usuarioRedux.id){
@@ -52,7 +52,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
             })
             setContadorLikes(cont);
         }
-    }, [likesRedux])
+    }, [likesAlertaRedux])
 
     /* useEffect(() => {
         if(alerta.daLikeAlerta[0] !== undefined && alerta.daLikeAlerta !== undefined){

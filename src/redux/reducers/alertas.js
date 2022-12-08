@@ -1,32 +1,20 @@
 const valorInicial = {
-    alertas: []
+    alertas: null
 }
 
 const state = (state = valorInicial, action) => {
-    switch(action.type){
-        case "guardarAlertas": {
-            return {
-                alertas: action.data 
-            };
+    
+    if(action.type === "guardarAlerta"){
+        if(state.alertas !== null && state.alertas[0] !== undefined){
+            return {alertas: [...state.alertas, action.data]}
+        }else{
+            return {alertas: action.data}
         }
-        case "guardarAlerta": {
-            if(state.alertas !== undefined){
-                return {
-                    alertas: [action.data, ...state.alertas], 
-                };
-            }else{
-                return {
-                    alertas: [action.data], 
-                }
-            }
-            
-        }
-        default: {
-            return {
-                alertas: state.alertas
-            };
-        }
+
+    }else{
+        return {alertas: state.alertas}
     }
+    
 }
 
 export default state

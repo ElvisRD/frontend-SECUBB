@@ -38,7 +38,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
     return(
 
         <>
-            {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} usuarioId={verAlerta.usuarioId} alertaId={verAlerta.id}/> : (null)} 
+            {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id}/> : (null)} 
 
             <View style={styles.containerAlerta}>
                 <View style={styles.containerBotonVolver}>

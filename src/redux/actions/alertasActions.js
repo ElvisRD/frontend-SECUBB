@@ -1,9 +1,3 @@
-const guardarAlertasRedux = (alertas) => {
-    return {
-        type: "guardarAlertas",
-        data: alertas
-    }
-}
 
 const guardarAlertaRedux = (alerta) => {
     return {
@@ -12,4 +6,4 @@ const guardarAlertaRedux = (alerta) => {
     }
 }
 
-export {guardarAlertasRedux, guardarAlertaRedux};
+export {guardarAlertaRedux};

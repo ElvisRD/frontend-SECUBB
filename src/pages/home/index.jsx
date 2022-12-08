@@ -46,6 +46,15 @@ export default function Home({navigation, route}) {
       dispatch(borrarLikeAlertaRedux(dislike))
     })  
 
+   
+    socket.on("daLikeComentario", (like) => {
+      //dispatch(daLikeAlertaRedux(like))
+    })
+
+    socket.on("daDislikeComentario", (dislike) => {
+      //dispatch(borrarLikeAlertaRedux(dislike))
+    })
+
     return () => {
       socket.off("comentario");
       socket.off("daLikeAlerta");

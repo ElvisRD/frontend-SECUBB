@@ -47,7 +47,7 @@ export default function Mapa({ setPortadaVisible, socket}) {
     }, [alertasNuevas]) */
 
     useEffect(() => {
-        if(alertasRedux !== undefined){
+        if(alertasRedux !== null){
            setAlertas(alertasRedux);
         }  
     }, [alertasRedux])
@@ -119,18 +119,18 @@ export default function Mapa({ setPortadaVisible, socket}) {
                 userLocationPriority="high" */
             >
               
-              { alertas.length !== 0 ? (
+              { alertas !== null ? (
                     alertas.map((alert,i) => 
                     <Marker
                         key={i}
                         coordinate={{
-                            latitude: parseFloat(alert.latitude) ,
-                            longitude: parseFloat(alert.longitude) 
+                            latitude: alert.latitude ,
+                            longitude: alert.longitude
                         }}
-                        onPress={()=>{console.log("marker")}}
+                        //onPress={()=>{console.log("marker")}}
                     > 
                         {pinTipoAlerta(alert.tipo)}
-                    </Marker>
+                    </Marker>  
                     
                 )):(null)
               }

@@ -5,16 +5,20 @@ import CardComentario from '../CardComentario';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import styles from "./styles"
 import { TextInput, Dialog, Portal, Paragraph, Button, Provider } from 'react-native-paper';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { crearComentario } from "../../data/comentarios";
+import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
 
 
-export default function Comentarios({setVerComentarios, socket, usuarioId, alertaId}) {
+export default function Comentarios({setVerComentarios, socket, alertaId}) {
 
     const [inputComentario, setInputComentario] = useState("");
     const [comentarios, setComentarios] = useState(null);
     const [iconoInput, setIconoInput] = useState(false);
     const [confirmacion, setConfirmacion] = useState(false);
     const comentariosRedux = useSelector(state => state.comentarios.comentarios);
+    const usuarioRedux = useSelector(state => state.usuario.usuario);
+    const dispatch = useDispatch();
     const scrollRef = useRef(null);
    
     useEffect(() => {
@@ -51,15 +55,24 @@ export default function Comentarios({setVerComentarios, socket, usuarioId, alert
       
       
       const crearUnComentario = async () => {
-       
-        const comentarioNuevo = {
+
+        const body = {
             alertaId: alertaId,
             comentario: inputComentario,
-            usuarioId: usuarioId,
-            daLikeComenetario: []
+            usuarioId: usuarioRedux.id,
+
         }
 
-        await socket.emit("comentario", comentarioNuevo);
+        let comentario = null;
+       
+        await crearComentario(body).then((result) => {
+            comentario=result.nuevoComentario;
+          }).catch((err) => {
+            console.log(err);
+          }); 
+
+        await socket.emit("comentario", comentario);
+        dispatch(guardarComentarioRedux(comentario));
 
         Keyboard.dismiss()
         if (scrollRef && scrollRef.current) {
@@ -89,7 +102,7 @@ export default function Comentarios({setVerComentarios, socket, usuarioId, alert
                     {
                         comentarios !== null && comentarios[0] !== undefined ? (
                             comentarios.map((comentario, index) => {
-                                return <CardComentario key={index} comentario={comentario} />
+                                return <CardComentario key={index} comentario={comentario} socket={socket} alertaId={alertaId} />
                             })
                         ) : (
                             <View style={styles.containerErrorComentarios}> 

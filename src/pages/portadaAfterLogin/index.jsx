@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import {View,Text} from "react-native";
 import styles from "./styles";
-import {guardarAlertasRedux} from "../../redux/actions/alertasActions";
+import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
 import {obtenerAlertas} from "../../data/alertas";
 import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
 import { daLikeAlertaRedux } from "../../redux/actions/likesActions";
@@ -16,7 +16,7 @@ export default function PortadaAfterLogin({setPortadaVisible}){
       const getAlertas = () => {
         setPortadaVisible(true)
         obtenerAlertas(true).then((result) => {
-          dispatch(guardarAlertasRedux(result))
+          dispatch(guardarAlertaRedux(result))
            result.map(alerta => {
                if(alerta.comentarios[0] !== undefined){
                  alerta.comentarios.map(comentario => {

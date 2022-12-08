@@ -8,14 +8,16 @@ import styles from "./styles";
 import { Formik } from "formik";
 import Camara from "../Camara"
 import {crearAlerta} from "../../data/alertas"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
 
+
 export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta}){
     const [visibleCamara, setVisibleCamara] = useState(false);
     const [imagen, setImagen] = useState("");
+    const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
     
     const valoresIniciales = {
@@ -49,6 +51,8 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                     values.longitude = coordenadasAlerta.longitude
                     values.latitude = coordenadasAlerta.latitude
 
+                    
+
                     const body = {
                       tipo: values.tipo,
                       descripcion: values.descripcion,
@@ -56,13 +60,11 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       latitude: values.latitude,
                       longitude: values.longitude,
                       activa: true,
-                      usuarioId: 1
+                      usuarioId: usuarioRedux.id
                       
-                    }               
-                    
+                    }        
+                          
                     let nuevaAlerta = null;
-
-                 
 
                     await crearAlerta(body).then((result) => {
                       nuevaAlerta=result.alerta

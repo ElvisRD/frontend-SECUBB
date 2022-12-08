@@ -3,16 +3,16 @@ const valorInicial = {
 };
 
 const state = (state = valorInicial, action) => {
-    if(action.type === "daLikeAlerta"){
+    if(action.type === "daLikeComentario"){
         if(state.usuarios !== null && state.usuarios[0] !== undefined){
             return {usuarios: [...state.usuarios, action.data]}
         }else{
             return {usuarios: [action.data]}
         }
     }else {
-        if(action.type === "borrarLikeAlerta"){
+        if(action.type === "borrarLikeComentario"){
             if(state.usuarios !== null){
-                return {usuarios: state.usuarios.filter(usuario => usuario.alertaId !== action.data.alertaId)}
+                return {usuarios: state.usuarios.filter(usuario => usuario.comentarioId !== action.data.comentarioId)}
             }else{
                 return {usuarios: state.usuarios}
             }

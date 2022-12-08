@@ -1,15 +1,30 @@
 const daLikeAlertaRedux = (like) => {
     return {
-        type: "daLike",
+        type: "daLikeAlerta",
         data: like
     }
 }
 
 const borrarLikeAlertaRedux = (like) => {
     return {
-        type: "borrarLike",
+        type: "borrarLikeAlerta",
         data: like
     }
 }
 
-export {daLikeAlertaRedux, borrarLikeAlertaRedux};
+const daLikeComentarioRedux = (like) => {
+    return {
+        type: "daLikeComentario",
+        data: like
+    }
+}
+
+const borrarLikeComentarioRedux = (like) => {
+    return {
+        type: "borrarLikeComentario",
+        data: like
+    }
+}
+
+
+export {daLikeAlertaRedux, borrarLikeAlertaRedux, borrarLikeComentarioRedux, daLikeComentarioRedux};
