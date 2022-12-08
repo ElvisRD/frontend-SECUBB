@@ -4,7 +4,9 @@ import styles from "./styles"
 import { Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {like,dislike} from "../../data/likeAlerta";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { daLikeAlertaRedux, borrarLikeAlertaRedux } from "../../redux/actions/likesActions";
+
 
 
 
@@ -13,9 +15,10 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
     const [liked, setLiked] = useState(false);
     const [cantidadComentarios, setCantidadComentarios] = useState(0);
     const [contadorLikes, setContadorLikes] = useState(0);
+    const dispatch = useDispatch();
     const comentariosRedux = useSelector(state => state.comentarios.comentarios)
     const likesRedux = useSelector(state => state.likesAlerta.usuarios)
-    const usuario = useSelector(state => state.usuario.usuario)
+    const usuarioRedux = useSelector(state => state.usuario.usuario)
 
 
     
@@ -42,7 +45,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
             likesRedux.map(like => {
                 if(like.alertaId === alerta.id){
                     cont++;
-                    if(like.usuarioId === usuario.id){
+                    if(like.usuarioId === usuarioRedux.id){
                         setLiked(true)
                     } 
                 }
@@ -70,18 +73,18 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
        
         const body = {  
             alertaId: alerta.id,
-            usuarioId: alerta.usuario.id
+            usuarioId: usuarioRedux.id
         }
 
         if(liked){
-           
             //dislike(body);
             await socket.emit("daDislikeAlerta", body);
+            dispatch(borrarLikeAlertaRedux(body));
             setContadorLikes(contadorLikes-1);
         }else{
             //like(body);
-         
             await socket.emit("daLikeAlerta", body);
+            dispatch(daLikeAlertaRedux(body));
             setContadorLikes(contadorLikes+1);
         }
     }

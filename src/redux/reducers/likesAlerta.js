@@ -5,7 +5,7 @@ const valorInicial = {
 const state = (state = valorInicial, action) => {
     if(action.type === "daLike"){
         if(state.usuarios !== null && state.usuarios[0] !== undefined){
-            return {usuarios: [...state.comentarios, action.data]}
+            return {usuarios: [...state.usuarios, action.data]}
         }else{
             return {usuarios: [action.data]}
         }

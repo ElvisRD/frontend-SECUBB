@@ -30,8 +30,6 @@ export default function Home({navigation, route}) {
 
   useEffect(() => {
 
-    console.log("se conecto al socket");
-    
     socket.on("comentario", (comentario) => {
       dispatch(guardarComentarioRedux(comentario))
     }) 
@@ -41,12 +39,10 @@ export default function Home({navigation, route}) {
     })
 
     socket.on("daLikeAlerta", (like) => {
-      console.log("se dio like a la alerta "+ like.alertaId);
       dispatch(daLikeAlertaRedux(like))
     })
 
     socket.on("daDislikeAlerta", (dislike) => {
-      console.log("se dio dislike a la alerta "+ dislike.alertaId);
       dispatch(borrarLikeAlertaRedux(dislike))
     })  
 
