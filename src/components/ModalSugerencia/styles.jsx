@@ -12,22 +12,19 @@ const styles = StyleSheet.create({
        width: "100%",
        height: "100%",
    },
-   containerBotonVolver: {
-        marginTop: "10%",
-        width: "100%",
-        height: "4%"
+   containerTitle: {
+    width: "100%",
     },
-    botonVolver: {
-        position: "absolute",
-        marginLeft: "5%"
-    },
-    containerTitulo: {
-        width: "100%",
-        marginTop: hp(2),
-    },
-    titulo: {
+    title: {
         fontSize: wp(10),
-        paddingLeft: wp(5)
+        paddingLeft: hp(2),
+    },
+    botonCerrar: {
+        borderRadius: 100,
+        marginLeft: wp(2)
+    },
+    iconCerrar: {
+        borderRadius: 100,
     },
     containerTextoSugerencia: {
         width: "100%",

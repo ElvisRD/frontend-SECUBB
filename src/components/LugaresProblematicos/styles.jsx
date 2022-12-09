@@ -13,26 +13,23 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
-    containerBotonVolver: {
-        marginTop: "10%",
+    containerTitle: {
         width: "100%",
-        height: "4%"
     },
-    botonVolver: {
-        position: "absolute",
-        marginLeft: "5%"
-    },
-    containerTitulo: {
-        width: "100%",
-        marginTop: hp(3),
-    },
-    titulo: {
+    title: {
         fontSize: wp(10),
-        paddingLeft: wp(5)
+        paddingLeft: hp(2),
+    },
+     botonCerrar: {
+        borderRadius: 100,
+        marginLeft: wp(2)
+    },
+    iconCerrar: {
+        borderRadius: 100,
     },
     containerLugares: {
         width: "100%",
-        marginTop: hp(4),
+        marginTop: hp(2),
         marginBottom: hp(1),
         justifyContent: "center",
         alignItems: "center",

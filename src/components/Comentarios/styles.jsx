@@ -3,6 +3,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 const styles = StyleSheet.create({
     containerComentarios: {
+        position: "absolute",
         width: "100%",
         height: "100%",
         backgroundColor: "white",

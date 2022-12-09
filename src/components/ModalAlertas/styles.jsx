@@ -7,27 +7,26 @@ const styles = StyleSheet.create({
     containerModal: {
         width: "100%",
     },
-    containerBotonCerrar: {
-        position: "absolute",
-        top: hp(6),
-        justifyContent: "center",
-        zIndex: 2,
+    containerTitle: {
         width: "100%",
-        height: hp(6),
+        justifyContent: "center",
+        height: "100%",
+    },
+    title: {
+        fontSize: wp(10),
+        paddingTop: hp(2.5),
+        paddingLeft: wp(2)
     },
     botonCerrar: {
-        position: "absolute",
-        padding: wp(1),
-        right: wp(5),
+        borderRadius: 100,
+        right: wp(2),
     },
-    tituloAlertas: {
-        fontSize: wp(10),
-        paddingLeft: wp(5)
-        
+    iconCerrar: {
+        borderRadius: 100,
     },
+    
     containerBotonesAlerta: {
         width: "100%",
-        marginTop: hp(5),
         height: "100%",
         flexDirection: "column"
     },

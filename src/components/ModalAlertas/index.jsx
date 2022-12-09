@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import ModalReportarAlerta from "../ModalReportarAlerta";
+import { Appbar } from 'react-native-paper';
 
 
 export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta}){
@@ -27,15 +28,11 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
            :(null)} 
 
             <View style={styles.containerModal}>
-                        <View style={styles.containerBotonCerrar}>
-                            <TouchableOpacity style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}}>
-                               <IconAD name="close" size={30} color="black" />
-                            </TouchableOpacity> 
-                        </View>
+                        <Appbar.Header >
+                            <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
+                            <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
+                        </Appbar.Header>
                         <View  style={styles.containerBotonesAlerta}>
-                            <View style={styles.containerTitleAlertas}>
-                                <Text style={styles.tituloAlertas}>Alertas</Text>
-                            </View>
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>
                                     <TouchableOpacity style={styles.alertaLuz} onPress={()=>{clickAlerta("Problema de iluminación")}}>

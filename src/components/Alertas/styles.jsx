@@ -7,28 +7,24 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     
-    containerBotonCerrar: {
-        position: "absolute",
-        top: hp(6),
-        justifyContent: "center",
-        zIndex: 2,
-        width: "100%",
-        height: hp(6),
-    },
-    botonCerrar: {
-        position: "absolute",
-        borderRadius: 100,
-        padding: wp(1),
-        right: wp(5),
-    },
     containerTitle: {
         width: "100%",
-        marginTop: hp(5),
+        justifyContent: "center",
+        height: "100%",
     },
     title: {
         fontSize: wp(10),
-        paddingLeft: wp(5)
+        paddingTop: hp(2.5),
+        paddingLeft: wp(2)
     },
+    botonCerrar: {
+        borderRadius: 100,
+        right: wp(2),
+    },
+    iconCerrar: {
+        borderRadius: 100,
+    },
+    
     noticias: {
         width: "100%",
         height: hp(92.5),

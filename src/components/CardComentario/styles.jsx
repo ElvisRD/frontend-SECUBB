@@ -20,10 +20,13 @@ const styles = StyleSheet.create({
         paddingTop: hp(0.5),
         width: "100%",
         minHeight: 55,
-        paddingHorizontal: wp(5),
+        paddingHorizontal: wp(4),
     },
     usuario: {
         fontSize: wp(5),
+    },
+    nombreUsuario: {
+        fontWeight: "bold",
     },
     textoDatosComentario:{
         width: "100%",

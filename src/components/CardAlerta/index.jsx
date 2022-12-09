@@ -11,7 +11,8 @@ import { daLikeAlertaRedux, borrarLikeAlertaRedux } from "../../redux/actions/li
 
 
 
-export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta}){
+
+export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta, setVerComentarios,setAlertaSeleccionada}){
     const [liked, setLiked] = useState(false);
     const [cantidadComentarios, setCantidadComentarios] = useState(0);
     const [contadorLikes, setContadorLikes] = useState(0);
@@ -89,12 +90,20 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
         }
     }
 
+    const verComentariosAlerta = () => {
+        setAlertaSeleccionada(alerta)
+        setVerComentarios(true)
+    
+    }
+
     return(
-            <View style={styles.containerAlerta} >
+        <>
+        
+             <View style={styles.containerAlerta} >
                 <TouchableOpacity style={styles.AlertaCard} onPress={seleccionarAlerta} >
                     <View style={styles.containerTipo}>
                         <Text style={styles.textoTipo}>{alerta.tipo}</Text>
-                        <Text style={styles.textoHora}>{alerta.fecha.slice(11,17)}</Text> 
+                        <Text style={styles.textoHora}>{alerta.fecha.slice(11,16)}</Text> 
                     </View>
                     <View style={styles.containerDescripcion}>
                         <Text style={styles.descripcion} numberOfLines={3} >{alerta.descripcion}</Text>
@@ -113,7 +122,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                         </View>
                         
                         <View style={styles.containerBotonComentario}>
-                            <TouchableOpacity style={styles.botonComentarios}>
+                            <TouchableOpacity style={styles.botonComentarios} onPress={verComentariosAlerta}>
                                 <MaterialCommunityIcons
                                     name="chat-outline"
                                     size={25}
@@ -124,5 +133,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                     </View>
                 </TouchableOpacity>
             </View> 
+        </>
+            
     )
 }

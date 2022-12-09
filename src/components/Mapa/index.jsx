@@ -7,6 +7,7 @@ import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 import styles from "./styles"
 import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Alerta from "../Alerta";
 
 
 
@@ -15,6 +16,8 @@ export default function Mapa({ setPortadaVisible, socket}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
+    const [verAlerta, setVerAlerta] = useState(false);
+    const [alertaSeleccionada, setAlertaSeleccionada] = useState(null);
     const [alertas, setAlertas] = useState([]);
     const alertasRedux = useSelector(state => state.alertas.alertas)
    
@@ -102,11 +105,21 @@ export default function Mapa({ setPortadaVisible, socket}) {
 
     }
 
+    const mostrarAlerta = (alerta) => {
+        setAlertaSeleccionada(alerta);
+        setVerAlerta(true);
+    }
+
     return (
         <>
         {isVisibleModal ? (
             <ModalAlerts setIsVisibleModal={setIsVisibleModal} socket={socket} coordenadasAlerta={coordenadasAlerta}/>
          ):(null)} 
+
+       {verAlerta ? (
+            <Alerta setIsVisibleAlerta={setVerAlerta} socket={socket} verAlerta={alertaSeleccionada} />
+        ) : (null)} 
+
          
          <View style={styles.container}>
 
@@ -127,7 +140,7 @@ export default function Mapa({ setPortadaVisible, socket}) {
                             latitude: alert.latitude ,
                             longitude: alert.longitude
                         }}
-                        //onPress={()=>{console.log("marker")}}
+                        onPress={()=>{mostrarAlerta(alert)}}
                     > 
                         {pinTipoAlerta(alert.tipo)}
                     </Marker>  

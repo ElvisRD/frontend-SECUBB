@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
    
@@ -13,14 +13,19 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    containerBotonCerrar: {
-        marginTop: "10%",
+    containerTitle: {
         width: "100%",
-        height: "4%"
+    },
+    title: {
+        fontSize: wp(10),
+        paddingLeft: hp(2),
     },
     botonCerrar: {
-        position: "absolute",
-        marginLeft: "5%"
+        borderRadius: 100,
+        marginLeft: wp(2)
+    },
+    iconCerrar: {
+        borderRadius: 100,
     },
     containerInputsModal: {
         marginTop: "5%",

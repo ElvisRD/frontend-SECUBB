@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from "react"
 import { View, Text, TouchableOpacity, Image } from "react-native"
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button,Appbar } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
+
 
 
 export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta}){
@@ -34,15 +35,12 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
 
         <View style={styles.containerModalReportar}>
           <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
-          <View style={styles.containerBotonCerrar}>
-                  <TouchableOpacity style={styles.botonCerrar} onPress={()=>{setModalReportar(false)}}>
-                      <IconAD 
-                          name='arrowleft'
-                          color='black'
-                          size={40}
-                      />
-                  </TouchableOpacity> 
-            </View>
+          <Appbar.Header >
+                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
+          </Appbar.Header>
+          <View style={styles.containerTitle}>
+            <Text style={styles.title}>Crear alerta</Text>
+          </View>
             <Formik
                   initialValues={valoresIniciales} 
                   validationSchema={validaciones}

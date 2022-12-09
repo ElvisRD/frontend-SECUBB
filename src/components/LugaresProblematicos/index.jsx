@@ -5,7 +5,7 @@ import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from '@react-native-community/datetimepicker';
-import { Button, TextInput } from "react-native-paper";
+import { Button, Appbar } from "react-native-paper";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
 
@@ -102,17 +102,11 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
 
          <View style={styles.containerModalLugaresProblematicos}>
              <KeyboardAwareScrollView bounces={false} style={styles.modalLugaresProblematicos}>
-                 <View style={styles.containerBotonVolver}>
-                        <TouchableOpacity style={styles.botonVolver} onPress={()=>{setModalLugaresProblematicos(false)}}>
-                            <IconAD 
-                                name='arrowleft'
-                                color='black'
-                                size={40}
-                            /> 
-                        </TouchableOpacity> 
-                </View>
-                <View style={styles.containerTitulo}>
-                    <Text style={styles.titulo}>Lugares Problematicos</Text>
+                <Appbar.Header>
+                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setModalLugaresProblematicos(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
+                </Appbar.Header>
+                <View style={styles.containerTitle}>
+                    <Text style={styles.title}>Lugares Problematicos</Text>
                 </View>
                 
                 <View  style={styles.containerLugares}>

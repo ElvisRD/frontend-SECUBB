@@ -11,6 +11,8 @@ export default function CardComentario({comentario, socket, alertaId}){
     const [liked, setLiked] = useState(false);
     const [contadorLikes, setContadorLikes] = useState(0);
     const [cantidadLikes, setCantidadLikes] = useState(0);
+
+    const [horaEditada, setHoraEditada] = useState("");
     const likesComentariosRedux = useSelector(state => state.likesComentario.usuarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
@@ -32,7 +34,6 @@ export default function CardComentario({comentario, socket, alertaId}){
         }
     }, [likesComentariosRedux])
 
-
     const handleLike = async () => {
         setLiked(!liked);
        
@@ -43,12 +44,12 @@ export default function CardComentario({comentario, socket, alertaId}){
         }
 
         if(liked){
-            dislike(body);
+            //dislike(body);
             await socket.emit("daDislikeComentario", body);
             dispatch(borrarLikeComentarioRedux(body));
             setContadorLikes(contadorLikes-1);
         }else{
-            like(body);
+            //like(body);
             await socket.emit("daLikeComentario", body);
             dispatch(daLikeComentarioRedux(body));
             setContadorLikes(contadorLikes+1);
@@ -60,10 +61,10 @@ export default function CardComentario({comentario, socket, alertaId}){
         <View style={styles.containerComentario}>
             <View style={styles.containerDatosComentario}>
                 <View style={styles.containerUsuario}>
-                    <Text style={styles.usuario}>aa: {comentario.comentario}</Text>
+                    <Text style={styles.usuario}><Text style={styles.nombreUsuario}>aa </Text>{comentario.comentario}</Text>
                 </View>
                 <View style={styles.textoDatosComentario}>
-                    <Text style={styles.datoComentario}>fecha</Text>
+                    <Text style={styles.datoComentario}>{comentario.fecha.slice(11,16)}</Text>
                     <Text style={styles.datoComentario}>{contadorLikes} Me gusta</Text>
                 </View>
 

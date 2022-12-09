@@ -13,16 +13,20 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    containerBotonVolver: {
+    containerBotones: {
         width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
         height: hp(5),
-        backgroundColor: "white",
         marginTop: hp(5),
        
     },
     botonVolver: {
-        position: "absolute",
         marginLeft: wp(4.5)
+    },
+    botonEliminar: {
+        position: "absolute",
+        right: wp(4.5),
     },
     containerTituloAlerta: {
         width: "100%",
@@ -30,18 +34,20 @@ const styles = StyleSheet.create({
         
     },
     tituloAlerta: {
-        fontSize: wp(7.5)
+        fontSize: wp(7.5),
+        fontWeight: "bold"
+
     },
     containerFecha: {
         width: "100%",
         flexDirection: "row",
         paddingHorizontal: wp(5),
         marginTop: hp(0.5),
-        justifyContent: "space-between"
         
     },
     fecha: {
-        fontSize: wp(3.5)
+        fontSize: wp(3.5),
+        marginRight: wp(3)
     },
     containerDescripcion: {
         width: "100%",
@@ -51,7 +57,8 @@ const styles = StyleSheet.create({
         maxHeight: 200
     },
     atributoAlerta: {
-        fontSize: wp(5.2)
+        fontSize: wp(5.2),
+        fontWeight: "bold"
     },
     descripcion: {
         fontSize: wp(4)
@@ -69,9 +76,6 @@ const styles = StyleSheet.create({
         marginTop: hp(2),
         paddingHorizontal: wp(5),
     },  
-    atributoImagen: {
-        fontSize: wp(5.2)
-    },
     containerImagen: {
         marginTop: hp(2),
         width: "100%",
