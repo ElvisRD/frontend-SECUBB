@@ -1,13 +1,14 @@
 import React,{useState, useEffect} from 'react';
 import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
-import MapView,{Marker} from 'react-native-maps';
+import MapView,{Marker,PROVIDER_GOOGLE} from 'react-native-maps';
 import ModalAlerts from "../ModalAlertas";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconAD from 'react-native-vector-icons/AntDesign';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 import styles from "./styles"
 import { useSelector } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Alerta from "../Alerta";
+import TiposAlertaMapa from "./tiposAlertaMapa";
 
 
 
@@ -16,6 +17,7 @@ export default function Mapa({ setPortadaVisible, socket}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
+    const [verTiposAlertas, setVerTiposAlertas] = useState(false);
     const [verAlerta, setVerAlerta] = useState(false);
     const [alertaSeleccionada, setAlertaSeleccionada] = useState(null);
     const [alertas, setAlertas] = useState([]);
@@ -65,24 +67,31 @@ export default function Mapa({ setPortadaVisible, socket}) {
       })
     }, []) */
  
-    const eliminarToken = async () => {
-        try {
-          await AsyncStorage.removeItem('usuario')
-          console.log("el usuario fue removido");
-        } catch(e) {
-            console.log("error al remover el usuario");
-        }
-      
-    }
     
     
-    const handleClickMap = () => {
-        
+    
+    const handleClickMap = async () => {
+
+        let encontreAlerta = false;
+
         if(coordenadasAlerta === null){
-           setCoordenadasAlerta(initialRegion)
+            for(let i = 0; i < alertasRedux.length; i++){
+                if(alertasRedux[i].latitude === initialRegion.latitude && alertasRedux[i].longitude === initialRegion.longitude){
+                    console.log("ya existe una alerta creada en esta coordenada");
+                    encontreAlerta = true;
+                    break;
+                }
+            }
+
+            if(!encontreAlerta){
+                setCoordenadasAlerta(initialRegion);
+                setIsVisibleModal(true);
+            }
+
+        }else{
+            setIsVisibleModal(true);
         }
 
-        setIsVisibleModal(true)
     }
 
     const pinTipoAlerta = (tipo) => {
@@ -120,13 +129,20 @@ export default function Mapa({ setPortadaVisible, socket}) {
             <Alerta setIsVisibleAlerta={setVerAlerta} socket={socket} verAlerta={alertaSeleccionada} />
         ) : (null)} 
 
+        {
+            verTiposAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setVerTiposAlertas} />):(null)
+        }
+
          
          <View style={styles.container}>
 
              <MapView
+                provider={PROVIDER_GOOGLE}
                 initialRegion={initialRegion}  
                 style={styles.mapa}
                 onRegionChangeComplete={(e)=>{setCoordenadasAlerta(e)}}
+                moveOnMarkerPress={false}
+                rotateEnabled={false}
                 /* showsUserLocation={true}
                 userLocationUpdateInterval={1000000}
                 userLocationPriority="high" */
@@ -140,6 +156,7 @@ export default function Mapa({ setPortadaVisible, socket}) {
                             latitude: alert.latitude ,
                             longitude: alert.longitude
                         }}
+                        mode
                         onPress={()=>{mostrarAlerta(alert)}}
                     > 
                         {pinTipoAlerta(alert.tipo)}
@@ -155,7 +172,17 @@ export default function Mapa({ setPortadaVisible, socket}) {
                 size= {70} 
                 color="gray"
                 style={styles.makerMapa}
+
             /> 
+
+            <TouchableOpacity style={styles.botonPregunta} onPress={()=>setVerTiposAlertas(true)} >
+                <IconAD 
+                    name="question"
+                    size={40}
+                    color="white"
+                
+                />
+            </TouchableOpacity>
             
             <TouchableOpacity style={styles.boton} onPress={handleClickMap}>
                 <Icon
@@ -164,15 +191,6 @@ export default function Mapa({ setPortadaVisible, socket}) {
                     size= {40}
                 />
             </TouchableOpacity> 
-
-            <TouchableOpacity style={styles.botonRuta} onPress={eliminarToken}>
-                <Icon
-                    name="plus"
-                    color="white"
-                    size= {40}
-                />
-            </TouchableOpacity> 
-
         </View>
         </>
 

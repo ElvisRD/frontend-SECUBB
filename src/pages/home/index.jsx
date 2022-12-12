@@ -132,17 +132,16 @@ export default function Home({navigation, route}) {
             <Text style={styles.textBoton}>Alertas</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.containerBoton}>
+        {/*   <TouchableOpacity style={styles.containerBoton}>
             <IconMCI
                 name="panorama-fisheye"
                 style={styles.boton}
                 size= {35}
             />
             <Text style={styles.textBoton} >???</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         
-        
-       
+
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("home")}}>
             <IconMCI
                 name="menu"

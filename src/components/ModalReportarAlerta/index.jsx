@@ -119,7 +119,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                   ):(null)
                   }
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" label="Descripción" multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
+                    <TextInput mode="outlined" label="Descripción" maxLength={200} multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
                   </View>
                   {errors.descripcion && touched.descripcion ? 
                   (

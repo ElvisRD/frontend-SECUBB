@@ -106,7 +106,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                         <Text style={styles.textoHora}>{alerta.fecha.slice(11,16)}</Text> 
                     </View>
                     <View style={styles.containerDescripcion}>
-                        <Text style={styles.descripcion} numberOfLines={3} >{alerta.descripcion}</Text>
+                        <Text style={styles.descripcion} numberOfLines={4} >{alerta.descripcion}</Text>
                     </View>
                     
                     <View style={styles.containerBotones}>
@@ -115,7 +115,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                                 <MaterialCommunityIcons
                                     name={liked ? "heart" : "heart-outline"}
                                     size={25}
-                                    color={liked ? "red" : "black"}
+                                    color={liked ? "red" : "#AAAAAA"}
                                 />
                             </Pressable>
                             <Text style={styles.likes}>{contadorLikes}</Text>
@@ -126,6 +126,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                                 <MaterialCommunityIcons
                                     name="chat-outline"
                                     size={25}
+                                    color="#AAAAAA"
                                 />
                             </TouchableOpacity>
                             <Text style={styles.comentarios}>{cantidadComentarios}</Text>

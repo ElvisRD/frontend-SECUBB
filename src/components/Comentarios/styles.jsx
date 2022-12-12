@@ -9,32 +9,30 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         zIndex: 10
     },
-    comentarios: {
-        width: "100%",
-        height: "100%",
-    },
-    containerBotonVolver: {
-        height: hp(5),
-        width: "100%",
-        marginTop: hp(5),
-        backgroundColor: "white",
-       
-    },
-    botonVolver: {
-        position: "absolute",
-        marginLeft: wp(4.5)
-    },
-    containerTituloComentario: {
+    containerNav: {
         width: "100%",
         backgroundColor: "white",
-        paddingLeft: wp(5)
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
     },
-    tituloComentario: {
-        fontSize: wp(7.5)
+    containerTitle: {
+        width: "100%",
+    },
+    title: {
+        fontSize: wp(10),
+        paddingLeft: hp(2),
+    },
+     botonCerrar: {
+        borderRadius: 100,
+        marginLeft: wp(2)
+    },
+    iconCerrar: {
+        borderRadius: 100,
     },
     containerErrorComentarios: {
         width: "100%",
-        marginTop: hp(4),
+        marginTop: hp(2),
         paddingLeft: wp(5),
     },
     textoErrorComentario: {
@@ -42,16 +40,21 @@ const styles = StyleSheet.create({
     },
     containerCardComentario: {
         width: "100%",
-        marginBottom: hp(10),
-        minHeight: hp(79),
+        marginBottom: hp(6),
+        height: hp(75),
+    },
+    containerUniqueCardComentario: {
+        width: "100%",
+        marginTop: hp(-2),
         alignItems: "center",
-        backgroundColor: "white"
+        marginBottom: hp(2),
     },
     containerTextInputComentario: {
         position: "absolute",
+        backgroundColor: "white",
+        bottom: 0,
         width: "100%", 
         flexDirection: "row", 
-        bottom: 0
     },
     textInput: {
         width: wp(82),  

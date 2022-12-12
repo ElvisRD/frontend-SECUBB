@@ -6,12 +6,20 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "white",
-        zIndex: 9
+        zIndex: 7
 
+    },
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
     },
     alerta: {
         width: "100%",
-        height: "100%",
+        marginTop: hp(1.5),
+        height: hp(75),
     },
     containerBotones: {
         width: "100%",
@@ -22,7 +30,7 @@ const styles = StyleSheet.create({
        
     },
     botonVolver: {
-        marginLeft: wp(4.5)
+        marginLeft: wp(2)
     },
     botonEliminar: {
         position: "absolute",
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
         maxHeight: 200
     },
     atributoAlerta: {
-        fontSize: wp(5.2),
+        fontSize: wp(6),
         fontWeight: "bold"
     },
     descripcion: {
@@ -104,14 +112,16 @@ const styles = StyleSheet.create({
         fontSize: wp(5)
     },
     containerBotonVerComentarios: {
+        position: "absolute",
         width: "100%",
-        marginTop: hp(2),
         alignItems: "center",
+        bottom: hp(2),
+  
     },
     botonComentarios: {
         minWidth: 100,
         width: wp(44),
-        marginBottom: hp(5),
+        //marginBottom: hp(5),
     },
     textoBotonComentarios: {
         fontSize: wp(3),

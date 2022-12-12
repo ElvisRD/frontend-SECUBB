@@ -1,10 +1,9 @@
 import React, {useEffect, useState, useRef} from "react"
-import { View, Text, StyleSheet, Image, TouchableOpacity, BackHandler, Alert, Keyboard } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, BackHandler, Alert, Keyboard,ScrollView } from "react-native"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import styles from "./styles"
-import { TextInput, Dialog, Portal, Paragraph, Button, Provider } from 'react-native-paper';
+import { TextInput, Dialog, Portal, Paragraph, Button, Provider, Appbar } from 'react-native-paper';
 import { useSelector, useDispatch } from "react-redux";
 import { crearComentario } from "../../data/comentarios";
 import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
@@ -85,24 +84,22 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
 
     return (
     <View style={styles.containerComentarios} >
-        <View style={styles.containerBotonVolver}>
-                    <TouchableOpacity style={styles.botonVolver} onPress={()=>{setVerComentarios(false)}}>
-                        <IconAD 
-                                name='arrowleft'
-                                color='black'
-                                size={40}
-                        />
-                    </TouchableOpacity> 
+        <Appbar.Header style={styles.containerNav}>
+            <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVerComentarios(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
+        </Appbar.Header>
+        <View style={styles.containerTitle}>
+            <Text style={styles.title}>Comentarios</Text>
         </View>
-        <View style={styles.containerTituloComentario}>
-                    <Text style={styles.tituloComentario}>Comentarios</Text>
-        </View>
-        <KeyboardAwareScrollView ref={scrollRef} enableAutomaticScroll={true} style={styles.comentarios} keyboardShouldPersistTaps="always" >     
-            <View style={styles.containerCardComentario}>
+            <ScrollView style={styles.containerCardComentario}>
                     {
                         comentarios !== null && comentarios[0] !== undefined ? (
                             comentarios.map((comentario, index) => {
-                                return <CardComentario key={index} comentario={comentario} socket={socket} alertaId={alertaId} />
+                                return (
+                                    <View style={styles.containerUniqueCardComentario} key={index}>
+                                        <CardComentario comentario={comentario} socket={socket} alertaId={alertaId} />
+                                     </View>
+                                )
+                                
                             })
                         ) : (
                             <View style={styles.containerErrorComentarios}> 
@@ -110,19 +107,17 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                             </View>
                         )
                     }
-            </View> 
+            </ScrollView>    
             <View style={styles.containerTextInputComentario}>
-                <TextInput style={styles.textInput} multiline={true} activeUnderlineColor="transparent" value={inputComentario} onFocus={()=>setIconoInput(true)} onSubmitEditing={()=> {
-                    alert('comentario enviado');
-                }} onChangeText={(text) => setInputComentario(text)}  placeholder='Deja tu comentario'/>
+                <TextInput style={styles.textInput} multiline={true} activeUnderlineColor="transparent" value={inputComentario} onFocus={()=>setIconoInput(true)}  
+                onChangeText={(text) => setInputComentario(text)}  placeholder='Deja tu comentario' maxLength={100} />
                 <View style={styles.containerBotonEnviar}>
                     <TouchableOpacity style={styles.botonEnviar} onPress={crearUnComentario} disabled={iconoInput?(inputComentario !== ""?false:true):(inputComentario !== "" ? (false):(true))} >
                         <Text style={styles.textoBotonEnviar}>Enviar</Text>
                     </TouchableOpacity>
                 </View>
                 
-            </View> 
-        </KeyboardAwareScrollView>
+            </View>
         <Provider>
             <Portal>
             <Dialog visible={confirmacion} onDismiss={()=>setConfirmacion(false)}>

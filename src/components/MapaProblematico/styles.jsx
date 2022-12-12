@@ -18,16 +18,21 @@ const styles = StyleSheet.create({
     }, 
     boton: {
         position: "absolute",
-        top: hp(3),
+        top: hp(2),
         left: wp(5),
-        width: 54,
+        padding: 3,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 100,
         backgroundColor: "black",
+        borderRadius: 100,
         opacity: 0.4,
-        height: 54,
-        zIndex: 2
+        zIndex: 3
+    },
+    pinCalor: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        backgroundColor: "red",
     }
 })
 

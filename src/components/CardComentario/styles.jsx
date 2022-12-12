@@ -4,22 +4,28 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const styles = StyleSheet.create({
     containerComentario: {
         width: wp(96),
-        minHeight: 100,
         borderRadius: 6,
         marginTop: hp(2),
         flexDirection: "row",
-        backgroundColor: "blue",
+        backgroundColor: "#F3F1F5",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
 
     },
     containerDatosComentario: {
         width: "90%",
-        height: "100%",
         flexDirection: "column",
     },
     containerUsuario: {
-        paddingTop: hp(0.5),
+        paddingTop: hp(1),
         width: "100%",
-        minHeight: 55,
+        minHeight: hp(5),
         paddingHorizontal: wp(4),
     },
     usuario: {
@@ -30,7 +36,8 @@ const styles = StyleSheet.create({
     },
     textoDatosComentario:{
         width: "100%",
-        marginTop: hp(1.5),
+        marginTop: hp(1),
+        paddingVertical: hp(1),
         paddingLeft: wp(5),
         flexDirection: "row",
     },  
@@ -47,7 +54,6 @@ const styles = StyleSheet.create({
         fontSize: wp(4),
     },
     containerBotonLike:{
-        minHeight: 100,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",

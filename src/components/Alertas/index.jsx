@@ -33,13 +33,13 @@ export default function Alertas({handlePressButtons,socket}) {
             {isVisibleAlerta ? <Alerta socket={socket} setIsVisibleAlerta={setIsVisibleAlerta} verAlerta={verAlerta} /> : null }
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={alertaSeleccionada.id} /> : (null)} 
 
-            <View style={styles.containerNoticias} >
-            <Appbar.Header >
+            <View style={styles.containerAlertas} >
+            <Appbar.Header style={styles.containerNav}>
                 <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
                 <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}} icon={props => <IconAD name="close" size={35} color="black" />} />
             </Appbar.Header>
-                <View style={styles.noticias}>
-                    <ScrollView style={styles.containerNoticiasActuales} > 
+                <View style={styles.alertas}>
+                    <ScrollView style={styles.containerAlertasActuales} > 
                        {alertas !== undefined ? (
                             alertas.map((alerta,i) => (
                                 <CardAlerta socket={socket} alerta={alerta} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>

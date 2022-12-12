@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { View, Text, TouchableOpacity, Image } from "react-native"
-import { Button, Appbar } from 'react-native-paper'
+import { Dialog, Portal, Appbar, Provider, Button } from 'react-native-paper'
 import styles from "./styles"
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -16,6 +16,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
    
     const [spinnerFoto, setSpinnerFoto] = useState(true);
     const [spinnerComentarios, setSpinnerComentarios] = useState(true);
+    const [modalEliminarAlerta, setModalEliminarAlerta] = useState(false);
     const [verComentarios, setVerComentarios] = useState(false);
     const [errorImagen, setErrorImagen] = useState(false);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
@@ -50,13 +51,13 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id}/> : (null)} 
 
             <View style={styles.containerAlerta}>
-                <Appbar.Header >
+                <Appbar.Header style={styles.containerNav} >
                     <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setIsVisibleAlerta(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-                    {
+                     {
                         verAlerta.usuarioId === usuarioRedux.id ? (
-                            <Appbar.Action animated={false} style={styles.botonEliminar} onPress={eliminarAlerta} icon={props => <IconMI name="delete-outline" size={35} color="black" />} /> 
+                            <Appbar.Action animated={false} style={styles.botonEliminar} onPress={()=>setModalEliminarAlerta(true)} icon={props => <IconMI name="delete-outline" size={35} color="black" />} /> 
                         ):(null)
-                    }
+                    } 
                 </Appbar.Header>
                 <KeyboardAwareScrollView bounces={false} style={styles.alerta} >
                     <View style={styles.containerTituloAlerta}>
@@ -68,7 +69,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                     </View>
                     <View style={styles.containerDescripcion}>
                         <Text style={styles.atributoAlerta}>Descripción</Text>
-                        <Text style={styles.descripcion}>hola</Text>
+                        <Text style={styles.descripcion}>{verAlerta.descripcion}</Text>
                     </View>
                     <View style={styles.containerUbicacion}>
                         <Text style={styles.atributoAlerta}>Ubicación</Text>
@@ -88,16 +89,31 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                             <Text style={styles.textoImagenNoEncontrada}>La alerta no tiene imagen</Text>
                         </View>)
                     } 
-                    <View style={styles.containerUsuario}>
-                        <Text style={styles.atributoAlerta}>Reportado por </Text>
+                    <View style={styles.containerUsuario}> 
+                        <Text style={styles.atributoAlerta}>Reportado por </Text> 
                     </View>
 
-                    <View style={styles.containerBotonVerComentarios}>
+                </KeyboardAwareScrollView>
+
+                <View style={styles.containerBotonVerComentarios}>
                         <Button style={styles.botonComentarios} labelStyle={styles.textoBotonComentarios} mode="elevated" onPress={() => setVerComentarios(true)}>
                             Ver comentarios
                         </Button>
-                    </View>
-                </KeyboardAwareScrollView>
+                </View>
+                
+                <Provider >
+                    <Portal>
+                        <Dialog visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)}>
+                            <Dialog.Icon icon="alert" />
+                            <Dialog.Title>¿Estás seguro que deseas eliminar la alerta?</Dialog.Title>
+                            <Dialog.Actions>
+                            <Button onPress={()=>setModalEliminarAlerta(false)}>Cancelar</Button>
+                            <Button onPress={eliminarAlerta}>Confirmar</Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+                </Provider>
+
             </View>
         </>
         

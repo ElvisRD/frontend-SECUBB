@@ -1,16 +1,28 @@
 import React,{useState} from "react"
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity} from 'react-native';
 import styles from "./styles"
-import { Button, Appbar } from 'react-native-paper';
+import { Dialog, Portal, Appbar, Provider, Button } from 'react-native-paper';
 import Perfil from "../MiPerfil"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import ModalSugerencia from "../ModalSugerencia";
 import ModalLugaresProblematicos from "../LugaresProblematicos";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Menu({handlePressButtons}){
+export default function Menu({handlePressButtons, navigation}){
     const [isVisiblePerfil, setIsVisiblePerfil] = useState(false);
     const [isVisibleLugares, setModalLugaresProblematicos] = useState(false);
     const [isVisibleSugerencia, setModalSugerencia] = useState(false);
+    const [isVisibleCerrarSesion, setIsVisibleCerrarSesion] = useState(false);
+
+    const eliminarToken = async () => {
+        try {
+          await AsyncStorage.removeItem('usuario')
+          console.log("el usuario fue removido");
+        } catch(e) {
+            console.log("error al remover el usuario");
+        }
+      
+    }
     
     return(
         <>
@@ -20,24 +32,12 @@ export default function Menu({handlePressButtons}){
         
         <View style={styles.containerMenu} >
               <View style={styles.menu}>
-                {/* <View style={styles.containerBotonCerrar}>
-                        <TouchableOpacity style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}}>
-                            <IconAD name="close" size={30} color="black" />
-                        </TouchableOpacity> 
-                </View>
-                <View style={styles.menuTitle}> 
-                    <Text style={styles.title}>Menú</Text>
-                </View> */}
-                <Appbar.Header >
+                <Appbar.Header style={styles.containerNav}>
                     <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Menú" />
                     <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}} icon={props => <IconAD name="close" size={35} color="black" />} />
                 </Appbar.Header>
 
                 <View style={styles.containerOpciones}> 
-                    {/* <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisiblePerfil(true)}}>
-                        <Text style={styles.textOpcion}>Mi perfil</Text>
-                    </TouchableOpacity> */}
-
                     <TouchableOpacity style={styles.opcionPerfil} >
                         <Text style={styles.textOpcion}>Notificaciones</Text>
                     </TouchableOpacity>
@@ -50,15 +50,28 @@ export default function Menu({handlePressButtons}){
                     </TouchableOpacity>
                 </View>
                 <View style={styles.containerBotonCerrarSesion}>
-                    <View style={styles.botonCerrarSesion} >
-                        <Button onPress={() => console.log('Pressed')} >
-                            Cerrar sesión
-                        </Button>
-                    </View>  
+                    <TouchableOpacity style={styles.botonCerrarSesion} onPress={()=>{setIsVisibleCerrarSesion(true)}} >
+                        <Text style={styles.textCerrarSesion}>Cerrar sesión</Text>
+                    </TouchableOpacity> 
                 </View>
               </View>
-             
+        
+                <Provider >
+                    <Portal>
+                        <Dialog visible={isVisibleCerrarSesion} onDismiss={()=>setIsVisibleCerrarSesion(false)}>
+                            <Dialog.Icon icon="alert" />
+                            <Dialog.Title>¿Estás seguro que deseas cerrar sesión?</Dialog.Title>
+                            <Dialog.Actions>
+                            <Button onPress={()=>setIsVisibleCerrarSesion(false)}>Cancelar</Button>
+                            <Button onPress={eliminarToken}>Confirmar</Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+                </Provider>
+
         </View>
+        
+
         </>
         
     )

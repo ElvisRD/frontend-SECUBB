@@ -13,7 +13,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
     containerTitle: {
         width: "100%",
         justifyContent: "center",
@@ -46,13 +52,30 @@ const styles = StyleSheet.create({
     },
     containerBotonCerrarSesion: {
         position: "absolute",
-        bottom: hp(9),
+        bottom: hp(13),
         width: "100%",
-        alignItems: "center"
+        alignItems: "center",
     },
     botonCerrarSesion: {
-        width: "50%"
+        width: wp(40),
+        paddingVertical: hp(0.5),
+        borderRadius: 40,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        backgroundColor: "#F2F2F2",
+    },
+    textCerrarSesion:{
+        fontSize: wp(5),
     }
+    
+
 })
 
 export default styles;

@@ -76,7 +76,7 @@ export default function CardComentario({comentario, socket, alertaId}){
                         <MaterialCommunityIcons
                                     name={liked ? "heart" : "heart-outline"}
                                     size={30}
-                                    color={liked ? "red" : "black"}
+                                    color={liked ? "red" : "#AAAAAA"}
                         />
                     </Pressable>
             </View>

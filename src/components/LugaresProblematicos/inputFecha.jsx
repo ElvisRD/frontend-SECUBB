@@ -5,7 +5,7 @@ import styles from "./styles"
 import DatePicker from '@react-native-community/datetimepicker';
 
 
-export default function InputFecha({setAbrirCalendario, labelTextInput, valueTextInput, abrirCalendario, guardarDatosDataPicker, tipoDatePicker, tiempo}) {
+export default function InputFecha({setAbrirCalendario, labelTextInput, valueTextInput, abrirCalendario, guardarDatosDataPicker, tipoDatePicker, tiempo, diaMaximo}) {
     return (
         <>
             <TouchableOpacity onPress={()=>setAbrirCalendario(true)}>
@@ -22,7 +22,7 @@ export default function InputFecha({setAbrirCalendario, labelTextInput, valueTex
 
             {
                 abrirCalendario ? (
-                    <DatePicker mode={tipoDatePicker} locale="es-ES" value={new Date()} dateFormat={"day month year"} onChange={(e,date) => guardarDatosDataPicker(e,date,tiempo)} negativeButton={()=> {console.log("sal");}} />
+                    <DatePicker mode={tipoDatePicker} locale="es-ES" value={new Date()} dateFormat={"day month year"} maximumDate={diaMaximo} minimumDate={new Date(2022,11,1)} onChange={(e,date) => guardarDatosDataPicker(e,date,tiempo)} negativeButton={()=> {console.log("sal");}} />
                 ):(null)
             }
 

@@ -5,9 +5,18 @@ const obtenerAlertas = async (activa) => {
    const alertas = await axios.get(`${URL_CONNECT_BACKEND}/api/alertas?activa=${activa}`)
    return alertas.data
 } 
+const obtenerAlertasPorFechaYTipo = async (tipo, fechaInicial, fechaFinal) => {
+    const alertas = await axios.get(`${URL_CONNECT_BACKEND}/api/alertasFiltradas?tipo=${tipo}&fechaInicial=${fechaInicial}&fechaFinal=${fechaFinal}`)
+    return alertas.data
+}
 
 const crearAlerta = async (body) => {
     const alerta = await axios.post(`${URL_CONNECT_BACKEND}/api/alerta`,body)
+    return alerta.data
+}
+
+const eliminarAlerta = async (id) => {
+    const alerta = await axios.delete(`${URL_CONNECT_BACKEND}/api/alerta/${id}`)
     return alerta.data
 }
 
@@ -24,6 +33,8 @@ const like = async (body) => {
 module.exports = {
     like,
     dislike,
+    eliminarAlerta,
+    obtenerAlertasPorFechaYTipo,
     obtenerAlertas,
     crearAlerta 
 }

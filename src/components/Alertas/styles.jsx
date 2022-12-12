@@ -2,19 +2,28 @@ import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
-    containerNoticias: {
-        backgroundColor: "white",
+    containerAlertas: {
+        backgroundColor: "white",   
         width: "100%",
+        height: "100%",
+        
     },
-    
+    containerNav: {
+        width: "100%",
+        boackgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
     containerTitle: {
         width: "100%",
         justifyContent: "center",
         height: "100%",
+        
     },
     title: {
         fontSize: wp(10),
-        paddingTop: hp(2.5),
+        paddingTop: hp(3.5),
         paddingLeft: wp(2)
     },
     botonCerrar: {
@@ -25,15 +34,13 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     
-    noticias: {
+    alertas: {
         width: "100%",
-        height: hp(92.5),
-        paddingBottom: hp(1),
-        marginTop: hp(2),
+        height: hp(84),
+        
     },
-    containerNoticiasActuales: {
+    containerAlertasActuales: {
         width: "100%",
-        marginBottom: hp(10),
     },
     containerNoAlertas: {
         width: "100%",

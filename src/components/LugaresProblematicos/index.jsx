@@ -6,14 +6,16 @@ import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
 import DatePicker from '@react-native-community/datetimepicker';
 import { Button, Appbar } from "react-native-paper";
+import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
 
 
 export default function ModalLugaresProblematicos({setModalLugaresProblematicos}) {
 
-    const [valorSeleccionado, setValorSeleccionado] = useState("hola");
+    const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
     const [mostrarMapa, setMostrarMapa] = useState(false);
+    const [alertas, setAlertas] = useState(null);
 
     const [fechaInicialSeleccinada, setFechaInicialSeleccinada] = useState({
         fecha: "",
@@ -29,12 +31,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
     const [abrirHoraInicial, setAbrirHoraInicial] = useState(false);
     const [abrirHoraFinal, setAbrirHoraFinal] = useState(false);
 
-    const selectList = [
-    
-            {label: "Lugar 1", value: "Lugar 1"},
-            {label: "Lugar 2", value: "Lugar 2"},
-            {label: "Lugar 3", value: "Lugar 3"}
-    ]
+   
     
     const pickerRef = useRef();
 
@@ -71,6 +68,45 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
 
     }
 
+    const obtenerAlertas = () => {
+        
+        if(fechaInicialSeleccinada.fecha === "" || fechaInicialSeleccinada.hora === "" || fechaFinalSeleccinada.fecha === "" || fechaFinalSeleccinada.hora === ""){
+            alert("Por favor seleccione una fecha y hora inicial y final");
+        }else{
+            const fechaInicialDividida = fechaInicialSeleccinada.fecha.split("/");
+            const fechaFinalDividida = fechaFinalSeleccinada.fecha.split("/");
+            
+            if(parseInt(fechaInicialDividida[0])<10){
+                fechaInicialDividida[0] = "0" + fechaInicialDividida[0];
+            }
+            if(parseInt(fechaInicialDividida[1])<10){
+                fechaInicialDividida[1] = "0" + fechaInicialDividida[1];
+            }
+
+            if(parseInt(fechaFinalDividida[0])<10){
+                fechaFinalDividida[0] = "0" + fechaFinalDividida[0];
+            }
+            if(parseInt(fechaFinalDividida[1])<10){
+                fechaFinalDividida[1] = "0" + fechaFinalDividida[1];
+            }
+
+            const fechaInicialModificada = fechaInicialDividida[2] + "-" + fechaInicialDividida[1] + "-" + fechaInicialDividida[0]+"T"+fechaInicialSeleccinada.hora+".000Z";
+            const fechaFinalModificada = fechaFinalDividida[2] + "-" + fechaFinalDividida[1] + "-" + fechaFinalDividida[0]+"T"+fechaFinalSeleccinada.hora+".000Z";
+            valorSeleccionado.replace(" ","%20");
+
+
+            obtenerAlertasPorFechaYTipo(valorSeleccionado,fechaInicialModificada,fechaFinalModificada).then((result) => {
+                setAlertas(result);
+                setMostrarMapa(true);
+            }).catch((err) => {
+                console.log("alertas no encontradas");
+            });
+
+        }
+
+
+    }
+
     const guardarHora = (e,hora,tiempo) => {
         if(e.type === "set"){
             setAbrirHoraInicial(false);
@@ -97,7 +133,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
     return (
         <> 
         {
-            mostrarMapa ? <MapaProblematico setMostrarMapa={setMostrarMapa} /> : null
+            mostrarMapa ? <MapaProblematico setMostrarMapa={setMostrarMapa} alertas={alertas} /> : null
         }
 
          <View style={styles.containerModalLugaresProblematicos}>
@@ -116,11 +152,14 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                         style={styles.select}
                         ref={pickerRef}
                         selectedValue={valorSeleccionado}
-                        onValueChange={(itemValue, itemIndex) =>
-                                setValorSeleccionado(itemValue)
-                        }>
-                        <Picker.Item label="Java" value="java" />
-                        <Picker.Item label="JavaScript" value="js" />
+                        onValueChange={(itemValue) => setValorSeleccionado(itemValue)}
+                    >
+                        <Picker.Item label="Problemas de iluminación" value= "Problemas de iluminación" />
+                        <Picker.Item label="Actividad sospechosa" value="Actividad sospechosa" />
+                        <Picker.Item label="Perros rondando" value="Perros rondando" />
+                        <Picker.Item label="Emergencia de salud" value="Emergencia de salud" />
+                        <Picker.Item label="Consumo de drogas" value="Consumo de drogas" />
+
                     </Picker>
   
                 </View >
@@ -138,6 +177,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                             guardarDatosDataPicker={guardarFecha}
                             tipoDatePicker="date"
                             tiempo="inicial"
+                            diaMaximo={new Date()}
                         
                         />
                        
@@ -149,6 +189,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                             guardarDatosDataPicker={guardarHora}
                             tipoDatePicker="time"
                             tiempo="inicial"
+                            
                        
                        />
                         
@@ -164,7 +205,8 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                                 abrirCalendario={abrirCalendarioFechaFinal}
                                 guardarDatosDataPicker={guardarFecha}
                                 tipoDatePicker="date"
-                                tiempo="final"    
+                                tiempo="final"  
+                                diaMaximo={new Date()}  
                         />
 
                         <InputFecha 
@@ -175,13 +217,14 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                                 guardarDatosDataPicker={guardarHora}
                                 tipoDatePicker="time"
                                 tiempo="final"  
+    
                         />
                        
 
                     </View>
                 </View>
                 <View style={styles.containerBotonMostrarLugares}>
-                    <Button mode="elevated" onPress={()=>{setMostrarMapa(true)}}>
+                    <Button mode="elevated" onPress={obtenerAlertas}>
                         Mostrar mapa
                     </Button>
                 </View>

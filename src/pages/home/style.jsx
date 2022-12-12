@@ -16,17 +16,20 @@ const styles = StyleSheet.create({
     },
     containerBotones: {
         position: "absolute",
-        bottom: "0%",
+        backgroundColor: "white",
+        borderTopWidth: 1,
+        borderColor: "#E5E5E5",
+        bottom: hp(0),
         width: "100%",
-        height: hp(7.5),
+        height: hp(8.5),
         flexDirection: "row",
         justifyContent: "space-around",
-        backgroundColor: "white",
         zIndex: 6
         
     },
     containerBoton: {
         borderRadius: 100,
+        paddingTop: hp(0.5),
         width: 55,
         height: 55,
         marginTop: "1%",

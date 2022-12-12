@@ -4,24 +4,32 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const styles = StyleSheet.create({
     containerAlerta: {
         width: "100%",
-        marginVertical: hp(1),
+        marginVertical: hp(1),       
         alignItems: "center",
         justifyContent: "center"
 
     },
     AlertaCard: {
         width: "94%",
-        height: 200,
-        marginTop: hp(1.5),
+        height: hp(21),
         paddingTop: hp(1),
-        backgroundColor: "blue",
+        backgroundColor: "#F3F1F5",
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
         borderRadius: 5,
         flexDirection: "column",
     },
     containerTipo:{
         justifyContent: "space-between",
         paddingHorizontal: wp(4),
-        
         alignItems: "center",
         flexDirection: "row"
     },
@@ -34,8 +42,7 @@ const styles = StyleSheet.create({
     },
     containerDescripcion: {
         width: "100%",
-        minHeight: 100,
-        maxHeight: 150,
+        height: hp(10),
         paddingHorizontal: wp(4),
         marginTop: hp(1),
         
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
     },
     containerBotones: {
         flexDirection: "row",
-        marginTop: hp(1.5),
+        marginTop: hp(0.5),
         justifyContent: "space-around",
     },
     containerBotonLike: {
