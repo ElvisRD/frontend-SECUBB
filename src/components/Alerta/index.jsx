@@ -6,10 +6,15 @@ import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
 import IconF from 'react-native-vector-icons/Feather';
+import { eliminarAlerta } from '../../data/alertas';
 import { URL_CONNECT_BACKEND } from '../../../env';
+import { eliminarComentarioRedux } from '../../redux/actions/comentariosActions'
+import { eliminarAlertaRedux } from '../../redux/actions/alertasActions'
+import { borrarTodosLosLikesAlertaRedux} from '../../redux/actions/likesActions'
 import {obtenerImagen} from "../../data/imagenes"
 import Comentarios from '../Comentarios';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import Toast from 'react-native-toast-message';
 
 
 export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
@@ -20,7 +25,9 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
     const [verComentarios, setVerComentarios] = useState(false);
     const [errorImagen, setErrorImagen] = useState(false);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
+    const alertasRedux = useSelector(state => state.alertas.alertas);
     const [imagen, setImagen] = useState();
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -39,11 +46,53 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
 
     }, [])
 
-
-    const eliminarAlerta = () => {
-        console.log("Eliminar alerta");
-    }
+    useEffect(() => {
+        if(alertasRedux !== undefined){
+            const alerta = alertasRedux.find(alerta => alerta.id === verAlerta.id);
+            if(alerta === undefined){
+                Toast.show({
+                    type: 'error',
+                    position: 'top',
+                    text1: 'La alerta fue eliminada por otro usuario',
+                    visibilityTime: 2000,
+                });; 
+                setIsVisibleAlerta(false);  
+            } 
+        }
+      
+    }, [alertasRedux])
     
+
+
+    const handlerEliminarAlerta = async () => {
+
+        eliminarAlerta(verAlerta.id).then(() => {
+            Toast.show({
+                type: 'success',
+                position: 'top',
+                text1: 'La alerta fue eliminada correctamente',
+                visibilityTime: 2000,
+            }); 
+        }).catch((err) => {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Error al eliminar la alerta',
+                visibilityTime: 2000,
+            });; 
+        });
+
+        await socket.emit("eliminarAlerta", verAlerta);
+        
+        setIsVisibleAlerta(false);
+        dispatch(eliminarAlertaRedux(verAlerta));
+        dispatch(eliminarComentarioRedux(verAlerta));
+        dispatch(borrarTodosLosLikesAlertaRedux(verAlerta));
+    
+       
+    }
+
+     
 
     return(
 
@@ -96,7 +145,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                 </KeyboardAwareScrollView>
 
                 <View style={styles.containerBotonVerComentarios}>
-                        <Button style={styles.botonComentarios} labelStyle={styles.textoBotonComentarios} mode="elevated" onPress={() => setVerComentarios(true)}>
+                        <Button style={styles.botonComentarios} labelStyle={styles.textoBotonComentarios} mode="elevated" onPress={()=>{setVerComentarios(true);}}>
                             Ver comentarios
                         </Button>
                 </View>
@@ -108,7 +157,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                             <Dialog.Title>¿Estás seguro que deseas eliminar la alerta?</Dialog.Title>
                             <Dialog.Actions>
                             <Button onPress={()=>setModalEliminarAlerta(false)}>Cancelar</Button>
-                            <Button onPress={eliminarAlerta}>Confirmar</Button>
+                            <Button onPress={handlerEliminarAlerta}>Confirmar</Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

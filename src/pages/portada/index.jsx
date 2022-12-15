@@ -4,8 +4,10 @@ import styles from "./styles";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
 import {obtenerAlertas} from "../../data/alertas";
 import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
+import { daLikeComentarioRedux } from "../../redux/actions/likesActions";
 import { daLikeAlertaRedux } from "../../redux/actions/likesActions";
 import { useDispatch } from "react-redux";
+import {obtenerComentarios} from "../../data/comentarios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { guardarUsuario } from "../../redux/actions/usuarioActions";
 
@@ -20,6 +22,7 @@ export default function Portada({navigation}){
           if(jsonValue !== null){
             dispatch(guardarUsuario(JSON.parse(jsonValue)));
             getAlertas();
+            getComentarios();
             /* setTimeout(() => {
               navigation.navigate("Home")
             }, 1500); */
@@ -33,24 +36,42 @@ export default function Portada({navigation}){
        }
 
        const getAlertas = () => {
+        const likeAlertas = [];
         obtenerAlertas(true).then((result) => {
           dispatch(guardarAlertaRedux(result))
            result.map(alerta => {
-               if(alerta.comentarios[0] !== undefined){
-                 alerta.comentarios.map(comentario => {
-                   dispatch(guardarComentarioRedux(comentario));
-                 })
-               }else{
                  if(alerta.daLikeAlerta[0] !== undefined){
                    alerta.daLikeAlerta.map(like => {
-                     dispatch(daLikeAlertaRedux(like));
+                    likeAlertas.push(like);
                    })
                  }
-               }
-              
-           })
+           }); 
+           if(likeAlertas[0] !== undefined){
+            dispatch(daLikeAlertaRedux(likeAlertas));
+           }
         }).catch((err) => {
            console.log("no se encontraron alertas");
+        });
+       }
+
+       const getComentarios = () => {
+        const likeComentarios = [];
+        obtenerComentarios().then((result) => {
+          dispatch(guardarComentarioRedux(result))
+          result.map(comentario => {
+            if(comentario.daLikeComentario[0] !== undefined){
+              comentario.daLikeComentario.map(like => {
+                likeComentarios.push(like);
+              })  
+            }
+          }); 
+
+          if(likeComentarios[0] !== undefined){
+            dispatch(daLikeComentarioRedux(likeComentarios));
+          }
+
+        }).catch((err) => {
+           console.log("no se encontraron comentarios");
         });
        }
 

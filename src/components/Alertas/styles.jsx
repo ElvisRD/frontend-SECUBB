@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
     },
     containerNoAlertas: {
         width: "100%",
-        marginTop: hp(1),
+        marginTop: hp(4.5),
         paddingLeft: wp(5),
     },
     textoNoAlertas: {
-        fontSize: wp(4),
+        fontSize: wp(6),
     }
     
 })

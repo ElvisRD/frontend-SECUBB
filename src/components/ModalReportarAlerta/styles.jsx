@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
         paddingLeft: hp(2),
     },
     botonCerrar: {
+        position: "absolute",
+        borderRadius: 100,
+        right: wp(2),
+    },
+    botonVolver: {
         borderRadius: 100,
         marginLeft: wp(2)
     },

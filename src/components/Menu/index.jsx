@@ -7,12 +7,14 @@ import IconAD from 'react-native-vector-icons/AntDesign';
 import ModalSugerencia from "../ModalSugerencia";
 import ModalLugaresProblematicos from "../LugaresProblematicos";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ConfiguracionNotificaciones from "../ConfiguracionNotificaciones";
 
-export default function Menu({handlePressButtons, navigation}){
+export default function Menu({handlePressButtons, navigation }){
     const [isVisiblePerfil, setIsVisiblePerfil] = useState(false);
     const [isVisibleLugares, setModalLugaresProblematicos] = useState(false);
     const [isVisibleSugerencia, setModalSugerencia] = useState(false);
     const [isVisibleCerrarSesion, setIsVisibleCerrarSesion] = useState(false);
+    const [isVisibleConfiguracionNotificaciones, setVisibleConfiguracionNotificaciones] = useState(false);
 
     const eliminarToken = async () => {
         try {
@@ -21,6 +23,9 @@ export default function Menu({handlePressButtons, navigation}){
         } catch(e) {
             console.log("error al remover el usuario");
         }
+        setIsVisibleCerrarSesion(false); 
+        handlePressButtons("mapa");
+        navigation.navigate("Login");
       
     }
     
@@ -29,6 +34,7 @@ export default function Menu({handlePressButtons, navigation}){
         {isVisiblePerfil ? <Perfil setIsVisiblePerfil={setIsVisiblePerfil} />:(null)}
         {isVisibleLugares ? <ModalLugaresProblematicos setModalLugaresProblematicos={setModalLugaresProblematicos} />:(null)} 
         {isVisibleSugerencia ? <ModalSugerencia setModalSugerencia={setModalSugerencia} />:(null)}
+        {isVisibleConfiguracionNotificaciones ? <ConfiguracionNotificaciones setVisibleConfiguracionNotificaciones={setVisibleConfiguracionNotificaciones} />:(null)}
         
         <View style={styles.containerMenu} >
               <View style={styles.menu}>
@@ -38,7 +44,7 @@ export default function Menu({handlePressButtons, navigation}){
                 </Appbar.Header>
 
                 <View style={styles.containerOpciones}> 
-                    <TouchableOpacity style={styles.opcionPerfil} >
+                    <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setVisibleConfiguracionNotificaciones(true)}} >
                         <Text style={styles.textOpcion}>Notificaciones</Text>
                     </TouchableOpacity>
                     
@@ -68,10 +74,7 @@ export default function Menu({handlePressButtons, navigation}){
                         </Dialog>
                     </Portal>
                 </Provider>
-
         </View>
-        
-
         </>
         
     )

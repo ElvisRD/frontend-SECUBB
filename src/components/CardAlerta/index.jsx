@@ -19,6 +19,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
     const dispatch = useDispatch();
     const comentariosRedux = useSelector(state => state.comentarios.comentarios)
     const likesAlertaRedux = useSelector(state => state.likesAlerta.usuarios)
+    const alertasRedux = useSelector(state => state.alertas.alertas)
     const usuarioRedux = useSelector(state => state.usuario.usuario)
 
 
@@ -32,7 +33,7 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
                 }
             })
             setCantidadComentarios(cont);
-        }
+        } 
     }, [comentariosRedux])
 
     const seleccionarAlerta = () => {
@@ -42,52 +43,59 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
 
     useEffect(() => {
         if(likesAlertaRedux !== null){
+
+            if(liked === true){
+                setLiked(false)
+            }
+            
             let cont = 0;
             likesAlertaRedux.map(like => {
                 if(like.alertaId === alerta.id){
                     cont++;
                     if(like.usuarioId === usuarioRedux.id){
                         setLiked(true)
-                    } 
+                    }
+        
                 }
             })
             setContadorLikes(cont);
+           
+        }else{
+            setContadorLikes(0);
+            setLiked(false)
         }
     }, [likesAlertaRedux])
-
-    /* useEffect(() => {
-        if(alerta.daLikeAlerta[0] !== undefined && alerta.daLikeAlerta !== undefined){
-            alerta.daLikeAlerta.map(daLike => {
-                if(daLike.usuarioId === alerta.usuario.id){
-                    setLiked(true)
-                }
-            })
-            setContadorLikes(alerta.daLikeAlerta.length)
-        }else{
-            setContadorLikes(0)
-        }
-    }, []); */
  
-
     const handleLike = async () => {
-        setLiked(!liked);
-       
+
         const body = {  
             alertaId: alerta.id,
             usuarioId: usuarioRedux.id
         }
 
-        if(liked){
-            //dislike(body);
-            await socket.emit("daDislikeAlerta", body);
-            dispatch(borrarLikeAlertaRedux(body));
-            setContadorLikes(contadorLikes-1);
-        }else{
-            //like(body);
-            await socket.emit("daLikeAlerta", body);
-            dispatch(daLikeAlertaRedux(body));
-            setContadorLikes(contadorLikes+1);
+        let positionArray = null;
+        if(likesAlertaRedux !== null){
+            for(let i=0; i<likesAlertaRedux.length; i++){
+                if(likesAlertaRedux[i].alertaId === alerta.id && likesAlertaRedux[i].usuarioId === usuarioRedux.id){
+                positionArray = i;
+                break;
+                }
+            }
         }
+
+        if(liked){
+            dislike(body);
+            dispatch(borrarLikeAlertaRedux(body, positionArray));
+            await socket.emit("daDislikeAlerta", body, positionArray);
+            setLiked(false);
+    
+        }else{
+            like(body);
+            dispatch(daLikeAlertaRedux(body));
+            await socket.emit("daLikeAlerta", body);
+            setLiked(true);
+        }
+
     }
 
     const verComentariosAlerta = () => {

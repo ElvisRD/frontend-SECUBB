@@ -6,13 +6,29 @@ const state = (state = valorInicial, action) => {
     
     if(action.type === "guardarAlerta"){
         if(state.alertas !== null && state.alertas[0] !== undefined){
-            return {alertas: [...state.alertas, action.data]}
+            return {alertas: [action.data, ...state.alertas]}
         }else{
-            return {alertas: action.data}
+            if(action.data[0] !== undefined){
+                return {alertas: action.data}
+            }else{
+                return {alertas: [action.data]}
+            }
         }
 
     }else{
-        return {alertas: state.alertas}
+
+        if(action.type === "eliminarAlerta"){
+            const alertas = state.alertas.filter((alerta) => alerta.id !== action.data.id)
+
+            if(alertas[0] !== undefined){
+                return {alertas: alertas}
+            }else{
+                return {alertas: null}
+            }
+        }else{
+            return {alertas: state.alertas}
+        }
+        
     }
     
 }

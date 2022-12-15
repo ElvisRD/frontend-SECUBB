@@ -6,4 +6,11 @@ const guardarAlertaRedux = (alerta) => {
     }
 }
 
-export {guardarAlertaRedux};
+const eliminarAlertaRedux = (alerta) => {
+    return {
+        type: "eliminarAlerta",
+        data: alerta
+    }
+}
+
+export {guardarAlertaRedux,eliminarAlertaRedux};

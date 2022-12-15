@@ -1,61 +1,80 @@
 import React,{ useEffect, useState} from "react";
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import styles from "./styles";
+import { Provider, Portal, Dialog, Button } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { daLikeComentarioRedux, borrarLikeComentarioRedux } from "../../redux/actions/likesActions";
 import {like, dislike} from "../../data/comentarios";
 import { useSelector, useDispatch} from "react-redux";
 
 
-export default function CardComentario({comentario, socket, alertaId}){
+export default function CardComentario({comentario, socket, alertaId, setModalEditar, setComentarioEditado}){
     const [liked, setLiked] = useState(false);
     const [contadorLikes, setContadorLikes] = useState(0);
-    const [cantidadLikes, setCantidadLikes] = useState(0);
-
-    const [horaEditada, setHoraEditada] = useState("");
     const likesComentariosRedux = useSelector(state => state.likesComentario.usuarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
+   
     
 
     useEffect(() => {
-        if(likesComentariosRedux !== null){
+        if(likesComentariosRedux !== null ){
             let cont = 0;
             likesComentariosRedux.map(like => {
-    
-                if(like.alertaId === alertaId && like.comentarioId === comentario.id){
+                if(comentario.id === like.comentarioId){
                     cont++;
-                    if(like.usuarioId === usuarioRedux.id && like.comentarioId === comentario.id){
-                        setLiked(true)
-                    }  
-                } 
+                    if(like.usuarioId === usuarioRedux.id){
+                        setLiked(true);
+                    }
+                }
             }) 
             setContadorLikes(cont);
-        }
+        }else{
+            setContadorLikes(0);
+        } 
     }, [likesComentariosRedux])
 
     const handleLike = async () => {
-        setLiked(!liked);
-       
         const body = {  
             comentarioId: comentario.id,
             alertaId: comentario.alertaId,
             usuarioId: usuarioRedux.id
         }
 
+        let positionArray = null;
+        if(likesComentariosRedux !== null){
+            for(let i=0 ; i < likesComentariosRedux.length ; i++){
+                if(likesComentariosRedux[i].comentarioId === comentario.id && likesComentariosRedux[i].usuarioId === usuarioRedux.id 
+                    && likesComentariosRedux[i].alertaId === comentario.alertaId){
+                    positionArray=i;
+                    break;
+                }
+            }
+
+        }
+        
+
         if(liked){
-            //dislike(body);
-            await socket.emit("daDislikeComentario", body);
-            dispatch(borrarLikeComentarioRedux(body));
-            setContadorLikes(contadorLikes-1);
+            
+            dislike(body);
+            dispatch(borrarLikeComentarioRedux(body, positionArray));
+            await socket.emit("daDislikeComentario", body,positionArray);
+            setLiked(false);
         }else{
-            //like(body);
-            await socket.emit("daLikeComentario", body);
+
+            like(body);
             dispatch(daLikeComentarioRedux(body));
-            setContadorLikes(contadorLikes+1);
+            await socket.emit("daLikeComentario", body);
+            setLiked(true);
         }
     }
     
+    const editarComentario = () => {
+        if(usuarioRedux.id === comentario.usuarioId){
+            setComentarioEditado(comentario)
+            setModalEditar(true);
+        }
+    }
 
     return(
         <View style={styles.containerComentario}>
@@ -66,6 +85,13 @@ export default function CardComentario({comentario, socket, alertaId}){
                 <View style={styles.textoDatosComentario}>
                     <Text style={styles.datoComentario}>{comentario.fecha.slice(11,16)}</Text>
                     <Text style={styles.datoComentario}>{contadorLikes} Me gusta</Text>
+                    {
+                        comentario.usuarioId === usuarioRedux.id ? (
+                        <TouchableOpacity>
+                            <Text style={styles.datoComentario} onPress={editarComentario} >Editar</Text>
+                        </TouchableOpacity>
+                        ): null
+                    }
                 </View>
 
             </View>
@@ -80,6 +106,8 @@ export default function CardComentario({comentario, socket, alertaId}){
                         />
                     </Pressable>
             </View>
+            
+        
         </View>
         
     )

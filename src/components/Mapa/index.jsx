@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
 import MapView,{Marker,PROVIDER_GOOGLE} from 'react-native-maps';
+import { Dialog, Portal, Provider, Button } from 'react-native-paper';
 import ModalAlerts from "../ModalAlertas";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -18,9 +19,10 @@ export default function Mapa({ setPortadaVisible, socket}) {
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [verTiposAlertas, setVerTiposAlertas] = useState(false);
+    const [modalAvisoAlerta, setModalAvisoAlerta] = useState(false);
     const [verAlerta, setVerAlerta] = useState(false);
     const [alertaSeleccionada, setAlertaSeleccionada] = useState(null);
-    const [alertas, setAlertas] = useState([]);
+    const [alertas, setAlertas] = useState(null);
     const alertasRedux = useSelector(state => state.alertas.alertas)
    
 
@@ -41,20 +43,12 @@ export default function Mapa({ setPortadaVisible, socket}) {
         log3: -72.986747,
     }
 
-    /* useEffect(() => {
-        if(alertasNuevas !== ""){
-            alertasNuevas.map(alerta => {
-                setAlertas(oldAlertas => [...oldAlertas, alerta])
-            })
-           
-        }         
-
-    }, [alertasNuevas]) */
-
     useEffect(() => {
         if(alertasRedux !== null){
-           setAlertas(alertasRedux);
-        }  
+            setAlertas(alertasRedux);
+        }else{
+            setAlertas(null);
+        }
     }, [alertasRedux])
     
     
@@ -73,17 +67,24 @@ export default function Mapa({ setPortadaVisible, socket}) {
     const handleClickMap = async () => {
 
         let encontreAlerta = false;
-
+        setModalAvisoAlerta(true);
         if(coordenadasAlerta === null){
-            for(let i = 0; i < alertasRedux.length; i++){
-                if(alertasRedux[i].latitude === initialRegion.latitude && alertasRedux[i].longitude === initialRegion.longitude){
-                    console.log("ya existe una alerta creada en esta coordenada");
-                    encontreAlerta = true;
-                    break;
-                }
-            }
 
-            if(!encontreAlerta){
+            if(alertasRedux !== null){
+                for(let i = 0; i < alertasRedux.length; i++){
+                    if(alertasRedux[i].latitude === initialRegion.latitude && alertasRedux[i].longitude === initialRegion.longitude){
+                        console.log("encontre alerta");
+                        
+                        encontreAlerta = true;
+                        break;
+                    }
+                }
+    
+                if(!encontreAlerta){
+                    setCoordenadasAlerta(initialRegion);
+                    setIsVisibleModal(true);
+                }
+            }else{
                 setCoordenadasAlerta(initialRegion);
                 setIsVisibleModal(true);
             }
@@ -133,6 +134,8 @@ export default function Mapa({ setPortadaVisible, socket}) {
             verTiposAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setVerTiposAlertas} />):(null)
         }
 
+       
+
          
          <View style={styles.container}>
 
@@ -149,19 +152,18 @@ export default function Mapa({ setPortadaVisible, socket}) {
             >
               
               { alertas !== null ? (
-                    alertas.map((alert,i) => 
-                    <Marker
-                        key={i}
-                        coordinate={{
-                            latitude: alert.latitude ,
-                            longitude: alert.longitude
-                        }}
-                        mode
-                        onPress={()=>{mostrarAlerta(alert)}}
-                    > 
-                        {pinTipoAlerta(alert.tipo)}
-                    </Marker>  
-                    
+                    alertas.map((alerta, i) => (
+                        <Marker
+                            key={i}
+                            coordinate={{
+                                latitude: alerta.latitude ,
+                                longitude: alerta.longitude
+                            }}
+                            onPress={()=>{mostrarAlerta(alerta)}}
+                        > 
+                            {pinTipoAlerta(alerta.tipo)}
+                        </Marker>
+                    )
                 )):(null)
               }
 
@@ -191,7 +193,23 @@ export default function Mapa({ setPortadaVisible, socket}) {
                     size= {40}
                 />
             </TouchableOpacity> 
+
+            <Provider style={{zIndex: 30}}>
+                    <Portal>
+                        <Dialog  visible={modalAvisoAlerta} onDismiss={()=>setModalAvisoAlerta(false)}>
+                            <Dialog.Icon icon="alert" />
+                            <Dialog.Title>¿Estás seguro que deseas cerrar sesión?</Dialog.Title>
+                            <Dialog.Actions>
+                                <Button onPress={()=>setModalAvisoAlerta(false)}>Cancelar</Button>
+                                <Button onPress={()=>setModalAvisoAlerta(false)}>Confirmar</Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+        </Provider>
+
+            
         </View>
+        
         </>
 
     )

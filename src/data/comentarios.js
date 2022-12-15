@@ -6,6 +6,16 @@ const crearComentario = async (body) => {
     return comentario.data
 }
 
+const editarComentario = async (body) => {
+    const comentario = await axios.put(`${URL_CONNECT_BACKEND}/api/comentario/editar`,body)
+    return comentario.data
+}
+
+const obtenerComentarios = async () => {
+    const comentarios = await axios.get(`${URL_CONNECT_BACKEND}/api/comentarios`)
+    return comentarios.data
+}
+
 const like = async (body) => {
     const like = await axios.post(`${URL_CONNECT_BACKEND}/api/comentario/like`,body)
     return like.data
@@ -19,6 +29,8 @@ const like = async (body) => {
 module.exports = {
     like,
     dislike,
+    editarComentario,
+    obtenerComentarios,
     crearComentario
 
 }

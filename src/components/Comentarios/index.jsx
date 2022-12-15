@@ -3,10 +3,13 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, BackHandler, Alert, Ke
 import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
 import styles from "./styles"
+import {editarComentario} from "../../data/comentarios";
 import { TextInput, Dialog, Portal, Paragraph, Button, Provider, Appbar } from 'react-native-paper';
 import { useSelector, useDispatch } from "react-redux";
 import { crearComentario } from "../../data/comentarios";
-import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
+import { guardarComentarioRedux, editarComentarioRedux } from "../../redux/actions/comentariosActions";
+import Toast from 'react-native-toast-message';
+
 
 
 export default function Comentarios({setVerComentarios, socket, alertaId}) {
@@ -17,6 +20,8 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
     const [confirmacion, setConfirmacion] = useState(false);
     const comentariosRedux = useSelector(state => state.comentarios.comentarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
+    const [comentarioEditado, setComentarioEditado] = useState(null);
+    const [modalEditar, setModalEditar] = useState(false);
     const dispatch = useDispatch();
     const scrollRef = useRef(null);
    
@@ -81,6 +86,35 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         setConfirmacion(false)
       }
 
+      const guardarComentarioEditado = async () => {
+
+        const body = {
+            id: comentarioEditado.id,
+            comentario: comentarioEditado.comentario,
+        } 
+
+        editarComentario(body).then(() => {
+            Toast.show({
+                type: 'success',
+                position: 'top',
+                text1: 'El comentario fue editado con éxito.',
+                visibilityTime: 2000,
+            });
+        }).catch((err) => {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Ocurrio un error al editar el comentario.',
+                visibilityTime: 2000,
+            });
+        });
+        
+        await socket.emit("editarComentario", comentarioEditado);
+        dispatch(editarComentarioRedux(comentarioEditado));
+        setModalEditar(false)
+
+    }
+
 
     return (
     <View style={styles.containerComentarios} >
@@ -96,7 +130,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                             comentarios.map((comentario, index) => {
                                 return (
                                     <View style={styles.containerUniqueCardComentario} key={index}>
-                                        <CardComentario comentario={comentario} socket={socket} alertaId={alertaId} />
+                                        <CardComentario comentario={comentario} socket={socket} alertaId={alertaId} setModalEditar={setModalEditar} setComentarioEditado={setComentarioEditado} />
                                      </View>
                                 )
                                 
@@ -131,6 +165,22 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                 </Dialog.Actions>
             </Dialog>
             </Portal>
+        </Provider>
+
+        <Provider >
+                <Portal>
+                        <Dialog visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
+                        <Dialog.Title>Editar comentario</Dialog.Title>
+                        <Dialog.Content style={styles.containerInputEditComentario}>
+                            <TextInput style={styles.textInput} autoFocus={true} multiline={true} activeUnderlineColor="transparent" defaultValue={comentarioEditado !== null ? comentarioEditado.comentario : ""}
+                            onChangeText={(text) => setComentarioEditado({...comentarioEditado, comentario: text})} placeholder='Deja tu comentario' maxLength={100} />
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                        <Button onPress={()=>setModalEditar(false)}>Cancelar</Button>
+                        <Button onPress={guardarComentarioEditado}>Confirmar</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
         </Provider>
         
     </View>

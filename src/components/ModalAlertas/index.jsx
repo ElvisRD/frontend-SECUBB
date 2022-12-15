@@ -88,11 +88,8 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
                                 </View>
                                 <View style={styles.containerAlerta}></View>
                             </View> 
-                        
-                    
-                    </View>
 
-                    
+                    </View>         
                 </View>
         </>
         

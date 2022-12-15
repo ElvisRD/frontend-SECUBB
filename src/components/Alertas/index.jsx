@@ -40,7 +40,7 @@ export default function Alertas({handlePressButtons,socket}) {
             </Appbar.Header>
                 <View style={styles.alertas}>
                     <ScrollView style={styles.containerAlertasActuales} > 
-                       {alertas !== undefined ? (
+                       {alertas !== null ? (
                             alertas.map((alerta,i) => (
                                 <CardAlerta socket={socket} alerta={alerta} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
                             ))

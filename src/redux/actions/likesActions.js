@@ -5,10 +5,11 @@ const daLikeAlertaRedux = (like) => {
     }
 }
 
-const borrarLikeAlertaRedux = (like) => {
+const borrarLikeAlertaRedux = (like, posicion) => {
     return {
         type: "borrarLikeAlerta",
-        data: like
+        data: like,
+        position: posicion
     }
 }
 
@@ -19,12 +20,20 @@ const daLikeComentarioRedux = (like) => {
     }
 }
 
-const borrarLikeComentarioRedux = (like) => {
+const borrarLikeComentarioRedux = (like, posicion) => {
     return {
         type: "borrarLikeComentario",
-        data: like
+        data: like,
+        position: posicion
+    }
+}
+
+const borrarTodosLosLikesAlertaRedux = (alerta) => {
+    return {
+        type: "borrarTodosLosLikesAlerta",
+        data: alerta
     }
 }
 
 
-export {daLikeAlertaRedux, borrarLikeAlertaRedux, borrarLikeComentarioRedux, daLikeComentarioRedux};
+export {daLikeAlertaRedux, borrarLikeAlertaRedux, borrarLikeComentarioRedux, daLikeComentarioRedux, borrarTodosLosLikesAlertaRedux};

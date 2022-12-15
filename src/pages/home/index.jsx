@@ -10,9 +10,10 @@ import * as Location from 'expo-location';
 import Portada from "../portada";
 import {URL_CONNECT_BACKEND} from "../../../env"
 import { useDispatch } from 'react-redux';
+import { eliminarAlertaRedux } from '../../redux/actions/alertasActions';
 import { guardarAlertaRedux} from '../../redux/actions/alertasActions';
-import { guardarComentarioRedux } from '../../redux/actions/comentariosActions';
-import { daLikeAlertaRedux, borrarLikeAlertaRedux } from '../../redux/actions/likesActions';
+import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux } from '../../redux/actions/comentariosActions';
+import { daLikeAlertaRedux, borrarLikeAlertaRedux, daLikeComentarioRedux, borrarLikeComentarioRedux, borrarTodosLosLikesAlertaRedux } from '../../redux/actions/likesActions';
 import PortadaAfterLogin from '../portadaAfterLogin';
 import io from "socket.io-client"
 
@@ -42,17 +43,27 @@ export default function Home({navigation, route}) {
       dispatch(daLikeAlertaRedux(like))
     })
 
-    socket.on("daDislikeAlerta", (dislike) => {
-      dispatch(borrarLikeAlertaRedux(dislike))
+    socket.on("daDislikeAlerta", (dislike,position) => {
+      dispatch(borrarLikeAlertaRedux(dislike,position))
     })  
 
    
     socket.on("daLikeComentario", (like) => {
-      //dispatch(daLikeAlertaRedux(like))
+      dispatch(daLikeComentarioRedux(like))
     })
 
-    socket.on("daDislikeComentario", (dislike) => {
-      //dispatch(borrarLikeAlertaRedux(dislike))
+    socket.on("daDislikeComentario", (dislike,position) => {
+      dispatch(borrarLikeComentarioRedux(dislike,position))
+    })
+
+    socket.on("eliminarAlerta", (alerta) => {
+      dispatch(eliminarAlertaRedux(alerta));
+      dispatch(eliminarComentarioRedux(alerta));
+      dispatch(borrarTodosLosLikesAlertaRedux(alerta));
+    })
+
+    socket.on("editarComentario", (comentario) => {
+      dispatch(editarComentarioRedux(comentario));
     })
 
     return () => {
@@ -104,7 +115,7 @@ export default function Home({navigation, route}) {
         <View style={styles.containerMapa}>
 
           {isVisibleMenu ? (
-              <Menu handlePressButtons={handlePressButtons}/>
+              <Menu handlePressButtons={handlePressButtons} navigation={navigation} />
             ):(null)}
 
             {isVisibleNoticias ? (

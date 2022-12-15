@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
     },
     textoBotonEnviar: {
         fontSize: wp(4)
+    },
+    containerInputEditComentario: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
     }
 })
 export default styles

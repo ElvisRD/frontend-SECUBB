@@ -3,10 +3,47 @@ import { View, Text, TouchableOpacity } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import { TextInput, Button, Appbar } from "react-native-paper"
 import styles from "./styles"
+import {crearSugerencia} from "../../data/sugerencias"
+import {useSelector} from "react-redux"
 import IconAD from 'react-native-vector-icons/AntDesign';
+import Toast from 'react-native-toast-message';
 
 export default function ModalSugerencia({setModalSugerencia}){
     const [sugerencia, setSugerencia] = React.useState("");
+    const usuarioRedux = useSelector(state => state.usuario.usuario);
+    
+
+    const enviarSugerencia = () => {
+        const body = {
+            sugerencia: sugerencia,
+            usuarioId: usuarioRedux.id
+        }
+
+        crearSugerencia(body).then((res)=>{
+            Toast.show({
+                    type: 'success',
+                    position: 'top',
+                    text1: 'Sugerencia enviada correctamente',
+                    visibilityTime: 2000,
+                    autoHide: true,
+                    topOffset: 30,
+                    bottomOffset: 40,
+            });
+        }).catch((err)=>{
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Error al enviar la sugerencia',
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 30,
+                bottomOffset: 40,
+            });
+        });
+        setModalSugerencia(false);
+    }
+
+
 
     return(
         <View style={styles.containerModalSugerencia}>
@@ -25,7 +62,7 @@ export default function ModalSugerencia({setModalSugerencia}){
                 </View> 
 
                 <View style={styles.containerBotonEnviar}>
-                    <Button mode="elevated" style={styles.botonEnviar} onPress={() => console.log('Pressed')}>
+                    <Button mode="elevated" style={styles.botonEnviar} onPress={enviarSugerencia} >
                        Enviar
                     </Button>
                 </View>

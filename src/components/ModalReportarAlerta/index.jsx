@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
+import Toast from 'react-native-toast-message';
 
 
 
@@ -36,7 +37,8 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
         <View style={styles.containerModalReportar}>
           <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
           <Appbar.Header >
-                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
+                <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setModalReportar(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
+                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
           </Appbar.Header>
           <View style={styles.containerTitle}>
             <Text style={styles.title}>Crear alerta</Text>
@@ -48,9 +50,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
 
                     values.longitude = coordenadasAlerta.longitude
                     values.latitude = coordenadasAlerta.latitude
-
                     
-
                     const body = {
                       tipo: values.tipo,
                       descripcion: values.descripcion,
@@ -66,8 +66,19 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
 
                     await crearAlerta(body).then((result) => {
                       nuevaAlerta=result.alerta
+                      Toast.show({
+                        type: 'success',
+                        position: 'top',
+                        text1: 'La alerta fue creada con éxito',
+                        visibilityTime: 2000,
+                      });; 
                     }).catch((err) => {
-                      console.log(err);
+                      Toast.show({
+                        type: 'error',
+                        position: 'top',
+                        text1: 'Se produjo un error al crear la alerta',
+                        visibilityTime: 2000,
+                      });; 
                     }); 
 
                     let tiposinEspacios = values.tipo.replace(/ /g,"_");
