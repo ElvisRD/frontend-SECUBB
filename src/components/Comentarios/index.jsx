@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from "react"
-import { View, Text, StyleSheet, Image, TouchableOpacity, BackHandler, Alert, Keyboard,ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, BackHandler, Keyboard,ScrollView } from "react-native"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
 import styles from "./styles"
@@ -54,9 +54,6 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         }
 
       }, [comentariosRedux])
-      
- 
-      
       
       const crearUnComentario = async () => {
 

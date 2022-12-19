@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import {View, Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import styles from './styles';
 import { Camera } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconMI from 'react-native-vector-icons/MaterialIcons'
-import { getPixelSizeForLayoutSize } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 
-export default function Camara({setVisibleCamara, setImagen}){
+export default function Camara({setVisibleCamara, setImagen, setLoading}){
     const [CamaraPermisos, setCamaraPermisos] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [foto, setFoto] = useState(null);
@@ -19,31 +17,26 @@ export default function Camara({setVisibleCamara, setImagen}){
     const {width} = useWindowDimensions();
     const height = Math.round((width * 16) / 9);
 
+    
 
     useEffect(() => {
-        (async () => {
-            MediaLibrary.requestPermissionsAsync();
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setCamaraPermisos(status ==='granted');
-        })();
-    }, []);
+      setLoading(false)
+    }, [])
+    
 
      const TomarFoto = async () => {
         if(camaraRef){
-            try{
-                const foto = await camaraRef.current.takePictureAsync();
-                setFoto(foto.uri)
-            } catch (e){
-                console.log(e);
-            }
+            await camaraRef.current.takePictureAsync().then((result) => {
+                setFoto(result.uri)
+            }).catch((err) => {
+               console.log(err); 
+            });
         }
-       
-        
      };
 
-     if(CamaraPermisos === false){
+     /* if(CamaraPermisos === false){
         return <Text>No hay acceso a la camara</Text>
-     }
+     } */
 
      const guardarImagen = () => {
         setVisibleCamara(false);
@@ -57,6 +50,7 @@ export default function Camara({setVisibleCamara, setImagen}){
                     <Image source={{uri: foto}} style={[styles.camera ,{height: "95%"}]}/>
                 </View>
                 <View style={styles.containerBotonesFotoTomada}>
+                    
                     <TouchableOpacity style={styles.botonFotoTomada} onPress={()=>{setFoto(null)}}>
                         <IconMC
                             name='reload'

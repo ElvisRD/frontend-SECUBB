@@ -4,8 +4,7 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
-import DatePicker from '@react-native-community/datetimepicker';
-import { Button, Appbar } from "react-native-paper";
+import { Portal, Provider, Button, Dialog, Appbar } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
@@ -16,6 +15,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
     const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
     const [mostrarMapa, setMostrarMapa] = useState(false);
     const [alertas, setAlertas] = useState(null);
+    const [modalNoHayAlertas, setModalNoHayAlertas] = useState(false);
 
     const [fechaInicialSeleccinada, setFechaInicialSeleccinada] = useState({
         fecha: "",
@@ -99,7 +99,8 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                 setAlertas(result);
                 setMostrarMapa(true);
             }).catch((err) => {
-                console.log("alertas no encontradas");
+                console.log(err);
+                setModalNoHayAlertas(true)
             });
 
         }
@@ -138,7 +139,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
 
          <View style={styles.containerModalLugaresProblematicos}>
              <KeyboardAwareScrollView bounces={false} style={styles.modalLugaresProblematicos}>
-                <Appbar.Header>
+                <Appbar.Header style={styles.containerNav}>
                     <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setModalLugaresProblematicos(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
                 </Appbar.Header>
                 <View style={styles.containerTitle}>
@@ -229,6 +230,17 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                     </Button>
                 </View>
             </KeyboardAwareScrollView>  
+            <Provider >
+                    <Portal>
+                        <Dialog visible={modalNoHayAlertas} onDismiss={()=>setModalNoHayAlertas(false)}>
+                            <Dialog.Icon icon="alert" />
+                            <Dialog.Title>No se encontraron alertas</Dialog.Title>
+                            <Dialog.Actions>
+                            <Button onPress={()=>setModalNoHayAlertas(false)}>Volver</Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+            </Provider>
         </View>
         </>
 

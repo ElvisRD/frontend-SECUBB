@@ -47,20 +47,22 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
     }, [])
 
     useEffect(() => {
-        if(alertasRedux !== undefined){
+        if(alertasRedux !== null){
             const alerta = alertasRedux.find(alerta => alerta.id === verAlerta.id);
-            if(alerta === undefined){
+           if(alerta === undefined){
                 Toast.show({
                     type: 'error',
                     position: 'top',
                     text1: 'La alerta fue eliminada por otro usuario',
                     visibilityTime: 2000,
-                });; 
+                });
                 setIsVisibleAlerta(false);  
             } 
+            
+           
         }
       
-    }, [alertasRedux])
+    }, [alertasRedux])  
     
 
 
@@ -116,27 +118,40 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                         <Text style={styles.fecha}>Fecha: {verAlerta.fecha.slice(8,10)}/{verAlerta.fecha.slice(5,7)}/{verAlerta.fecha.slice(0,4)}</Text>
                         <Text style={styles.fecha}>Hora: {verAlerta.fecha.slice(11,16)}</Text>
                     </View>
-                    <View style={styles.containerDescripcion}>
-                        <Text style={styles.atributoAlerta}>Descripción</Text>
-                        <Text style={styles.descripcion}>{verAlerta.descripcion}</Text>
-                    </View>
+                    
                     <View style={styles.containerUbicacion}>
                         <Text style={styles.atributoAlerta}>Ubicación</Text>
                         <Text style={styles.ubicacion}>{verAlerta.ubicacion}</Text>
                     </View>
-                    <View style = {styles.containerTituloImagen}>
-                        <Text style={styles.atributoAlerta}>Imagen</Text>
+
+                    {
+                        verAlerta.descripcion_ubicacion !== "" ? (
+                        <View style={styles.containerDescripcionUbicacion}>
+                            <Text style={styles.atributoAlerta}>Descripción Ubicación </Text>
+                            <Text style={styles.descripcion}>{verAlerta.descripcion_ubicacion}</Text>
+                        </View>
+                        ):(null)
+                    }
+
+                    <View style={styles.containerDescripcion}>
+                        <Text style={styles.atributoAlerta}>Descripción</Text>
+                        <Text style={styles.descripcion}>{verAlerta.descripcion}</Text>
                     </View>
+                    
+                    
                     {
                         errorImagen !== true ? (
+                            <>
+                            <View style = {styles.containerTituloImagen}>
+                                <Text style={styles.atributoAlerta}>Imagen</Text>
+                            </View>
                             <View style={styles.containerImagen}>
                                 <Image style={styles.imagen} source={{uri: `${URL_CONNECT_BACKEND}/${imagen}`}} /> 
                             </View>
+                            </>
                         ):
-                        (
-                        <View style={styles.containerTextoImagen}>
-                            <Text style={styles.textoImagenNoEncontrada}>La alerta no tiene imagen</Text>
-                        </View>)
+                        (null)
+                        
                     } 
                     <View style={styles.containerUsuario}> 
                         <Text style={styles.atributoAlerta}>Reportado por </Text> 
@@ -152,7 +167,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                 
                 <Provider >
                     <Portal>
-                        <Dialog visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)}>
+                        <Dialog visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)} >
                             <Dialog.Icon icon="alert" />
                             <Dialog.Title>¿Estás seguro que deseas eliminar la alerta?</Dialog.Title>
                             <Dialog.Actions>

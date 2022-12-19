@@ -26,8 +26,6 @@ export default function Alertas({handlePressButtons,socket}) {
     },[alertasRedux]) 
 
 
-     
-
     return(
         <>
             {isVisibleAlerta ? <Alerta socket={socket} setIsVisibleAlerta={setIsVisibleAlerta} verAlerta={verAlerta} /> : null }
@@ -42,9 +40,10 @@ export default function Alertas({handlePressButtons,socket}) {
                     <ScrollView style={styles.containerAlertasActuales} > 
                        {alertas !== null ? (
                             alertas.map((alerta,i) => (
-                                <CardAlerta socket={socket} alerta={alerta} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
+                               alerta.activa === true ? 
+                                    <CardAlerta socket={socket} alerta={alerta} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
+                               :(null)   
                             ))
-
                         ):(
                             <View style={styles.containerNoAlertas}>
                                 <Text style={styles.textoNoAlertas}>No se encontraron alertas.</Text>

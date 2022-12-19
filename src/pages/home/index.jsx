@@ -1,18 +1,17 @@
 import React,{useState, useEffect} from 'react';
 import styles from "./style";
-import { View, Text,TouchableOpacity } from 'react-native';
+import { View, Text,TouchableOpacity, BackHandler} from 'react-native';
 import Mapa from "../../components/Mapa/"
-
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import Menu from "../../components/Menu/"
 import Alertas from "../../components/Alertas"
-import * as Location from 'expo-location';
-import Portada from "../portada";
+
 import {URL_CONNECT_BACKEND} from "../../../env"
 import { useDispatch } from 'react-redux';
-import { eliminarAlertaRedux } from '../../redux/actions/alertasActions';
-import { guardarAlertaRedux} from '../../redux/actions/alertasActions';
+import { guardarAlertaRedux,eliminarAlertaRedux, editarAlertaRedux} from '../../redux/actions/alertasActions';
 import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux } from '../../redux/actions/comentariosActions';
+import { guardarSugerenciaRedux, eliminarSugerenciaRedux } from '../../redux/actions/sugerenciasActions';
+import { guardarNotificacionRedux } from '../../redux/actions/notificacionesActions';
 import { daLikeAlertaRedux, borrarLikeAlertaRedux, daLikeComentarioRedux, borrarLikeComentarioRedux, borrarTodosLosLikesAlertaRedux } from '../../redux/actions/likesActions';
 import PortadaAfterLogin from '../portadaAfterLogin';
 import io from "socket.io-client"
@@ -21,13 +20,34 @@ const socket = io(URL_CONNECT_BACKEND);
 
 export default function Home({navigation, route}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
-  
-  const [isVisibleMapa, setIsVisibleMapa] = useState(true);
   const [portadaVisible, setPortadaVisible] = useState(route.params.portadaAfterVisible);
+  const [coordenadasUsuario, setCoordenadasUsuario] = useState(route.params.coordenadasUsuario);
   const [isVisibleNoticias, setIsVisibleNoticias] = useState(false);
  
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if(coordenadasUsuario !== null && coordenadasUsuario !== undefined){
+      setPortadaVisible(false);
+    }
+  }, [coordenadasUsuario])
+  
+  useEffect(() => {
 
+    const backAction = () => {
+      BackHandler.exitApp()
+      return true;
+    };
+
+      const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+           backAction
+      ); 
+
+      return () => backHandler.remove();
+  }, [])
+  
+
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
@@ -39,6 +59,11 @@ export default function Home({navigation, route}) {
       dispatch(guardarAlertaRedux(alerta))
     })
 
+    socket.on("editarAlerta", (alerta) => {
+      console.log("editarAlerta");
+      dispatch(editarAlertaRedux(alerta))
+    })
+
     socket.on("daLikeAlerta", (like) => {
       dispatch(daLikeAlertaRedux(like))
     })
@@ -47,7 +72,6 @@ export default function Home({navigation, route}) {
       dispatch(borrarLikeAlertaRedux(dislike,position))
     })  
 
-   
     socket.on("daLikeComentario", (like) => {
       dispatch(daLikeComentarioRedux(like))
     })
@@ -66,6 +90,18 @@ export default function Home({navigation, route}) {
       dispatch(editarComentarioRedux(comentario));
     })
 
+    socket.on("guardarSugerencia", (sugerencia) => {
+      dispatch(guardarSugerenciaRedux(sugerencia));
+    })
+
+    socket.on("eliminarSugerencia", (sugerencia) => {
+      dispatch(eliminarSugerenciaRedux(sugerencia));
+    })
+
+    socket.on("notificacion", (notificacion) => {
+      dispatch(guardarNotificacionRedux(notificacion));
+    });
+
     return () => {
       socket.off("comentario");
       socket.off("daLikeAlerta");
@@ -74,10 +110,6 @@ export default function Home({navigation, route}) {
     }
     
   }, [])
-
-
-
-
 
 
   function handlePressButtons(nombre){
@@ -108,21 +140,20 @@ export default function Home({navigation, route}) {
 
     <>
     {
-       portadaVisible ? <PortadaAfterLogin setPortadaVisible={setPortadaVisible} />:(null)
+       portadaVisible ? <PortadaAfterLogin setPortadaVisible={setPortadaVisible} setCoordenadasUsuario={setCoordenadasUsuario}/>:(null)
     }
    
       <View style={styles.container}>
         <View style={styles.containerMapa}>
-
-          {isVisibleMenu ? (
-              <Menu handlePressButtons={handlePressButtons} navigation={navigation} />
+            {isVisibleMenu ? (
+              <Menu handlePressButtons={handlePressButtons} navigation={navigation} socket={socket} />
             ):(null)}
 
             {isVisibleNoticias ? (
               <Alertas handlePressButtons={handlePressButtons} socket={socket}/>
             ): (null)}
 
-          <Mapa setPortadaVisible={setPortadaVisible} socket={socket}/>
+          <Mapa socket={socket} coordenadasUsuario={coordenadasUsuario}/>
         </View>
         <View style={styles.containerBotones}> 
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("mapa")}} >
@@ -143,16 +174,6 @@ export default function Home({navigation, route}) {
             <Text style={styles.textBoton}>Alertas</Text>
           </TouchableOpacity>
           
-        {/*   <TouchableOpacity style={styles.containerBoton}>
-            <IconMCI
-                name="panorama-fisheye"
-                style={styles.boton}
-                size= {35}
-            />
-            <Text style={styles.textBoton} >???</Text>
-          </TouchableOpacity> */}
-        
-
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("home")}}>
             <IconMCI
                 name="menu"

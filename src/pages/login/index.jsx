@@ -9,6 +9,7 @@ export default function Login({navigation}) {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [verContraseña, setVerContraseña] = useState(false);
+  const [location, setLocation] = useState(null);
 
   const iniciarSesion = () => {
    
@@ -18,8 +19,7 @@ export default function Login({navigation}) {
       }
 
       existeUsuario(body).then((res)=>{
-        guardarDatosUsuario(res.usuario)
-        
+          guardarDatosUsuario(res.usuario)
       }).catch((err)=>{
         console.log("usuario no encontrado");
       })
@@ -27,7 +27,6 @@ export default function Login({navigation}) {
   }
 
   const guardarDatosUsuario = async (usuario) => {
-    console.log(usuario);
     try {
       await AsyncStorage.setItem('usuario', JSON.stringify(usuario))
       navigation.navigate("Home", {portadaAfterVisible: true});
@@ -35,6 +34,7 @@ export default function Login({navigation}) {
       console.log("error al guardar datos");
     } 
   }
+
 
   return (
     <View style={styles.container}>
@@ -62,7 +62,7 @@ export default function Login({navigation}) {
         />
       </View>
       <View style={styles.containerButton}>
-        <Button mode="contained" onPress={iniciarSesion} >
+        <Button mode="contained" onPress={iniciarSesion} buttonColor="#01579b" >
           Iniciar sesión
         </Button>
       </View>

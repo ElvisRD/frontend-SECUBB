@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height: "100%",
     },
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
     title: {
         fontSize: wp(10),
         paddingTop: hp(2.5),

@@ -8,13 +8,17 @@ import ModalSugerencia from "../ModalSugerencia";
 import ModalLugaresProblematicos from "../LugaresProblematicos";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfiguracionNotificaciones from "../ConfiguracionNotificaciones";
+import ModalVerSugerencias from "../ModalVerSugerencias";
+import {useSelector} from "react-redux"
 
-export default function Menu({handlePressButtons, navigation }){
+export default function Menu({handlePressButtons, navigation, socket}){
     const [isVisiblePerfil, setIsVisiblePerfil] = useState(false);
     const [isVisibleLugares, setModalLugaresProblematicos] = useState(false);
     const [isVisibleSugerencia, setModalSugerencia] = useState(false);
     const [isVisibleCerrarSesion, setIsVisibleCerrarSesion] = useState(false);
+    const [isVisibleVerSugerencias, setIsVisibleVerSugerencias] = useState(false);
     const [isVisibleConfiguracionNotificaciones, setVisibleConfiguracionNotificaciones] = useState(false);
+    const usuarioRedux = useSelector(state => state.usuario.usuario);
 
     const eliminarToken = async () => {
         try {
@@ -33,8 +37,9 @@ export default function Menu({handlePressButtons, navigation }){
         <>
         {isVisiblePerfil ? <Perfil setIsVisiblePerfil={setIsVisiblePerfil} />:(null)}
         {isVisibleLugares ? <ModalLugaresProblematicos setModalLugaresProblematicos={setModalLugaresProblematicos} />:(null)} 
-        {isVisibleSugerencia ? <ModalSugerencia setModalSugerencia={setModalSugerencia} />:(null)}
+        {isVisibleSugerencia ? <ModalSugerencia setModalSugerencia={setModalSugerencia} socket={socket} />:(null)}
         {isVisibleConfiguracionNotificaciones ? <ConfiguracionNotificaciones setVisibleConfiguracionNotificaciones={setVisibleConfiguracionNotificaciones} />:(null)}
+        {isVisibleVerSugerencias ? <ModalVerSugerencias setModalVerSugerencias={setIsVisibleVerSugerencias} socket={socket} />:(null)}
         
         <View style={styles.containerMenu} >
               <View style={styles.menu}>
@@ -49,8 +54,15 @@ export default function Menu({handlePressButtons, navigation }){
                     </TouchableOpacity>
                     
                     <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setModalSugerencia(true)}}>
-                        <Text style={styles.textOpcion}>Sugerencia</Text>
+                        <Text style={styles.textOpcion}>Enviar sugerencia</Text>
                     </TouchableOpacity>
+                    {
+                        usuarioRedux.rol === "Administrador" ? (
+                            <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisibleVerSugerencias(true)}}> 
+                                <Text style={styles.textOpcion}>Ver sugerencias</Text>
+                            </TouchableOpacity>
+                        ) : (null)
+                    }
                     <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setModalLugaresProblematicos(true)}}>
                         <Text style={styles.textOpcion}>Ver lugares</Text>
                     </TouchableOpacity>

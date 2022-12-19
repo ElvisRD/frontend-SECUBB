@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./pages/login"
@@ -18,10 +17,10 @@ export default function App() {
     <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName='Portada'>
-            <Stack.Screen name="Home" component={Home} options={{
-              headerShown: false,
-            }} />
             <Stack.Screen name="Portada" component={Portada} options={{
+                headerShown: false,
+            }} />
+            <Stack.Screen name="Home" component={Home} options={{
               headerShown: false,
             }} />
             <Stack.Screen name="Login" component={Login} options={{
@@ -29,7 +28,7 @@ export default function App() {
             }} />
           </Stack.Navigator>
         </NavigationContainer>
-        <Toast />
+        <Toast  />
     </Provider>
    
   );

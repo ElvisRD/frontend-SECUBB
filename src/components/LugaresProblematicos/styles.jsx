@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
     containerTitle: {
         width: "100%",
     },
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
     select: {
         marginTop: hp(3),
         width: "80%",
-        backgroundColor: "gray",
+        backgroundColor: "#E5E5E5",
         zIndex: 20
 
     },

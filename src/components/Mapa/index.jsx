@@ -1,98 +1,175 @@
-import React,{useState, useEffect} from 'react';
-import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
-import MapView,{Marker,PROVIDER_GOOGLE} from 'react-native-maps';
+import React,{useState, useEffect, useRef} from 'react';
+import { View, Linking , Text,TouchableOpacity, PermissionsAndroid, Alert } from 'react-native';
+import MapView,{Marker,PROVIDER_GOOGLE, Polygon} from 'react-native-maps';
 import { Dialog, Portal, Provider, Button } from 'react-native-paper';
 import ModalAlerts from "../ModalAlertas";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
+import IconI from 'react-native-vector-icons/Ionicons';
+import IconE from 'react-native-vector-icons/Entypo';
+import IconMI from 'react-native-vector-icons/MaterialIcons';
+import IconFA from 'react-native-vector-icons/FontAwesome';
+import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from "./styles"
 import { useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import Alerta from "../Alerta";
 import TiposAlertaMapa from "./tiposAlertaMapa";
+import mapStyle from "../../json/styleMap.json";
+import departamentos from "../../json/depatamentosUbb.json";
+import departamentoSiluetas from "../../json/departamentosSiluetas.json";
+import * as geolib from 'geolib';
+import  coordenadasUbb  from "../../json/coordenadasUbb";
 
 
 
 
-export default function Mapa({ setPortadaVisible, socket}) {
+export default function Mapa({ socket, coordenadasUsuario}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [verTiposAlertas, setVerTiposAlertas] = useState(false);
     const [modalAvisoAlerta, setModalAvisoAlerta] = useState(false);
     const [verAlerta, setVerAlerta] = useState(false);
+    const [ubicacion, setUbicacion] = useState(null);
     const [alertaSeleccionada, setAlertaSeleccionada] = useState(null);
     const [alertas, setAlertas] = useState(null);
     const alertasRedux = useSelector(state => state.alertas.alertas)
-   
+    const notificacionRedux = useSelector(state => state.notificacion.notificacion)
+    const usuarioRedux = useSelector(state => state.usuario.usuario)
 
-    const [initialRegion, setInitialRegion] = useState({
-        latitude: -36.726520,
-        longitude: -72.986522,
+
+    const [initialRegion, _] = useState({
+        latitude: -36.821884,
+        longitude: -73.012440,
         latitudeDelta: 0.001,
         longitudeDelta: 0.001,
 
     })
 
-    const coordenadas = {
-        la1: -36.726392,
-        log1: -72.986794,
-        lat2: -36.726407,
-        log2: -72.986749,
-        lat3: -36.726378,
-        log3: -72.986747,
-    }
-
     useEffect(() => {
         if(alertasRedux !== null){
             setAlertas(alertasRedux);
+           
         }else{
             setAlertas(null);
         }
     }, [alertasRedux])
-    
-    
 
-    /* const [spinner, setSpinner] = useState(false); */
+    useEffect(() => {
 
-    /* useEffect(() => {
-      socket.on("alerta", (alert) => {
+        if(notificacionRedux !== null && notificacionRedux !== undefined && usuarioRedux.notificaciones !== false){
+            let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
+                {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100);
+                //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
+                console.log(mostrarNotificacion);
+            if(mostrarNotificacion){
+                console.log(usuarioRedux);
+                Toast.show({
+                    type: 'info',
+                    position: 'top',
+                    text1: 'Alerta',
+                    text2: 'Se creo una alerta cerca de tu ubicación',
+                    visibilityTime: 4000,
+                });
+            }
+        }
        
-      })
-    }, []) */
- 
-    
+    }, [notificacionRedux])
+
+    useEffect(() => {
+      setCoordenadasAlerta(initialRegion);
+    }, [])
     
     
     const handleClickMap = async () => {
-
-        let encontreAlerta = false;
-        setModalAvisoAlerta(true);
-        if(coordenadasAlerta === null){
-
-            if(alertasRedux !== null){
-                for(let i = 0; i < alertasRedux.length; i++){
-                    if(alertasRedux[i].latitude === initialRegion.latitude && alertasRedux[i].longitude === initialRegion.longitude){
-                        console.log("encontre alerta");
+        
+           if(usuarioSeEncuentraEnUbb()){
+                if(soloAlertasDentroDeUbb()){
+                    setModalAvisoAlerta(true);
+                    let encontreAlerta = false;
+                    if(coordenadasAlerta === null){
+                        if(alertasRedux !== null){
+                            for(let i = 0; i < alertasRedux.length; i++){
+                                if(alertasRedux[i].latitude === initialRegion.latitude && alertasRedux[i].longitude === initialRegion.longitude){ 
+                                    encontreAlerta = true;
+                                    break;
+                                }
+                            }
+                
+                            if(!encontreAlerta){
+                                setCoordenadasAlerta(initialRegion);
+                                verSiAlertaSeEncuentraEnDepartamento();
+                                setIsVisibleModal(true);
+                            }
+                        }else{
+                    
+                            setCoordenadasAlerta(initialRegion);
+                            verSiAlertaSeEncuentraEnDepartamento();
+                            setIsVisibleModal(true);
+                        }
+            
+                    }else{
                         
-                        encontreAlerta = true;
-                        break;
+                        verSiAlertaSeEncuentraEnDepartamento();
+                        setIsVisibleModal(true);
                     }
+                }else{
+                    Toast.show({
+                        type: 'error',
+                        position: 'top',
+                        text1: 'Error',
+                        text2: 'Solo puedes crear alertas dentro de la UBB',
+                        visibilityTime: 2000,
+                    })
                 }
-    
-                if(!encontreAlerta){
-                    setCoordenadasAlerta(initialRegion);
-                    setIsVisibleModal(true);
-                }
-            }else{
-                setCoordenadasAlerta(initialRegion);
-                setIsVisibleModal(true);
-            }
+                
+           }else{
 
-        }else{
-            setIsVisibleModal(true);
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Error',
+                text2: 'Solo puedes crear alertas mientras estes dentro de la UBB',
+                visibilityTime: 2000,
+            })
+           } 
+        
+    }
+
+    const verSiAlertaSeEncuentraEnDepartamento = () => {
+       
+        let seEncontro = false;
+        let nombreDepa = null;
+        
+        for(let i = 0; i < departamentoSiluetas.length; i++){
+            if( geolib.isPointInPolygon({ latitude: coordenadasAlerta.latitude, longitude: coordenadasAlerta.longitude }, departamentoSiluetas[i].coordenadas)){
+                seEncontro = true;
+                nombreDepa = departamentoSiluetas[i].nombre;
+                break;
+            }
         }
 
+       if(seEncontro){
+            setUbicacion(nombreDepa);
+       }else{
+            setUbicacion("Exterior");
+       }
+    
+    }
+
+    const usuarioSeEncuentraEnUbb = () => {
+        let seEncuentraDentro = geolib.isPointInPolygon({ latitude: -36.82238193190107, longitude: -73.01337695114863 }, coordenadasUbb.coordenadas)
+        //-36.82238193190107, -73.01337695114863
+        //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
+        //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
+        return seEncuentraDentro;
+    }
+
+    const soloAlertasDentroDeUbb = () => {
+        let seEncuentraDentro = geolib.isPointInPolygon({ latitude: coordenadasAlerta.latitude, longitude: coordenadasAlerta.longitude }, coordenadasUbb.coordenadas)
+        return seEncuentraDentro;
     }
 
     const pinTipoAlerta = (tipo) => {
@@ -120,10 +197,11 @@ export default function Mapa({ setPortadaVisible, socket}) {
         setVerAlerta(true);
     }
 
+
     return (
         <>
         {isVisibleModal ? (
-            <ModalAlerts setIsVisibleModal={setIsVisibleModal} socket={socket} coordenadasAlerta={coordenadasAlerta}/>
+            <ModalAlerts setIsVisibleModal={setIsVisibleModal} socket={socket} coordenadasAlerta={coordenadasAlerta} ubicacion={ubicacion}/>
          ):(null)} 
 
        {verAlerta ? (
@@ -143,9 +221,18 @@ export default function Mapa({ setPortadaVisible, socket}) {
                 provider={PROVIDER_GOOGLE}
                 initialRegion={initialRegion}  
                 style={styles.mapa}
-                onRegionChangeComplete={(e)=>{setCoordenadasAlerta(e)}}
+                onRegionChangeComplete={(e)=> {setCoordenadasAlerta(e)}}
                 moveOnMarkerPress={false}
                 rotateEnabled={false}
+                customMapStyle={mapStyle}
+                zoomTapEnabled={false}
+                showsBuildings={false}
+                showsScale={true}
+                //showsMyLocationButton={true}
+                
+                
+                //onTouchEnd={(e)=>console.log("aa")}
+                //onTouchStart={(e)=>console.log("aa")}
                 /* showsUserLocation={true}
                 userLocationUpdateInterval={1000000}
                 userLocationPriority="high" */
@@ -153,19 +240,86 @@ export default function Mapa({ setPortadaVisible, socket}) {
               
               { alertas !== null ? (
                     alertas.map((alerta, i) => (
-                        <Marker
-                            key={i}
-                            coordinate={{
-                                latitude: alerta.latitude ,
-                                longitude: alerta.longitude
-                            }}
-                            onPress={()=>{mostrarAlerta(alerta)}}
-                        > 
-                            {pinTipoAlerta(alerta.tipo)}
-                        </Marker>
+                        alerta.activa === true ? (
+                            <Marker
+                                key={i}
+                                coordinate={{
+                                    latitude: alerta.latitude ,
+                                    longitude: alerta.longitude
+                                }}
+                                onPress={()=>{mostrarAlerta(alerta)}}
+                                
+                            > 
+                                {pinTipoAlerta(alerta.tipo)}
+                            </Marker>
+                        ):(null)
                     )
                 )):(null)
+
+    
               }
+
+              {
+                departamentos.map((depa, i) => (
+                    <Marker
+                        key={i}
+                        title={depa.nombre}
+                        coordinate={{
+                            latitude: depa.latitud ,
+                            longitude: depa.longitud
+                        }}
+                        opacity={0.5}
+                        
+                    >
+                         
+                        <Text style={{position: "absolute"}}> </Text>
+                        
+                        {
+                            coordenadasAlerta !== null  ? (
+                                coordenadasAlerta.longitudeDelta < 0.006 && coordenadasAlerta.latitudeDelta < 0.006  ? (
+                                    depa.tipoIcon === "AntDesign" ? (
+                                        <IconAD name={depa.icono} size={25} color="black"/>
+                                    ):(
+                                        depa.tipoIcon === "FontAwesome" ? (
+                                            <IconFA name={depa.icono} size={25} color="black"/>
+                                        ):(
+                                            depa.tipoIcon === "Ionicon" ? (
+                                                <IconI name={depa.icono} size={25} color="black"/>
+                                            ):(
+                                                depa.tipoIcon === "MaterialIcons" ? (
+                                                    <IconMI name={depa.icono} size={25} color="black"/>
+                                                ):(
+                                                    depa.tipoIcon === "Entypo" ? (
+                                                        <IconE name={depa.icono} size={25} color="black"/>
+                                                    ):(
+                                                        depa.tipoIcon === "MaterialCommunityIcons" ? (
+                                                            <IconMCI name={depa.icono} size={25} color="black"/>
+                                                        ):(
+                                                            null
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ) 
+                                ) : (null)
+                            ):(null)  
+                                 
+                        } 
+                    </Marker>
+                ))
+              }
+
+              {departamentoSiluetas.map((departamento, i) => (
+                <Polygon 
+                    key={i}
+                    coordinates={departamento.coordenadas}
+                    fillColor="rgba(0,0,0,0.1)"
+                    strokeColor="rgba(0,0,0,0.1)"
+               
+                />
+              ))
+            }
 
             </MapView>
 
@@ -194,7 +348,7 @@ export default function Mapa({ setPortadaVisible, socket}) {
                 />
             </TouchableOpacity> 
 
-            <Provider style={{zIndex: 30}}>
+            <Provider >
                     <Portal>
                         <Dialog  visible={modalAvisoAlerta} onDismiss={()=>setModalAvisoAlerta(false)}>
                             <Dialog.Icon icon="alert" />
@@ -205,9 +359,8 @@ export default function Mapa({ setPortadaVisible, socket}) {
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>
-        </Provider>
+            </Provider>
 
-            
         </View>
         
         </>

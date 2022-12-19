@@ -9,6 +9,13 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         zIndex: 20
     },
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
     ModalReportarAlerta: {
         width: "100%",
         height: "100%",
@@ -70,7 +77,8 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "gray",
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
         marginLeft: "16%"
     },
     containerBotonCrearAlerta: {

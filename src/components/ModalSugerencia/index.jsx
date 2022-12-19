@@ -48,7 +48,7 @@ export default function ModalSugerencia({setModalSugerencia}){
     return(
         <View style={styles.containerModalSugerencia}>
              <KeyboardAwareScrollView bounces={false} style={styles.modalSugerencia}>
-                <Appbar.Header >
+                <Appbar.Header style={styles.containerNav}>
                     <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setModalSugerencia(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
                 </Appbar.Header>
                 <View style={styles.containerTitle}>
@@ -58,7 +58,7 @@ export default function ModalSugerencia({setModalSugerencia}){
                     <Text style={styles.texto}>¿Tienes alguna sugerencia para la aplicación? ¡Escríbenos!</Text>
                 </View>
                 <View style={styles.containerInput}>
-                    <TextInput mode="outlined" style={styles.input} multiline={true} numberOfLines={10} label="Sugerencia" onChangeText={(text)=>{setSugerencia(text)}}/>
+                    <TextInput mode="outlined" style={styles.input} multiline={true} numberOfLines={10} label="Sugerencia" maxLength={200} onChangeText={(text)=>{setSugerencia(text)}}/>
                 </View> 
 
                 <View style={styles.containerBotonEnviar}>

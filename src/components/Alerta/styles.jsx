@@ -79,6 +79,11 @@ const styles = StyleSheet.create({
     ubicacion: {
         fontSize: wp(4)
     },
+    containerDescripcionUbicacion: {
+        width: "100%",
+        marginTop: hp(2),
+        paddingHorizontal: wp(5),
+    },
     containerTituloImagen: {
         width: "100%",
         marginTop: hp(2),

@@ -1,0 +1,363 @@
+[
+    {
+        "id": 1,
+        "nombre": "Facultad de Ciencias",
+        "tipoIcon": "Ionicon",
+        "icono": "school-outline",
+        "latitud": -36.821138,
+        "longitud": -73.013586
+    },
+    {
+        "id": 2,
+        "nombre": "Facultad de Ciencias Empresariales",
+        "tipoIcon": "Ionicon",
+        "icono": "school-outline",
+        "latitud": -36.821689,
+        "longitud": -73.011104
+    },
+    {
+        "id": 3,
+        "nombre": "Departamento de Arquitectura",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.821341,
+        "longitud": -73.013233
+    },
+    {
+        "id": 4,
+        "nombre": "Departamento de Gantes",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.821808,
+        "longitud": -73.013886
+    },
+    {
+        "id": 5,
+        "nombre": "Aula Magna",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "bookmark-music-outline",
+        "latitud": -36.822137,
+        "longitud": -73.013148
+    },
+    {
+        "id": 6,
+        "nombre": "Vicerrectoria de Asuntos Economicos",
+        "tipoIcon": "Ionicon",
+        "icono": "people-outline",
+        "latitud": -36.821218,
+        "longitud": -73.014275
+    },
+    {
+        "id": 7,
+        "nombre": "Oficina de Informaciones",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "head-question-outline",
+        "latitud": -36.820611,
+        "longitud": -73.014764
+    },
+    {
+        "id": 8,
+        "nombre": "Depatamento de Diseño Industrial",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.823360,
+        "longitud": -73.011934
+    },
+    {
+        "id": 9,
+        "nombre": "Centro de Idiomas",
+        "tipoIcon": "MaterialIcons",
+        "icono": "language",
+        "latitud": -36.821548,
+        "longitud": -73.012416
+    },
+    {
+        "id": 10,
+        "nombre": "Departamento de Ciencias de la Contrucción",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.823939,
+        "longitud": -73.012661
+    },
+    {
+        "id": 11,
+        "nombre": "Laboratorio de Materiales",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.823400,
+        "longitud": -73.011193
+    },
+    {
+        "id": 12,
+        "nombre": "Casino",
+        "tipoIcon": "Ionicon",
+        "icono": "restaurant-outline",
+        "latitud": -36.823174,
+        "longitud": -73.010596
+    },
+    {
+        "id": 13,
+        "nombre": "DDE",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.823397,
+        "longitud": -73.013477
+    },
+    {
+        "id": 14,
+        "nombre": "Federacion de Estudiantes",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "coffee-outline",
+        "latitud": -36.823738,
+        "longitud": -73.013554
+    },
+    {
+        "id": 15,
+        "nombre": "Laboratorio Ciencia de la Construcción",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.823935,
+        "longitud": -73.013140
+    },
+    {
+        "id": 16,
+        "nombre": "Laboratorios de Talleres DIMec",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.823912,
+        "longitud": -73.011743
+    },
+    {
+        "id": 17,
+        "nombre": "Centro de Estudios Urbanos",
+        "tipoIcon": "Ionicon",
+        "icono": "school-outline",
+        "latitud":  -36.82288389687761,
+        "longitud": -73.01163308712174
+    },
+    {
+        "id": 18,
+        "nombre": "Pabellón Tecnologico de la Madera",
+        "tipoIcon": "MaterialIcons",
+        "icono": "biotech",
+        "latitud": -36.823188420888584,
+        "longitud":  -73.01271147917753
+    },
+    {
+        "id": 19,
+        "nombre": "Centro de Investigacion de Polímeros Avanzados",
+        "tipoIcon": "Entypo",
+        "icono": "magnifying-glass",
+        "latitud": -36.824193,
+        "longitud": -73.011956
+    },
+    {
+        "id": 20,
+        "nombre": "Biblioteca",
+        "tipoIcon": "AntDesign",
+        "icono": "book",
+        "latitud": -36.821538,
+        "longitud": -73.011771
+    },
+    {
+        "id": 21,
+        "nombre": "Aulas AA",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "google-classroom",
+        "latitud":  -36.82220984842047,
+        "longitud": -73.01200846801747
+    },
+    {
+        "id": 22,
+        "nombre": "Aulas AB",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "google-classroom",
+        "latitud": -36.822343,
+        "longitud": -73.011521
+    },
+    {
+        "id": 23,
+        "nombre": "Aulas AC",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "google-classroom",
+        "latitud": -36.822304,
+        "longitud": -73.011115
+    },
+    {
+        "id": 24,
+        "nombre": "Departamento de Estudios Generales",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.820911,
+        "longitud": -73.012584
+    },
+    {
+        "id": 25,
+        "nombre": "Facultad de Arquitectura, Contruccion y Diseño",
+        "tipoIcon": "Ionicon",
+        "icono": "school-outline",
+        "latitud":   -36.82083661674849,
+        "longitud": -73.01316957195381
+    },
+    {
+        "id": 26,
+        "nombre": "Departamento de Estadistica",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.821464,
+        "longitud": -73.013717
+    },
+    {
+        "id": 27,
+        "nombre": "Centro de Innovación",
+        "tipoIcon": "MaterialIcons",
+        "icono": "lightbulb-outline",
+        "latitud": -36.822235,
+        "longitud": -73.014767
+    },
+    {
+        "id": 28,
+        "nombre": "Departamento de Artes",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.822671,
+        "longitud": -73.012050
+    },
+    {
+        "id": 29,
+        "nombre": "Departamento de Ingenieria en Maderas",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.822745,
+        "longitud": -73.012719
+    },
+    {
+        "id": 30,
+        "nombre": "Departamento de Ingenieria Civil Industrial",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.822378,
+        "longitud": -73.012618
+    },
+    {
+        "id": 31,
+        "nombre": "Gimnasio",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "dumbbell",
+        "latitud": -36.822010,
+        "longitud": -73.015425
+    },
+    {
+        "id": 31,
+        "nombre": "Aulas AD",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "google-classroom",
+        "latitud": -36.822705,
+        "longitud": -73.011550
+    },
+    {
+        "id": 32,
+        "nombre": "Departamento de Mecánica",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.821596,
+        "longitud": -73.012181
+    },
+    {
+        "id": 32,
+        "nombre": "Departamento de Ingeniería de Construcción",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.821269,
+        "longitud": -73.012819
+    },
+    {
+        "id": 33,
+        "nombre": "Departamento de Ingeniería de Construcción",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.820775,
+        "longitud": -73.014325
+    },
+    {
+        "id": 34,
+        "nombre": "Cafeteria",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "coffee-outline",
+        "latitud": -36.821645,
+        "longitud": -73.011402
+    },
+    {
+        "id": 35,
+        "nombre": "Punto de Reciclaje",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "recycle-variant",
+        "latitud": -36.820268,
+        "longitud": -73.015820
+    },
+    {
+        "id": 36,
+        "nombre": "Centro Tecnologico de Calidad de la Vivienda",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "home-lightbulb-outline",
+        "latitud":  -36.82407356757579,
+        "longitud": -73.01375310987086
+    },
+    {
+        "id": 37,
+        "nombre": "Programa de Politicas Públicas",
+        "tipoIcon": "Ionicon",
+        "icono": "newspaper-outline",
+        "latitud":  -36.822545,
+        "longitud": -73.012080
+    },
+    {
+        "id": 38,
+        "nombre": "Paraninfo",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "theater",
+        "latitud": -36.82147123244399,
+        "longitud": -73.01283855935098
+    },
+    {
+        "id": 39,
+        "nombre": "Laboritorio de Cromatografía Gaseosa y Pirplisis Analítica (LCGPA)",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.823178,
+        "longitud": -73.012231
+    },
+    {
+        "id": 40,
+        "nombre": "Centro Biomateriales y Nanotecnología (CBN)",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.823090,
+        "longitud": -73.012389
+    },
+    {
+        "id": 41,
+        "nombre": "Departamento Ingeniería Civel y Ambiental",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "office-building-outline",
+        "latitud": -36.823396,
+        "longitud": -73.011318
+    },
+    {
+        "id": 42,
+        "nombre": "Laboratorio de Sistemas Automatizados de Producción (CIM)",
+        "tipoIcon": "Entypo",
+        "icono": "lab-flask",
+        "latitud": -36.822828,
+        "longitud": -73.011940
+    },
+    {
+        "id": 43,
+        "nombre": "Aulas Arte, Cultura)",
+        "tipoIcon": "MaterialCommunityIcons",
+        "icono": "google-classroom",
+        "latitud":  -36.82297964489981,
+        "longitud": -73.01344321091459
+    }
+
+]

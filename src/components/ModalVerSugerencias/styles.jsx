@@ -2,52 +2,48 @@ import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
-    containerAlertas: {
-        backgroundColor: "white",   
+   containerModalVerSugerencias:{
         width: "100%",
         height: "100%",
-        
-    },
-    containerNav: {
+        position: "absolute",
+        backgroundColor: "white",
+        zIndex: 7,
+   },
+   containerNav: {
         width: "100%",
         backgroundColor: "white",
         borderBottomWidth: 1,
         borderColor: "#E5E5E5",
-        
     },
-    containerTitle: {
+   containerTitle: {
         width: "100%",
-        justifyContent: "center",
-        height: "100%",
-        
+        marginTop: hp(1),
     },
     title: {
         fontSize: wp(10),
-        paddingTop: hp(3.5),
-        paddingLeft: wp(2)
+        paddingLeft: hp(2),
     },
-    botonCerrar: {
+    botonVolver: {
         borderRadius: 100,
-        right: wp(2),
+        marginLeft: wp(2)
     },
     iconCerrar: {
         borderRadius: 100,
     },
-    
-    alertas: {
+    sugerencias: {
         width: "100%",
         height: hp(84),
-        
     },
-    containerAlertasActuales: {
+    containerSugerencias: {
         width: "100%",
+        paddingTop: hp(2),
     },
-    containerNoAlertas: {
+    containerNoSugerencias: {
         width: "100%",
         marginTop: hp(4.5),
         paddingLeft: wp(5),
     },
-    textoNoAlertas: {
+    textoNoSugerencias: {
         fontSize: wp(6),
     }
     

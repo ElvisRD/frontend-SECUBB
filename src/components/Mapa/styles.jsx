@@ -94,6 +94,9 @@ const styles = StyleSheet.create({
     },
     textTipoAlerta: {
         fontSize: wp(4.5),
+    },
+    containerPinDepartamentos: {
+        alignItems: "center",
     }
 
 })

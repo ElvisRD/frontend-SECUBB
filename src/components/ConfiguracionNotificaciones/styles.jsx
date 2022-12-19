@@ -8,9 +8,15 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         zIndex: 7,
    },
-   
+   containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+   },
    containerTitle: {
         width: "100%",
+        marginTop: hp(1),
     },
     title: {
         fontSize: wp(10),

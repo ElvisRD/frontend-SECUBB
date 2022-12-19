@@ -1,6 +1,6 @@
-import React,{useEffect, useState} from "react"
-import { View, Text, TouchableOpacity, Image } from "react-native"
-import { TextInput, Button,Appbar } from 'react-native-paper';
+import React,{useState} from "react"
+import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
+import { TextInput, Button,Appbar, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -13,30 +13,64 @@ import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
 import Toast from 'react-native-toast-message';
+import { Camera } from 'expo-camera';
+import Cargando from "../Cargando"
 
 
 
-export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta}){
+export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta, ubicacion}){
     const [visibleCamara, setVisibleCamara] = useState(false);
     const [imagen, setImagen] = useState("");
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
+    const [permisoCamara, setPermisoCamara] = useState(false);
+    const [loading, setLoading] = useState(false);
     
     const valoresIniciales = {
       tipo: tipoAlerta,
       descripcion: "",
+      ubicacion: ubicacion,
       latitude: 0,
       longitude: 0,
-      ubicacion: ""
+      descripcion_ubicacion: ""
+    }
+  
+    const handleBotonImagen = () => {
+
+      verificarPermisoCamara().then((result) => {
+        if(result === true){
+          setVisibleCamara(true)
+        }else{
+          setPermisoCamara(true)
+        }
+      })
+    
+      
+    }
+
+    const verificarPermisoCamara = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      if(status === 'granted'){
+        return true;
+      }else{
+        if(status === 'denied'){
+          setPermisoCamara(true);
+          return false;
+        }else{
+          return false;
+        }
+      }
+      
     }
     
     return(
       <>
-        {visibleCamara ? <Camara setVisibleCamara={setVisibleCamara} setImagen={setImagen} /> : (null)}
+        {loading ? <Cargando/> : (null)}
+        {visibleCamara ? <Camara setVisibleCamara={setVisibleCamara} setImagen={setImagen} setLoading={setLoading}/> : (null)}
 
         <View style={styles.containerModalReportar}>
           <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
-          <Appbar.Header >
+          <Appbar.Header style={styles.containerNav} >
                 <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setModalReportar(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
                 <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
           </Appbar.Header>
@@ -55,6 +89,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       tipo: values.tipo,
                       descripcion: values.descripcion,
                       ubicacion: values.ubicacion,
+                      descripcion_ubicacion: values.descripcion_ubicacion,
                       latitude: values.latitude,
                       longitude: values.longitude,
                       activa: true,
@@ -70,7 +105,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                         type: 'success',
                         position: 'top',
                         text1: 'La alerta fue creada con éxito',
-                        visibilityTime: 2000,
+                        visibilityTime: 3000,
                       });; 
                     }).catch((err) => {
                       Toast.show({
@@ -81,20 +116,19 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       });; 
                     }); 
 
-                    let tiposinEspacios = values.tipo.replace(/ /g,"_");
+                    let tipoSinEspacios = values.tipo.replace(/ /g,"_");
 
                     if(imagen !== ""){
 
                       const data = new FormData();
 
                       data.append('archivo', {
-                      uri: imagen,
-                      type: 'image/jpeg',
-                      name: 'imagen.jpg',
+                        uri: imagen,
+                        type: 'image/jpeg',
+                        name: 'imagen.jpg',
                       });
                      
-                      guardarImagen(nuevaAlerta.id, data, tiposinEspacios).then((result) => {
-                        console.log(result);
+                      guardarImagen(nuevaAlerta.id, data, tipoSinEspacios).then(() => {
                       }).catch((err) => {
                         console.log(err);
                       }); 
@@ -118,19 +152,22 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                     <TextInput mode="outlined" label="Tipo alerta" value={values.tipo} disabled/>
                   </View>
                   
-                  
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" label="Ubicación" multiline={true} numberOfLines={4} onBlur={handleBlur('ubicacion')} value={values.ubicacion} onChangeText={handleChange('ubicacion')}/>
+                    <TextInput mode="outlined" label="Ubicación" multiline={true} numberOfLines={2} value={values.ubicacion} disabled/>
                   </View>
-                  {errors.ubicacion && touched.ubicacion? 
+
+                  <View style={styles.containerInputs}>
+                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción ubicación" multiline={true} numberOfLines={4} maxLength={200} onBlur={handleBlur('ubicacion')} value={values.descripcion_ubicacion} onChangeText={handleChange('descripcion_ubicacion')}/>
+                  </View>
+                  {errors.descripcion_ubicacion && touched.descripcion_ubicacion? 
                   (
                     <View style={styles.containerError}>
-                      <Text style={styles.textoError} >{errors.ubicacion}</Text>
+                      <Text style={styles.textoError} >{errors.descripcion_ubicacion}</Text>
                     </View>
                   ):(null)
                   }
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" label="Descripción" maxLength={200} multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
+                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción" maxLength={200} multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
                   </View>
                   {errors.descripcion && touched.descripcion ? 
                   (
@@ -150,15 +187,16 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
 
                   <View style={styles.containerFotoYBoton}>
                     <View style={styles.containerBotonFoto}>
-                      <TouchableOpacity style={styles.botonFoto} onPress={()=>{setVisibleCamara(true)}}>
+                      <TouchableOpacity style={styles.botonFoto} onPress={handleBotonImagen}>
                         <Icon 
                           name="add-photo-alternate"
+                          color="gray"
                           size={30}
                         />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.containerBotonCrearAlerta}>
-                        <Button mode="contained" style={styles.botonCrearAlerta} onPress={handleSubmit}>
+                        <Button mode="contained" style={styles.botonCrearAlerta} buttonColor="#01579b" onPress={handleSubmit}>
                           Crear alerta
                         </Button>
                     </View>
@@ -168,7 +206,21 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                 )}
             </Formik>
           </KeyboardAwareScrollView>
-        </View>
+
+          <Provider >
+                    <Portal>
+                        <Dialog  visible={permisoCamara} dismissable={false} >
+                            <Dialog.Icon icon="alert" />
+                            <Dialog.Title>Permiso de Cámara</Dialog.Title>
+                            <Dialog.Content><Text>Para el uso de la cámara, es necesario que se active el permiso en configuración, si usted rechaza este permiso, no podrá acceder a la cámara.</Text></Dialog.Content>
+                            <Dialog.Actions>
+                                <Button onPress={()=>setPermisoCamara(false)}>Rechazar</Button>
+                                <Button onPress={() => Linking.openSettings()}>ir a Configuración</Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+          </Provider>
+        </View> 
       </>
 
         

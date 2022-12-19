@@ -8,7 +8,7 @@ import ModalReportarAlerta from "../ModalReportarAlerta";
 import { Appbar } from 'react-native-paper';
 
 
-export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta}){
+export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta,ubicacion}){
 
     const [modalReportar, setModalReportar] = useState(false);
     const [tipoAlerta, setTipoAlerta] = useState("");
@@ -24,11 +24,11 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
         <>
           {modalReportar ? 
             <ModalReportarAlerta tipoAlerta={tipoAlerta} setModalReportar={setModalReportar} setIsVisibleModal={setIsVisibleModal}  
-            socket={socket} coordenadasAlerta={coordenadasAlerta} />
+            socket={socket} coordenadasAlerta={coordenadasAlerta} ubicacion={ubicacion}/>
            :(null)} 
 
             <View style={styles.containerModal}>
-                        <Appbar.Header >
+                        <Appbar.Header style={styles.containerNav} >
                             <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
                             <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
                         </Appbar.Header>

@@ -9,7 +9,7 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
 
     return(
         <View style={styles.containerConfiguracionNotificaciones}>
-            <Appbar.Header >
+            <Appbar.Header style={styles.containerNav}>
                     <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVisibleConfiguracionNotificaciones(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
             </Appbar.Header>
             <View style={styles.containerTitle}>
