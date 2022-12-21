@@ -108,7 +108,15 @@ const styles = StyleSheet.create({
     },
     containerPinDepartamentos: {
         alignItems: "center",
-    }
+    },
+    containerNav: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomWidth: 1,
+        borderColor: "#E5E5E5",
+        
+    },
+    
 
 })
 

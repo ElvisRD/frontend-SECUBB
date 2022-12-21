@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     containerImagen: {
         width: "100%",
         height: "100%",
-        backgroundColor: "black",
+        backgroundColor: "black ",
     },
     containerBotonSacarFoto: {
         position: "absolute",

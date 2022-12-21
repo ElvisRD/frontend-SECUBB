@@ -25,9 +25,10 @@ import  coordenadasUbb  from "../../json/coordenadasUbb";
 
 
 
-export default function Mapa({ socket, coordenadasUsuario}) {
+export default function Mapa({ socket}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
+    const [coordenadasUsuario, setCoordenadasUsuario] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [verTiposAlertas, setVerTiposAlertas] = useState(false);
     const [modalAvisoAlerta, setModalAvisoAlerta] = useState(false);
@@ -39,6 +40,14 @@ export default function Mapa({ socket, coordenadasUsuario}) {
     const notificacionRedux = useSelector(state => state.notificacion.notificacion)
     const usuarioRedux = useSelector(state => state.usuario.usuario)
     const dimensionesPantalla = Dimensions.get('window');
+
+    useEffect(() => {
+        if(usuarioRedux.coordenadas !== null){
+            setCoordenadasUsuario(usuarioRedux.coordenadas);
+        }
+    }, [usuarioRedux.coordenadas])
+    
+
 
 
     const [initialRegion, _] = useState({
@@ -64,7 +73,7 @@ export default function Mapa({ socket, coordenadasUsuario}) {
             let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
                 {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100);
                 //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
-                console.log(mostrarNotificacion);
+                //console.log(mostrarNotificacion);
             if(mostrarNotificacion){
                 console.log(usuarioRedux);
                 Toast.show({

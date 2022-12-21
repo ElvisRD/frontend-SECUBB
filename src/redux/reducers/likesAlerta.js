@@ -51,7 +51,11 @@ const state = (state = valorInicial, action) => {
                     return {usuarios: null}
                 }    
             }else{
-                return {usuarios: state.usuarios}
+                if(action.type === "limpiarRedux"){
+                    return {usuarios: null}
+                }else{
+                    return state
+                }
             }
                 
         }

@@ -8,7 +8,7 @@ import RepresentacionPin from './representacionPin';
 export default function TiposAlertaMapa({setVerTiposAlertas}) {
     return (
         <View style={styles.containerTiposAlertas}>
-             <Appbar.Header>
+             <Appbar.Header style={styles.containerNav}>
                     <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Tipos de alertas" />
                     <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVerTiposAlertas(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
             </Appbar.Header>

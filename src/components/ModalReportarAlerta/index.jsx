@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
+import { View, Text, TouchableOpacity, Image, Linking, PermissionsAndroid } from "react-native"
 import { TextInput, Button,Appbar, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,7 +13,6 @@ import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
 import Toast from 'react-native-toast-message';
-import { Camera } from 'expo-camera';
 import Cargando from "../Cargando"
 
 
@@ -35,33 +34,26 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
       descripcion_ubicacion: ""
     }
   
-    const handleBotonImagen = () => {
+    const handleBotonImagen = async () => {
       setLoading(true)
-      verificarPermisoCamara().then((result) => {
-        if(result === true){
-          setVisibleCamara(true)
-        }else{
-          setPermisoCamara(true)
+      //Camera.requestCameraPermissionsAsync()
+      try {
+        const granted = await PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.CAMERA);
+        if (granted === true) {
+          setVisibleCamara(true);
+          setPermisoCamara(false);
+        } else {
+          setPermisoCamara(true);
         }
-      })
-    
+      } catch (err) {
+        console.log("no se pudo obtener el permiso de la camara");
+      }
+      setLoading(false)
       
     }
 
-    const verificarPermisoCamara = async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      if(status === 'granted'){
-        return true;
-      }else{
-        if(status === 'denied'){
-          setPermisoCamara(true);
-          return false;
-        }else{
-          return false;
-        }
-      }
-      
-    }
+
     
     return(
       <>
@@ -220,9 +212,10 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                             <Dialog.Icon icon="alert" />
                             <Dialog.Title>Permiso de Cámara</Dialog.Title>
                             <Dialog.Content><Text>Para el uso de la cámara, es necesario que se active el permiso en configuración, si usted rechaza este permiso, no podrá acceder a la cámara.</Text></Dialog.Content>
-                            <Dialog.Actions>
+                            <Dialog.Actions style={{justifyContent: "center"}}>
                                 <Button onPress={()=>setPermisoCamara(false)}>Rechazar</Button>
                                 <Button onPress={() => Linking.openSettings()}>ir a Configuración</Button>
+                                <Button onPress={handleBotonImagen}>Verificar</Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

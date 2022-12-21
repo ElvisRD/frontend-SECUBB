@@ -13,23 +13,14 @@ import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux 
 import { guardarSugerenciaRedux, eliminarSugerenciaRedux } from '../../redux/actions/sugerenciasActions';
 import { guardarNotificacionRedux } from '../../redux/actions/notificacionesActions';
 import { daLikeAlertaRedux, borrarLikeAlertaRedux, daLikeComentarioRedux, borrarLikeComentarioRedux, borrarTodosLosLikesAlertaRedux } from '../../redux/actions/likesActions';
-import PortadaAfterLogin from '../portadaAfterLogin';
 import io from "socket.io-client"
 
 const socket = io(URL_CONNECT_BACKEND);
 
-export default function Home({navigation, route}) {
+export default function Home({navigation}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
-  const [portadaVisible, setPortadaVisible] = useState(route.params.portadaAfterVisible);
-  const [coordenadasUsuario, setCoordenadasUsuario] = useState(route.params.coordenadasUsuario);
   const [isVisibleNoticias, setIsVisibleNoticias] = useState(false);
- 
-  useEffect(() => {
-    if(coordenadasUsuario !== null && coordenadasUsuario !== undefined){
-      setPortadaVisible(false);
-    }
-  }, [coordenadasUsuario])
-  
+
   useEffect(() => {
 
     const backAction = () => {
@@ -134,9 +125,6 @@ export default function Home({navigation, route}) {
   return (
 
     <>
-    {
-       portadaVisible ? <PortadaAfterLogin setPortadaVisible={setPortadaVisible} setCoordenadasUsuario={setCoordenadasUsuario}/>:(null)
-    }
    
       <View style={styles.container}>
         <View style={styles.containerMapa}>
@@ -148,7 +136,7 @@ export default function Home({navigation, route}) {
               <Alertas handlePressButtons={handlePressButtons} socket={socket}/>
             ): (null)}
 
-          <Mapa socket={socket} coordenadasUsuario={coordenadasUsuario}/>
+          <Mapa socket={socket}/>
         </View>
         <View style={styles.containerBotones}> 
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("mapa")}} >

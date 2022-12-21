@@ -1,8 +1,21 @@
-const guardarUsuario = (usuario) => {
+const guardarUsuarioRedux = (usuario) => {
     return {
         type: "guardarUsuario",
         data: usuario
     }
 }
 
-export {guardarUsuario};
+const guardarUbicacionRedux = (coordenadas) => {
+    return {
+        type: "guardarUbicacion",
+        data: coordenadas
+    }
+}
+
+const limpiarRedux = () => {
+    return {
+        type: "limpiarRedux"
+    }
+}
+
+export {guardarUsuarioRedux,guardarUbicacionRedux,limpiarRedux};

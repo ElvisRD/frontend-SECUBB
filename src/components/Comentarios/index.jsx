@@ -52,7 +52,8 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
       useEffect(() => {
         if(comentariosRedux !== null){
             let comentariosFiltrados = comentariosRedux.filter(comentario => comentario.alertaId === alertaId);
-            setComentarios(comentariosFiltrados);
+            let comentariosOrdenados = comentariosFiltrados.sort((a, b) => a.id > b.id);
+            setComentarios(comentariosOrdenados);
         }
 
       }, [comentariosRedux])

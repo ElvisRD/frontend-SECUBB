@@ -1,16 +1,19 @@
 const valorInicial = {
     usuario: null,
+    coordenadas: null
 };
 
 const state = (state = valorInicial, action) => {
     if(action.type === "guardarUsuario"){
         return {
-            usuario: action.data
+            ...state, usuario: action.data
         };
     }else{
-        return {
-            usuario: state.usuario
-        };
+        if(action.type === "guardarUbicacion"){
+            return {...state, coordenadas: action.data}
+        }else{
+            return state;
+        }
     }
 }
 

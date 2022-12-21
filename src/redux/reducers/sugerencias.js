@@ -24,7 +24,11 @@ const state = (state = valorInicial, action) => {
                 return {sugerencias: null}
             }
         }else{
-            return {sugerencias: state.sugerencias}
+            if(action.type === "limpiarRedux"){
+                return {sugerencias: null}
+            }else{
+                return state
+            }
         }
     }
 }

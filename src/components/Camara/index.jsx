@@ -8,7 +8,7 @@ import IconMI from 'react-native-vector-icons/MaterialIcons'
 
 
 
-export default function Camara({setVisibleCamara, setImagen, setLoading}){
+export default function Camara({setVisibleCamara, setImagen}){
     const [type, _] = useState(Camera.Constants.Type.back);
     const [foto, setFoto] = useState(null);
     const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
@@ -17,12 +17,6 @@ export default function Camara({setVisibleCamara, setImagen, setLoading}){
     const height = Math.round((dimensionesPantalla.width * 16) / 9);
 
     
-
-    useEffect(() => {
-      setLoading(false)
-    }, [])
- 
-
      const TomarFoto = async () => {
  
         if(camaraRef){

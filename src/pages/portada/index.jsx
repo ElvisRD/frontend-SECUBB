@@ -12,18 +12,17 @@ import { obtenerSugerencias } from "../../data/sugerencias";
 import { useDispatch } from "react-redux";
 import {obtenerComentarios} from "../../data/comentarios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { guardarUsuario } from "../../redux/actions/usuarioActions";
+import { guardarUsuarioRedux, guardarUbicacionRedux } from "../../redux/actions/usuarioActions";
 import * as Location from 'expo-location';
-import IconUBB from "../../image/IconUBB.png";
 import Cargando from "../../components/Cargando";
 
 
 
 export default function Portada({navigation}){
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
-    const [coordenadasUsuario, setCoordenadasUsuario] = useState(null);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0); 
     const [cargando, setCargando] = useState(false);
+   
 
     const dispatch = useDispatch();
 
@@ -33,11 +32,11 @@ export default function Portada({navigation}){
           const jsonValue = await AsyncStorage.getItem('usuario')
           const datosUsuario = JSON.parse(jsonValue);
           if(jsonValue !== null){
-              setCargando(true)
+              
               let permiso = await obtenerPermisoUbicacion();
-
+          
               if(permiso){
-                dispatch(guardarUsuario(datosUsuario));
+                dispatch(guardarUsuarioRedux(datosUsuario));
                 getAlertas();
                 getComentarios();
               
@@ -49,7 +48,8 @@ export default function Portada({navigation}){
                 setPermisoLocalizacion(true)
               }
               
-              setCargando(false)
+              
+              navigation.navigate("Home")
             
           }else{
             navigation.navigate("Login")
@@ -115,7 +115,7 @@ export default function Portada({navigation}){
              
               if (granted === true) {
                 let location = await Location.getCurrentPositionAsync({});
-                setCoordenadasUsuario(location);
+                dispatch(guardarUbicacionRedux(location));
                 return true;
               } else {
                 setPermisoLocalizacion(true)
@@ -128,17 +128,12 @@ export default function Portada({navigation}){
        obtenerDatosStorage();
     }, [verificarActivacionPermiso])
 
-    useEffect(() => {
-      if(coordenadasUsuario !== null){
-        navigation.navigate("Home", {portadaAfterVisible: false, coordenadasUsuario: coordenadasUsuario});
-      }
-    }, [coordenadasUsuario])
-    
+
     return (
       <>
         {cargando ? <Cargando /> : null}
         <View style={styles.containerPortada}>
-            <Image source={{IconUBB}} />
+            <Text>Portada</Text>
         </View>
         <Provider >
                 <Portal>

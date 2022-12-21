@@ -26,7 +26,12 @@ const state = (state = valorInicial, action) => {
                 return {alertas: null}
             }
         }else{
-            return {alertas: state.alertas}
+            if(action.type === "limpiarRedux"){
+                return {alertas: null}
+            }else{
+                return state
+            }
+           
         }
         
     }

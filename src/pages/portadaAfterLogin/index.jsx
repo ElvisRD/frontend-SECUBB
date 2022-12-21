@@ -10,6 +10,7 @@ import { guardarSugerenciaRedux } from "../../redux/actions/sugerenciasActions";
 import { obtenerSugerencias } from "../../data/sugerencias";
 import { guardarComentarioRedux } from "../../redux/actions/comentariosActions";
 import { daLikeAlertaRedux } from "../../redux/actions/likesActions";
+import { guardarUsuarioRedux, guardarUbicacionRedux } from "../../redux/actions/usuarioActions";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from 'expo-location';
@@ -17,7 +18,7 @@ import Cargando from "../../components/Cargando";
 
 
 
-export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsuario}){
+export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0);
@@ -33,15 +34,16 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
           if (granted === true) {
             let location = await Location.getCurrentPositionAsync({});
-            setCoordenadasUsuario(location);
+            dispatch(guardarUbicacionRedux(location));
+            return true;
           } else {
             setPermisoLocalizacion(true);
+            return false;
           }
         } catch (err) {
           console.log(err);
         }
-        setCargando(false)
-      
+    
       }
 
       const getAlertas = () => {
@@ -85,26 +87,39 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
        }
 
        const getSugerencias = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('usuario')
-          const datosUsuario = JSON.parse(jsonValue);
-          if(datosUsuario.tipo === "Administrador"){
-            obtenerSugerencias().then((result) => {
-              dispatch(guardarSugerenciaRedux(result))
-            }).catch((err) => {
-              console.log("no se encontraron sugerencias");
-            })
-          }
-        } catch(e) {
-          console.log("error al obtener datos");
-        }
+    
+        obtenerSugerencias().then((result) => {
+            dispatch(guardarSugerenciaRedux(result))
+        }).catch((err) => {
+            console.log("no se encontraron sugerencias");
+        })
+     
        }
 
-       getPermisoLocalizacion();
-       getSugerencias();
-       getAlertas(); 
-       getComentarios();
+       const obtenerDatos = async () => {
+
+        const jsonValue = await AsyncStorage.getItem('usuario')
+        const datosUsuario = JSON.parse(jsonValue);
+        
+        
+        dispatch(guardarUsuarioRedux(datosUsuario));
+       
+       getPermisoLocalizacion().then((result) => {
+            getAlertas();
+            getComentarios();
+            
+            if(datosUsuario.tipo === "Administrador"){
+              getSugerencias();
+            }
+            setPortadaAfterLogin(false);
+            navigation.navigate("Home");
+         }).catch((err) => {
+           console.log(err);
+        });  
       
+       }
+     
+      obtenerDatos();
 
     }, [verificarActivacionPermiso])
 

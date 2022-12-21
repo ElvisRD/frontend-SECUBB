@@ -40,7 +40,11 @@ const state = (state = valorInicial, action) => {
                 return {comentarios: arraySinElComentario} 
                 
             }else{
-                return {comentarios: state.comentarios}
+                if(action.type === "limpiarRedux"){
+                    return {comentarios: null}
+                }else{
+                    return state
+                }
             }
         }
     }

@@ -15,3 +15,4 @@ export default configureStore({
         serializableCheck: { warnAfter: 128 },
     })
 })
+
