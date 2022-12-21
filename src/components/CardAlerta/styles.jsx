@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     AlertaCard: {
         width: "94%",
-        height: hp(21),
+        height: hp(22),
         paddingTop: hp(1),
         backgroundColor: "#F3F1F5",
         borderWidth: 1,

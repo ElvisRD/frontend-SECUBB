@@ -1,12 +1,13 @@
 {
-  "name": "hola",
+  "name": "SECUBB",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build": "expo build:android"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
@@ -20,8 +21,10 @@
     "expo-camera": "~12.4.0",
     "expo-location": "~14.3.0",
     "expo-media-library": "^14.2.0",
+    "expo-notifications": "~0.16.1",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
+    "expo-updates": "~0.14.7",
     "formik": "^2.2.9",
     "geolib": "^3.3.3",
     "react": "18.0.0",
@@ -43,8 +46,7 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
     "socket.io-client": "^4.5.3",
-    "yup": "^0.32.11",
-    "expo-notifications": "~0.16.1"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

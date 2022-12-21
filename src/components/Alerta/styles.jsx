@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     imagen: {
         width: wp(90),
         borderRadius: 10,
+        resizeMode: "contain",
         height: hp(70)
     },
     containerTextoImagen:{

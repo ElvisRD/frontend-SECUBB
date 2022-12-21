@@ -1,11 +1,14 @@
 {
   "expo": {
-    "name": "hola",
-    "slug": "hola",
+    "name": "SECUBB",
+    "slug": "SECUBB",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "android": {
+      "package": "package.json"
+    }
   }
 }

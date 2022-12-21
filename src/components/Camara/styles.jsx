@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP } from "react-native-responsive-screen";
 
 const styles = StyleSheet.create({
     containerCamara: {
         width: "100%",
-        height: "107%",
+        height: "100%",
         backgroundColor: "black",
-        zIndex: 30
+        zIndex: 20
     },
 
     containerBotonesCamara: {
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
         position: "absolute", 
         width: "50%",
         top: "8%",
-        backgroundColor: "red",
         height: "4%",
         alignItems: "flex-end",
         right: "0%",
@@ -40,17 +40,18 @@ const styles = StyleSheet.create({
     containerImagen: {
         width: "100%",
         height: "100%",
-        backgroundColor: "black"
+        backgroundColor: "black",
     },
     containerBotonSacarFoto: {
         position: "absolute",
+        bottom: heightPercentageToDP(1),
         width: "100%",
+        position: "absolute",
         alignItems: "center",
-        zIndex: 31,
-        bottom: "7.5%"
-        
+
     },
     botonSacarFoto: {
+       
         width: 80,
         height: 80,
         borderRadius: 100,

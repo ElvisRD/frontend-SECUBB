@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from "react"
-import { View, Text, TouchableOpacity, BackHandler, Keyboard,ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, BackHandler, Keyboard,ScrollView, Dimensions } from "react-native"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
 import styles from "./styles"
@@ -20,9 +20,11 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
     const [confirmacion, setConfirmacion] = useState(false);
     const comentariosRedux = useSelector(state => state.comentarios.comentarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
+    //const alertasRedux = useSelector(state => state.alertas.alertas);
     const [comentarioEditado, setComentarioEditado] = useState(null);
     const [modalEditar, setModalEditar] = useState(false);
     const dispatch = useDispatch();
+    const dimensionesPantalla = Dimensions.get("window");  
     const scrollRef = useRef(null);
    
     useEffect(() => {
@@ -121,7 +123,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         <View style={styles.containerTitle}>
             <Text style={styles.title}>Comentarios</Text>
         </View>
-            <ScrollView style={styles.containerCardComentario}>
+            <ScrollView style={dimensionesPantalla.height < 700 ? styles.containerCardComentarioPantallaPeque:styles.containerCardComentarioPantallaGrand} >
                     {
                         comentarios !== null && comentarios[0] !== undefined ? (
                             comentarios.map((comentario, index) => {

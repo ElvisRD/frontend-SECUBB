@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useState} from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import { TextInput, Button, Appbar } from "react-native-paper"
@@ -7,13 +7,16 @@ import {crearSugerencia} from "../../data/sugerencias"
 import {useSelector} from "react-redux"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import Toast from 'react-native-toast-message';
+import Cargando from "../Cargando"
 
 export default function ModalSugerencia({setModalSugerencia}){
-    const [sugerencia, setSugerencia] = React.useState("");
+    const [sugerencia, setSugerencia] = useState("");
+    const [cargando, setCargando] = useState(false);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     
 
     const enviarSugerencia = () => {
+        setCargando(true)
         const body = {
             sugerencia: sugerencia,
             usuarioId: usuarioRedux.id
@@ -40,12 +43,16 @@ export default function ModalSugerencia({setModalSugerencia}){
                 bottomOffset: 40,
             });
         });
+        setCargando(false);
         setModalSugerencia(false);
     }
 
 
 
     return(
+       <>
+        {cargando ? <Cargando/> : null}
+
         <View style={styles.containerModalSugerencia}>
              <KeyboardAwareScrollView bounces={false} style={styles.modalSugerencia}>
                 <Appbar.Header style={styles.containerNav}>
@@ -68,5 +75,7 @@ export default function ModalSugerencia({setModalSugerencia}){
                 </View>
             </KeyboardAwareScrollView>  
         </View>
+       
+       </>
     );
 }

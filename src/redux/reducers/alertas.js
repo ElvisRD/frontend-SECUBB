@@ -26,13 +26,7 @@ const state = (state = valorInicial, action) => {
                 return {alertas: null}
             }
         }else{
-            if(action.type === "editarAlerta"){
-                let arraySinAlerta = state.alertas.filter((alertas) => alertas.id !== action.data.id)
-                arraySinAlerta = [...arraySinAlerta, action.data];
-                return {alertas: arraySinAlerta}
-            }else{
-                return {alertas: state.alertas}
-            }
+            return {alertas: state.alertas}
         }
         
     }

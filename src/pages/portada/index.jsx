@@ -14,8 +14,6 @@ import {obtenerComentarios} from "../../data/comentarios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { guardarUsuario } from "../../redux/actions/usuarioActions";
 import * as Location from 'expo-location';
-import EscudoUbb from "../../image/escudoUBB.png" 
-
 
 
 export default function Portada({navigation}){
@@ -61,7 +59,7 @@ export default function Portada({navigation}){
 
        const getAlertas = () => {
         const likeAlertas = [];
-        obtenerAlertas(true).then((result) => {
+        obtenerAlertas().then((result) => {
           dispatch(guardarAlertaRedux(result))
            result.map(alerta => {
                  if(alerta.daLikeAlerta[0] !== undefined){

@@ -38,10 +38,15 @@ const styles = StyleSheet.create({
     textoErrorComentario: {
         fontSize: wp(5)
     },
-    containerCardComentario: {
+    containerCardComentarioPantallaGrand: {
         width: "100%",
         marginBottom: hp(6),
-        height: hp(75),
+        height: hp(84),
+    },
+     containerCardComentarioPantallaPeque: {
+        width: "100%",
+        marginBottom: hp(6),
+        height: hp(70),
     },
     containerUniqueCardComentario: {
         width: "100%",

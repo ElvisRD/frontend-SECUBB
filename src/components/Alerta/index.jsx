@@ -53,7 +53,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                 Toast.show({
                     type: 'error',
                     position: 'top',
-                    text1: 'La alerta fue eliminada por otro usuario',
+                    text1: 'La alerta fue eliminada o desactivada',
                     visibilityTime: 2000,
                 });
                 setIsVisibleAlerta(false);  

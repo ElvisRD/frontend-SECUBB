@@ -9,5 +9,9 @@ import sugerencias from "./reducers/sugerencias"
 import notificacion from "./reducers/notificacion"
 
 export default configureStore({
-    reducer: {alertas,usuario,comentarios,likesAlerta,likesComentario,sugerencias,notificacion}
+    reducer: {alertas,usuario,comentarios,likesAlerta,likesComentario,sugerencias,notificacion},
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: { warnAfter: 128 },
+        serializableCheck: { warnAfter: 128 },
+    })
 })

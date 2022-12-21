@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {View, Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
+import {View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import styles from './styles';
 import { Camera } from 'expo-camera';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -9,22 +9,22 @@ import IconMI from 'react-native-vector-icons/MaterialIcons'
 
 
 export default function Camara({setVisibleCamara, setImagen, setLoading}){
-    const [CamaraPermisos, setCamaraPermisos] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
+    const [type, _] = useState(Camera.Constants.Type.back);
     const [foto, setFoto] = useState(null);
     const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const camaraRef = useRef(null);
-    const {width} = useWindowDimensions();
-    const height = Math.round((width * 16) / 9);
+    const dimensionesPantalla = Dimensions.get("window");
+    const height = Math.round((dimensionesPantalla.width * 16) / 9);
 
     
 
     useEffect(() => {
       setLoading(false)
     }, [])
-    
+ 
 
      const TomarFoto = async () => {
+ 
         if(camaraRef){
             await camaraRef.current.takePictureAsync().then((result) => {
                 setFoto(result.uri)
@@ -34,9 +34,7 @@ export default function Camara({setVisibleCamara, setImagen, setLoading}){
         }
      };
 
-     /* if(CamaraPermisos === false){
-        return <Text>No hay acceso a la camara</Text>
-     } */
+
 
      const guardarImagen = () => {
         setVisibleCamara(false);
@@ -104,12 +102,11 @@ export default function Camara({setVisibleCamara, setImagen, setLoading}){
                     </View>
                 </View>
 
-                <Camera style={[styles.camera ,{height: height}]} type={type}
+                <Camera style={[styles.camera ,{height: height }]} type={type}
                 ref={camaraRef} flashMode={flash}
                 ratio='16:9'
                 />        
                 
-
                 <View style={styles.containerBotonSacarFoto}>
                     <TouchableOpacity style={styles.botonSacarFoto} onPress={TomarFoto}>
                         <IconMI 

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { URL_CONNECT_BACKEND } from "../../env";
 
-const obtenerAlertas = async (activa) => {
-   const alertas = await axios.get(`${URL_CONNECT_BACKEND}/api/alertas?activa=${activa}`)
+const obtenerAlertas = async () => {
+   const alertas = await axios.get(`${URL_CONNECT_BACKEND}/api/alertas`)
    return alertas.data
 } 
 const obtenerAlertasPorFechaYTipo = async (tipo, fechaInicial, fechaFinal) => {

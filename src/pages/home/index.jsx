@@ -8,7 +8,7 @@ import Alertas from "../../components/Alertas"
 
 import {URL_CONNECT_BACKEND} from "../../../env"
 import { useDispatch } from 'react-redux';
-import { guardarAlertaRedux,eliminarAlertaRedux, editarAlertaRedux} from '../../redux/actions/alertasActions';
+import { guardarAlertaRedux,eliminarAlertaRedux} from '../../redux/actions/alertasActions';
 import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux } from '../../redux/actions/comentariosActions';
 import { guardarSugerenciaRedux, eliminarSugerenciaRedux } from '../../redux/actions/sugerenciasActions';
 import { guardarNotificacionRedux } from '../../redux/actions/notificacionesActions';
@@ -57,11 +57,6 @@ export default function Home({navigation, route}) {
 
     socket.on("alerta", (alerta) => {
       dispatch(guardarAlertaRedux(alerta))
-    })
-
-    socket.on("editarAlerta", (alerta) => {
-      console.log("editarAlerta");
-      dispatch(editarAlertaRedux(alerta))
     })
 
     socket.on("daLikeAlerta", (like) => {

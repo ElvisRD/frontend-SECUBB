@@ -1,6 +1,8 @@
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+
+
 const styles = StyleSheet.create({
     containerAlertas: {
         backgroundColor: "white",   
@@ -19,6 +21,7 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         height: "100%",
+
         
     },
     title: {
@@ -34,10 +37,16 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     
-    alertas: {
+    alertasPantallaGrand: {
         width: "100%",
         height: hp(84),
+        flexGrow: 0,
         
+    },
+    alertasPantallaPeque: {
+        width: "100%",
+        height: hp(79),
+        backgroundColor: "white",
     },
     containerAlertasActuales: {
         width: "100%",

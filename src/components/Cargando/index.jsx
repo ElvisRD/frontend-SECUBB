@@ -6,7 +6,7 @@ import styles from "./styles";
 export default function Cargando() {
     return(
         <View style={styles.containerCargando}>
-            <ActivityIndicator animating={true} color="red" />
+            <ActivityIndicator animating={true} color="blue" />
         </View>
     )
 }

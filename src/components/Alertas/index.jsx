@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react"
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import styles from "./styles"
 import CardAlerta from "../CardAlerta"
 import { useSelector } from "react-redux";
@@ -17,14 +17,14 @@ export default function Alertas({handlePressButtons,socket}) {
     const [verAlerta, setVerAlerta] = useState(null)
     const [verComentarios, setVerComentarios] = useState(false);
     const [isVisibleAlerta, setIsVisibleAlerta] = useState(false);
+    const dimensionesPantalla = Dimensions.get("window");
 
 
-     useEffect(() => {
+    useEffect(() => {
         if(alertasRedux !== undefined){
             setAlertas(alertasRedux);
         }
     },[alertasRedux]) 
-
 
     return(
         <>
@@ -36,8 +36,8 @@ export default function Alertas({handlePressButtons,socket}) {
                 <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
                 <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}} icon={props => <IconAD name="close" size={35} color="black" />} />
             </Appbar.Header>
-                <View style={styles.alertas}>
-                    <ScrollView style={styles.containerAlertasActuales} > 
+                <View style={dimensionesPantalla.height < 700 ? styles.alertasPantallaPeque: styles.alertasPantallaGrand}>
+                    <ScrollView style={styles.containerAlertasActuales}> 
                        {alertas !== null ? (
                             alertas.map((alerta,i) => (
                                alerta.activa === true ? 

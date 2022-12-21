@@ -9,18 +9,18 @@ export default function Login({navigation}) {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [verContraseña, setVerContraseña] = useState(false);
-  const [location, setLocation] = useState(null);
 
   const iniciarSesion = () => {
-   
-      const body = {
-        correo: correo,
-        contraseña: contraseña
-      }
 
+      const body = {
+        correo: "Elvis@gmail.com",
+        contraseña: "1234"
+      }
+      
       existeUsuario(body).then((res)=>{
           guardarDatosUsuario(res.usuario)
       }).catch((err)=>{
+        console.log(err);
         console.log("usuario no encontrado");
       })
     

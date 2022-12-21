@@ -36,7 +36,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
     }
   
     const handleBotonImagen = () => {
-
+      setLoading(true)
       verificarPermisoCamara().then((result) => {
         if(result === true){
           setVisibleCamara(true)
@@ -99,6 +99,8 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                           
                     let nuevaAlerta = null;
 
+                    setLoading(true);
+
                     await crearAlerta(body).then((result) => {
                       nuevaAlerta=result.alerta
                       Toast.show({
@@ -115,6 +117,9 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                         visibilityTime: 2000,
                       });; 
                     }); 
+
+                    
+                    setLoading(false);
 
                     let tipoSinEspacios = values.tipo.replace(/ /g,"_");
 
@@ -137,11 +142,13 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                     await socket.emit("alerta", nuevaAlerta);
 
                     dispatch(guardarAlertaRedux(nuevaAlerta));
-                  
+                
                     setModalReportar(false);
                    
                     setImagen("");
+                    
                     setIsVisibleModal(false);
+
    
                   }} 
             >

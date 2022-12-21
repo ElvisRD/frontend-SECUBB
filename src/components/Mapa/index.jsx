@@ -1,5 +1,5 @@
 import React,{useState, useEffect, useRef} from 'react';
-import { View, Linking , Text,TouchableOpacity, PermissionsAndroid, Alert } from 'react-native';
+import { View , Text,TouchableOpacity, Dimensions } from 'react-native';
 import MapView,{Marker,PROVIDER_GOOGLE, Polygon} from 'react-native-maps';
 import { Dialog, Portal, Provider, Button } from 'react-native-paper';
 import ModalAlerts from "../ModalAlertas";
@@ -38,6 +38,7 @@ export default function Mapa({ socket, coordenadasUsuario}) {
     const alertasRedux = useSelector(state => state.alertas.alertas)
     const notificacionRedux = useSelector(state => state.notificacion.notificacion)
     const usuarioRedux = useSelector(state => state.usuario.usuario)
+    const dimensionesPantalla = Dimensions.get('window');
 
 
     const [initialRegion, _] = useState({
@@ -340,7 +341,7 @@ export default function Mapa({ socket, coordenadasUsuario}) {
                 />
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.boton} onPress={handleClickMap}>
+            <TouchableOpacity style={dimensionesPantalla.height < 700 ? styles.botonPlusPantallaPeque : styles.botonPlusPantallaGrand} onPress={handleClickMap}>
                 <Icon
                     name="plus"
                     color="white"

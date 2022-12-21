@@ -32,9 +32,20 @@ const styles = StyleSheet.create({
         right: wp(5),
         zIndex: 2 
     },
-    boton:{
+    botonPlusPantallaGrand:{
         position: "absolute",
-        bottom: hp(16.5),
+        bottom: hp(16),
+        padding: 5.5,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 100,
+        backgroundColor: "black",
+        opacity: 0.35,
+        zIndex: 2
+    },
+    botonPlusPantallaPeque:{
+        position: "absolute",
+        bottom: hp(20),
         padding: 5.5,
         justifyContent: "center",
         alignItems: "center",

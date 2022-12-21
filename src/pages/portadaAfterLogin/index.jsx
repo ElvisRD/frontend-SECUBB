@@ -38,7 +38,7 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
 
       const getAlertas = () => {
         const likeAlertas = [];
-        obtenerAlertas(true).then((result) => {
+        obtenerAlertas().then((result) => {
           dispatch(guardarAlertaRedux(result))
            result.map(alerta => {
                  if(alerta.daLikeAlerta[0] !== undefined){

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: wp(10),
-        paddingLeft: hp(2),
+        paddingLeft: hp(2.5),
     },
     botonCerrar: {
         position: "absolute",
