@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     containerPortada: {
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
         width: "100%",
         justifyContent: "center",
         alignItems: "center",

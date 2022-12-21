@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text} from "react-native";
+import {View,Text, PermissionsAndroid, BackHandler} from "react-native";
 import styles from "./styles";
 import {Provider, Portal, Button, Dialog} from "react-native-paper";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -13,6 +13,7 @@ import { daLikeAlertaRedux } from "../../redux/actions/likesActions";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from 'expo-location';
+import Cargando from "../../components/Cargando";
 
 
 
@@ -20,20 +21,27 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
 
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0);
+    const [cargando, setCargando] = useState(false);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
 
       const getPermisoLocalizacion = async () => {
-        let {status} = await Location.requestForegroundPermissionsAsync();
-        if(status !== "granted"){
-          setPermisoLocalizacion(true);
-        }else{
-          let location = await Location.getCurrentPositionAsync({});
-          setCoordenadasUsuario(location);
-         
+        try {
+          const granted = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+          if (granted === true) {
+            let location = await Location.getCurrentPositionAsync({});
+            setCoordenadasUsuario(location);
+          } else {
+            setPermisoLocalizacion(true);
+          }
+        } catch (err) {
+          console.log(err);
         }
+        setCargando(false)
+      
       }
 
       const getAlertas = () => {
@@ -93,15 +101,17 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
        }
 
        getPermisoLocalizacion();
+       getSugerencias();
        getAlertas(); 
        getComentarios();
-       getSugerencias();
+      
 
     }, [verificarActivacionPermiso])
 
 
     return (
       <>
+        {cargando ? <Cargando /> : null}
         <View style={styles.containerPortada}>
               <Text>Preparando datos...</Text>
         </View>
@@ -110,12 +120,12 @@ export default function PortadaAfterLogin({setPortadaVisible, setCoordenadasUsua
                             <Dialog visible={permisoLocalizacion} dismissable={false} >
                                 <Dialog.Icon icon="alert" />
                                 <Dialog.Title>Permiso de localización</Dialog.Title>
-                                <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es necesario que acepte el permiso de localización,
-                                  si usted rechaza este permiso la aplicacion se cerrara.</Text></Dialog.Content>
-                                <Dialog.Actions>
-                                    <Button onPress={() =>{setPermisoLocalizacion(false)}}>Rechazar</Button>
+                                <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es obligatorio el permiso de localización,
+                                si usted rechaza este permiso la aplicación se cerrará.</Text></Dialog.Content>
+                                <Dialog.Actions style={{justifyContent: "center"}}>
+                                    <Button onPress={() => BackHandler.exitApp()}> Rechazar</Button>
                                     <Button onPress={() => Linking.openSettings()}>Ir a Configuraciones</Button>
-                                    <Button onPress={() => setVerificarActivacionPermiso(verificarActivacionPermiso+1)}>Verificar</Button>
+                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setCargando(true)}}>Verificar</Button>
                                 </Dialog.Actions>
                             </Dialog>
                         </Portal>

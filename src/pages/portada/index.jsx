@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, Linking, Image} from "react-native";
-import {Provider, Dialog, Portal, Button, ActivityIndicator } from "react-native-paper";
+import {View,Text, Linking, Image, PermissionsAndroid, BackHandler} from "react-native";
+import {Provider, Dialog, Portal, Button } from "react-native-paper";
 import styles from "./styles";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
 import {obtenerAlertas} from "../../data/alertas";
@@ -14,6 +14,9 @@ import {obtenerComentarios} from "../../data/comentarios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { guardarUsuario } from "../../redux/actions/usuarioActions";
 import * as Location from 'expo-location';
+import IconUBB from "../../image/IconUBB.png";
+import Cargando from "../../components/Cargando";
+
 
 
 export default function Portada({navigation}){
@@ -30,7 +33,7 @@ export default function Portada({navigation}){
           const jsonValue = await AsyncStorage.getItem('usuario')
           const datosUsuario = JSON.parse(jsonValue);
           if(jsonValue !== null){
-              
+              setCargando(true)
               let permiso = await obtenerPermisoUbicacion();
 
               if(permiso){
@@ -39,7 +42,6 @@ export default function Portada({navigation}){
                 getComentarios();
               
                 if(datosUsuario.tipo === "Administrador"){
-                  console.log("es admin");
                   getSugerencias();
                 } 
 
@@ -47,9 +49,9 @@ export default function Portada({navigation}){
                 setPermisoLocalizacion(true)
               }
               
+              setCargando(false)
             
           }else{
-
             navigation.navigate("Login")
           }
         } catch(e) {
@@ -106,29 +108,21 @@ export default function Portada({navigation}){
        } 
 
        const obtenerPermisoUbicacion = async() => {
-          if(verificarActivacionPermiso > 0){
-            let {status} = await Location.requestForegroundPermissionsAsync();
-            if(status !== "granted"){
-              return false;
-            }else{
-              setCargando(true)
-              let location = await Location.getCurrentPositionAsync({});
-              setCoordenadasUsuario(location);
-              setCargando(false)
-              return true;
-            }
-
-          }else{
-            let {status} = await Location.requestForegroundPermissionsAsync();
-            if(status !== "granted"){
-              return false;
-            }else{
-              let location = await Location.getCurrentPositionAsync({});
-              setCoordenadasUsuario(location);
-              return true;
-            }
-          }
           
+            try {
+              const granted = await PermissionsAndroid.check(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+             
+              if (granted === true) {
+                let location = await Location.getCurrentPositionAsync({});
+                setCoordenadasUsuario(location);
+                return true;
+              } else {
+                setPermisoLocalizacion(true)
+              }
+            } catch (err) {
+              console.log(err);
+            }   
        }
 
        obtenerDatosStorage();
@@ -142,22 +136,21 @@ export default function Portada({navigation}){
     
     return (
       <>
+        {cargando ? <Cargando /> : null}
         <View style={styles.containerPortada}>
-            <Text>Portada</Text>
+            <Image source={{IconUBB}} />
         </View>
         <Provider >
                 <Portal>
                           <Dialog visible={permisoLocalizacion} dismissable={false} >
                               <Dialog.Icon icon="alert" />
                               <Dialog.Title>Permiso de localización</Dialog.Title>
-                              <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es necesario que acepte el permiso de localización,
-                                si usted rechaza este permiso la aplicacion se cerrara.</Text></Dialog.Content>
-                              <Dialog.Actions>
-                                  <Button onPress={()=>{setPermisoLocalizacion(false)}}>Rechazar</Button>
+                              <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es obligatorio el permiso de localización,
+                                si usted rechaza este permiso la aplicación se cerrará.</Text></Dialog.Content>
+                              <Dialog.Actions style={{justifyContent: "center"}}>
+                                  <Button onPress={()=> BackHandler.exitApp()}>Rechazar</Button>
                                   <Button onPress={() => Linking.openSettings()}>Ir a Configuraciones</Button>
-                                  {
-                                    cargando ? <ActivityIndicator size="small" color="#01579b" /> : <Button onPress={()=> setVerificarActivacionPermiso(verificarActivacionPermiso+1)}>Verificar</Button>
-                                  }
+                                  <Button onPress={()=> setVerificarActivacionPermiso(verificarActivacionPermiso+1)}>Verificar</Button>
                               </Dialog.Actions>
                           </Dialog>
                 </Portal>

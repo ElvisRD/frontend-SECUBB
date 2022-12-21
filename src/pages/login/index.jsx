@@ -66,13 +66,7 @@ export default function Login({navigation}) {
           Iniciar sesión
         </Button>
       </View>
-      <View style={styles.containerRegistro} >
-       <Text >¿Olvido su contraseña?  </Text>
-        <TouchableOpacity onPress={()=>{console.log("hgola")}}> 
-         <Text style={styles.textRegistrarse}>Recuperar</Text>
-        </TouchableOpacity>
-      </View>
-      
+    
     </View>
   );
 }

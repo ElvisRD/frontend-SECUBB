@@ -57,7 +57,7 @@ export default function Menu({handlePressButtons, navigation, socket}){
                         <Text style={styles.textOpcion}>Enviar sugerencia</Text>
                     </TouchableOpacity>
                     {
-                        usuarioRedux.rol === "Administrador" ? (
+                        usuarioRedux.tipo === "Administrador" ? (
                             <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisibleVerSugerencias(true)}}> 
                                 <Text style={styles.textOpcion}>Ver sugerencias</Text>
                             </TouchableOpacity>
