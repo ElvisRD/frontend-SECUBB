@@ -193,11 +193,13 @@ export default function Mapa({ socket}) {
                 if(tipo === "Consumo de drogas"){
                     return <IconFA5 name="map-marker-alt" size={40} color="purple"/>
                 }
+
     }
     const mostrarAlerta = (alerta) => {
         setAlertaSeleccionada(alerta);
         setVerAlerta(true);
     }
+
     return (
         <>
         {isVisibleModal ? (
@@ -211,7 +213,6 @@ export default function Mapa({ socket}) {
         {
             verTiposAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setVerTiposAlertas} />):(null)
         }
-
          <View style={styles.container}>
              <MapView
                 provider={PROVIDER_GOOGLE}
@@ -224,8 +225,8 @@ export default function Mapa({ socket}) {
                 zoomTapEnabled={false}
                 showsBuildings={false}
                 showsScale={true}
-                
                 //showsMyLocationButton={true}
+                
                 
                 //onTouchEnd={(e)=>console.log("aa")}
                 //onTouchStart={(e)=>console.log("aa")}
@@ -253,7 +254,6 @@ export default function Mapa({ socket}) {
                 )):(null)
 
               }
-{/* 
               {
                 departamentos.map((depa, i) => (
                     <Marker
@@ -304,8 +304,7 @@ export default function Mapa({ socket}) {
                     </Marker>
                 ))
               }
- */}
-             {/*  {departamentoSiluetas.map((departamento, i) => (
+             {departamentoSiluetas.map((departamento, i) => (
                 <Polygon 
                     key={i}
                     coordinates={departamento.coordenadas}
@@ -315,7 +314,6 @@ export default function Mapa({ socket}) {
                 />
               ))
             }
- */}
             </MapView>
 
             <Icon

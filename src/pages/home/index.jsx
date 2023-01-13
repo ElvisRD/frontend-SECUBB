@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import styles from "./style";
 import { View, Text,TouchableOpacity, BackHandler} from 'react-native';
-import Mapa from "../../components/Mapa2/"
+import Mapa from "../../components/Mapa/"
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import Menu from "../../components/Menu/"
 import Alertas from "../../components/Alertas"
