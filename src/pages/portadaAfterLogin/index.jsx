@@ -151,7 +151,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
                                 <Dialog.Actions style={{justifyContent: "center"}}>
                                     <Button onPress={() => BackHandler.exitApp()}> Rechazar</Button>
                                     <Button onPress={() => Linking.openSettings()}>Ir a Configuraciones</Button>
-                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1)}}>Verificar</Button>
+                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setPermisoLocalizacion(false)}}>Verificar</Button>
                                 </Dialog.Actions>
                             </Dialog>
                         </Portal>

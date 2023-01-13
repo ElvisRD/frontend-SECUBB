@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import { View, Text, TouchableOpacity, Image, Linking, PermissionsAndroid } from "react-native"
+import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
 import { TextInput, Button,Appbar, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,6 +13,7 @@ import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
 import validaciones from "./validaciones";
 import {guardarImagen} from "../../data/imagenes"
 import Toast from 'react-native-toast-message';
+import {Camera} from "expo-camera"
 import Cargando from "../Cargando"
 
 
@@ -36,21 +37,16 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
   
     const handleBotonImagen = async () => {
       setLoading(true)
-      //Camera.requestCameraPermissionsAsync()
-      try {
-        const granted = await PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.CAMERA);
-        if (granted === true) {
-          setVisibleCamara(true);
-          setPermisoCamara(false);
-        } else {
-          setPermisoCamara(true);
-        }
-      } catch (err) {
+      const {status} = Camera.requestCameraPermissionsAsync()
+
+      if(status !== "granted"){
+        setPermisoCamara(true);
         console.log("no se pudo obtener el permiso de la camara");
+      }else{
+        setVisibleCamara(true);
+        setPermisoCamara(false);
       }
       setLoading(false)
-      
     }
     
     return(
