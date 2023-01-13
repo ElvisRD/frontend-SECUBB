@@ -52,6 +52,7 @@ export default function Portada({navigation}){
           const datosUsuario = JSON.parse(jsonValue);
           if(datosUsuario !== null){
               obtenerPermisoUbicacion().then((result) => {
+                
                 if(result){
                   dispatch(guardarUsuarioRedux(datosUsuario));
                   getAlertas();

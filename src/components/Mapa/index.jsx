@@ -227,7 +227,6 @@ export default function Mapa({ socket}) {
                 
                 //showsMyLocationButton={true}
                 
-                
                 //onTouchEnd={(e)=>console.log("aa")}
                 //onTouchStart={(e)=>console.log("aa")}
                 /* showsUserLocation={true}
