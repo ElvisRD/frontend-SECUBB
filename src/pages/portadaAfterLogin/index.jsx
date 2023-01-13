@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, PermissionsAndroid, BackHandler} from "react-native";
+import {View,Text, PermissionsAndroid, BackHandler, Linking} from "react-native";
 import styles from "./styles";
 import {Provider, Portal, Button, Dialog} from "react-native-paper";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -22,7 +22,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0);
-    const [cargando, setCargando] = useState(false);
+    //const [cargando, setCargando] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -42,23 +42,14 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     useEffect(() => {
       const getPermisoLocalizacion = async () => {
-        try {
-          /* const granted = await PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); */
-
-            let { status } = await Location.requestForegroundPermissionsAsync();
-                
+            let { status } = await Location.requestForegroundPermissionsAsync();   
+            //setCargando(false)
             if (status !== 'granted') {
-              setErrorMsg('Permission to access location was denied');
               return false;
             }
             let location = await Location.getCurrentPositionAsync({});
             dispatch(guardarUbicacionRedux(location));
-            return true;
-            
-        } catch (err) {
-          Alert.alert("Error", "No se obtuvo el permiso de localización"); 
-        }
+            return true; 
       }
 
       const getAlertas = () => {
@@ -117,11 +108,10 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         const jsonValue = await AsyncStorage.getItem('usuario')
         const datosUsuario = JSON.parse(jsonValue);
         
-        
         dispatch(guardarUsuarioRedux(datosUsuario));
        
        getPermisoLocalizacion().then((result) => {
-        console.log(result);
+
         if(result === true){
           getAlertas();
           getComentarios();
@@ -147,7 +137,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     return (
       <>
-        {cargando ? <Cargando /> : null}
+        {/* {cargando ? <Cargando /> : null} */}
         <View style={styles.containerPortada}>
               <Text>Preparando datos...</Text>
         </View>
@@ -161,7 +151,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
                                 <Dialog.Actions style={{justifyContent: "center"}}>
                                     <Button onPress={() => BackHandler.exitApp()}> Rechazar</Button>
                                     <Button onPress={() => Linking.openSettings()}>Ir a Configuraciones</Button>
-                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setCargando(true)}}>Verificar</Button>
+                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1)}}>Verificar</Button>
                                 </Dialog.Actions>
                             </Dialog>
                         </Portal>

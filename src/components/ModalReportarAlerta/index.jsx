@@ -89,23 +89,24 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
 
                     let nuevaAlerta = null;
                     setLoading(true);
+                   
 
-                    await crearAlerta(body).then((result) => {
+                      await crearAlerta(body).then((result) => {
                       nuevaAlerta=result.alerta
                       Toast.show({
-                        type: 'success',
-                        position: 'top',
-                        text1: 'La alerta fue creada con éxito',
-                        visibilityTime: 3000,
-                      });
-                    }).catch((err) => {
-                      Toast.show({
-                        type: 'error',
-                        position: 'top',
-                        text1: 'Se produjo un error al crear la alerta',
-                        visibilityTime: 2000,
-                      });; 
-                    }); 
+                          type: 'success',
+                          position: 'top',
+                          text1: 'La alerta fue creada con éxito',
+                          visibilityTime: 3000,
+                        });
+                      }).catch((err) => {
+                        Toast.show({
+                          type: 'error',
+                          position: 'top',
+                          text1: 'Se produjo un error al crear la alerta',
+                          visibilityTime: 2000,
+                        });; 
+                      }); 
 
                     setLoading(false); 
 
@@ -128,16 +129,10 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                     }     
                     
                     await socket.emit("alerta", nuevaAlerta);
-
                     dispatch(guardarAlertaRedux(nuevaAlerta)); 
-                
                     setModalReportar(false);
-                   
                     setImagen("");
-                    
                     setIsVisibleModal(false);
-
-   
                   }} 
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (

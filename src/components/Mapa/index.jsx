@@ -223,6 +223,7 @@ export default function Mapa({ socket}) {
                 rotateEnabled={false}
                 customMapStyle={mapStyle}
                 zoomTapEnabled={false}
+                //loadingEnabled={true}
                 showsBuildings={false}
                 showsScale={true}
                 //showsMyLocationButton={true}

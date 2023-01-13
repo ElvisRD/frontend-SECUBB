@@ -24,7 +24,6 @@ export default function Alertas({handlePressButtons,socket}) {
 
     useEffect(() => {
         if(alertasRedux !== undefined){
-            //console.log(alertasRedux);
             setAlertas(alertasRedux);
         }
     },[alertasRedux]) 
@@ -33,7 +32,7 @@ export default function Alertas({handlePressButtons,socket}) {
       if(likesAlertaRedux !== null){
         setLikesAlertas(likesAlertaRedux);
       }
-    }, [likesAlertaRedux])
+    }, [likesAlertaRedux,alertasRedux])
     
     const filtrarLikesAlerta = (alertaId) => {
         if(likesAlertas !== null && likesAlertas !== undefined){

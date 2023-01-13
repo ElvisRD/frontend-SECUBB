@@ -21,7 +21,7 @@ import Cargando from "../../components/Cargando";
 export default function Portada({navigation}){
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0); 
-    const [cargando, setCargando] = useState(false);
+    //const [cargando, setCargando] = useState(false);
    
 
     const dispatch = useDispatch();
@@ -62,19 +62,18 @@ export default function Portada({navigation}){
                     getSugerencias();
                   } 
 
-                  Alert.alert("Bienvenido", "Bienvenido a la aplicación de alertas de la ciudad de Cuenca");
                   navigation.navigate("Home")
                 }else{
                   setPermisoLocalizacion(true)
                 }
               }).catch((err) => {
-                Alert.alert("Error", "No se pudo obtener la ubicación");
+                console.log(err);
               });
           }else{
             navigation.navigate("Login")
           }
         } catch(e) {
-          console.log("error al obtener datos");
+          console.log(e);
         }
        }
 
@@ -93,8 +92,7 @@ export default function Portada({navigation}){
             dispatch(daLikeAlertaRedux(likeAlertas));
            }
         }).catch((err) => {
-            Alert.alert("Error", "No se encontraron alertas"); 
-           console.log("no se encontraron alertas");
+          console.log("error peticion alertas");
         });
        }
 
@@ -115,7 +113,7 @@ export default function Portada({navigation}){
           }
 
         }).catch((err) => {
-          Alert.alert("Error", "No se encontraron comentarios"); 
+          console.log("error peticion comentarios");
         });
        }
 
@@ -123,28 +121,21 @@ export default function Portada({navigation}){
         await obtenerSugerencias().then((result) => {
            dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-          Alert.alert("Error", "No se pudo obtener las sugerencias"); 
-          console.log("no se encontraron sugerencias");
+          console.log("error peticion sugerencias");
         });
        } 
 
        const obtenerPermisoUbicacion = async() => {
-            try {
-              /* const granted = await PermissionsAndroid.check(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); */
-                let { status } = await Location.requestForegroundPermissionsAsync();
-                
-                if (status !== 'granted') {
-                  setErrorMsg('Permission to access location was denied');
-                  return false;
-                }
-                let location = await Location.getCurrentPositionAsync({});
-                dispatch(guardarUbicacionRedux(location));
-                return true;
-
-            } catch (err) {
-              console.log(err);
-            }
+          
+              let { status } = await Location.requestForegroundPermissionsAsync();
+              
+              if (status !== 'granted') {
+                  
+                 return false;
+              }
+              let location = await Location.getCurrentPositionAsync({});
+              dispatch(guardarUbicacionRedux(location));
+              return true;
        }
 
        obtenerDatosStorage();
@@ -153,7 +144,7 @@ export default function Portada({navigation}){
 
     return (
       <>
-        {cargando ? <Cargando /> : null}
+       {/* {cargando ? <Cargando /> : null} */}
         <View style={styles.containerPortada}>
             <Text>Portada</Text>
         </View>
