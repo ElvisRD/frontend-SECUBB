@@ -46,6 +46,16 @@ const styles = StyleSheet.create({
     },
     inputActivarNotificaciones: {
         marginRight: wp(8),
+    },
+    containerBoton: {
+        width: "100%",
+        position: "absolute",
+        justifyContent: "center",
+        alignItems: "center",
+        bottom: hp(20),
+    },
+    botonGuardar: {
+        width: wp(40),
     } 
 });
 

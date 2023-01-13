@@ -39,7 +39,6 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
            }).catch((err) => {
                 setErrorImagen(true)
            });
-
        }
        
        getImagen();
@@ -56,10 +55,19 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                     text1: 'La alerta fue eliminada o desactivada',
                     visibilityTime: 2000,
                 });
-                setIsVisibleAlerta(false);  
+                setVerComentarios(false);
+                setIsVisibleAlerta(false); 
+                
             } 
             
-           
+        }else{
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'La alerta fue eliminada o desactivada',
+                visibilityTime: 2000,
+            });
+            setIsVisibleAlerta(false);  
         }
       
     }, [alertasRedux])  
@@ -154,7 +162,8 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                         
                     } 
                     <View style={styles.containerUsuario}> 
-                        <Text style={styles.atributoAlerta}>Reportado por </Text> 
+                        <Text style={styles.atributoAlerta}>Reportado por </Text>
+                        <Text style={styles.ubicacion}>{verAlerta.usuario.nombre} {verAlerta.usuario.apellido}</Text> 
                     </View>
 
                 </KeyboardAwareScrollView>

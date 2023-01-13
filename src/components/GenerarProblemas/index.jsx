@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text  } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
-import {Picker} from '@react-native-picker/picker';
+
 import { Portal, Provider, Button, Dialog, Appbar } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
@@ -148,8 +148,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                 
                 <View  style={styles.containerLugares}>
                     <Text style={styles.tituloSelect}>Tipo de alerta</Text>
-                    
-                    <Picker
+                   {/*  <Picker
                         style={styles.select}
                         ref={pickerRef}
                         selectedValue={valorSeleccionado}
@@ -160,16 +159,13 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                         <Picker.Item label="Perros rondando" value="Perros rondando" />
                         <Picker.Item label="Emergencia de salud" value="Emergencia de salud" />
                         <Picker.Item label="Consumo de drogas" value="Consumo de drogas" />
-
-                    </Picker>
-  
+                    </Picker> */}
                 </View >
                 <View style={styles.containerInputFechas}>
                     <View style={styles.containerTituloFecha}>
                         <Text style={styles.tituloFecha}>Fecha inicial</Text>
                     </View>
                     <View style={styles.containerFechaInicio}>
-
                         <InputFecha 
                             setAbrirCalendario={setAbrirCalendarioFechaInicial}
                             labelTextInput="Fecha inicial"
@@ -179,9 +175,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                             tipoDatePicker="date"
                             tiempo="inicial"
                             diaMaximo={new Date()}
-                        
                         />
-                       
                        <InputFecha 
                             setAbrirCalendario={setAbrirHoraInicial}
                             labelTextInput="Hora inicial"
@@ -190,10 +184,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                             guardarDatosDataPicker={guardarHora}
                             tipoDatePicker="time"
                             tiempo="inicial"
-                            
-                       
                        />
-                        
                     </View>
                     <View style={styles.containerTituloFecha}>
                         <Text style={styles.tituloFecha}>Fecha final</Text>

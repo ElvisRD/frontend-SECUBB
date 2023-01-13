@@ -20,6 +20,7 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
 
     useEffect(() => {
         if(sugerenciasRedux !== null){
+            //console.log(sugerenciasRedux);
             setSugerencias(sugerenciasRedux)
         }
     }, [sugerenciasRedux]) 
@@ -29,8 +30,9 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
    const handleEliminarSugerencia = () => {
         eliminarSugerencia(sugerencia.id).then( async ()=>{
             
-            await socket.emit("eliminarSugerencia", sugerencia);
+            
             dispatch(eliminarSugerenciaRedux(sugerencia));
+            await socket.emit("eliminarSugerencia", sugerencia);
             setModalEliminarSugerencia(false);
 
             Toast.show({

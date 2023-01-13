@@ -4,11 +4,13 @@ import styles from "./styles"
 import { Dialog, Portal, Appbar, Provider, Button } from 'react-native-paper';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import ModalSugerencia from "../ModalSugerencia";
-import ModalLugaresProblematicos from "../LugaresProblematicos";
+import ModalLugaresProblematicos from "../GenerarProblemas";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfiguracionNotificaciones from "../ConfiguracionNotificaciones";
 import ModalVerSugerencias from "../ModalVerSugerencias";
 import {limpiarRedux} from "../../redux/actions/usuarioActions";
+import ModificarContraseña from "../ModificarContraseña"
+import ModificarTipos from "../ModificarTipos"
 import {useSelector, useDispatch} from "react-redux"
 
 export default function Menu({handlePressButtons, navigation, socket}){
@@ -16,6 +18,8 @@ export default function Menu({handlePressButtons, navigation, socket}){
     const [isVisibleSugerencia, setModalSugerencia] = useState(false);
     const [isVisibleCerrarSesion, setIsVisibleCerrarSesion] = useState(false);
     const [isVisibleVerSugerencias, setIsVisibleVerSugerencias] = useState(false);
+    const [isVisibleCambiarContraseña, setIsVisibleCambiarContraseña] = useState(false); 
+    const [isVisibleModificarTipos, setIsVisibleModificarTipos] = useState(false);
     const [isVisibleConfiguracionNotificaciones, setVisibleConfiguracionNotificaciones] = useState(false);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
@@ -39,6 +43,8 @@ export default function Menu({handlePressButtons, navigation, socket}){
         <>
         {isVisibleLugares ? <ModalLugaresProblematicos setModalLugaresProblematicos={setModalLugaresProblematicos} />:(null)} 
         {isVisibleSugerencia ? <ModalSugerencia setModalSugerencia={setModalSugerencia} socket={socket} />:(null)}
+        {isVisibleCambiarContraseña ? <ModificarContraseña setIsVisible={setIsVisibleCambiarContraseña} />:(null)}
+        {isVisibleModificarTipos ? <ModificarTipos setIsVisible={setIsVisibleModificarTipos} />:(null)}
         {isVisibleConfiguracionNotificaciones ? <ConfiguracionNotificaciones setVisibleConfiguracionNotificaciones={setVisibleConfiguracionNotificaciones} />:(null)}
         {isVisibleVerSugerencias ? <ModalVerSugerencias setModalVerSugerencias={setIsVisibleVerSugerencias} socket={socket} />:(null)}
         
@@ -53,18 +59,31 @@ export default function Menu({handlePressButtons, navigation, socket}){
                     <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setVisibleConfiguracionNotificaciones(true)}} >
                         <Text style={styles.textOpcion}>Notificaciones</Text>
                     </TouchableOpacity>
+
+                    {
+                        usuarioRedux.tipo !== "Administrador" ? (
+                            <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setModalSugerencia(true)}}>
+                                <Text style={styles.textOpcion}>Enviar sugerencia</Text>
+                            </TouchableOpacity>
+
+                        ) : (null)
+                    }
                     
-                    <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setModalSugerencia(true)}}>
-                        <Text style={styles.textOpcion}>Enviar sugerencia</Text>
+                    <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisibleCambiarContraseña(true)}}>
+                        <Text style={styles.textOpcion}>Modificar contraseña</Text>
                     </TouchableOpacity>
+
                     {
                         usuarioRedux.tipo === "Administrador" ? (
                             <>
                                 <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisibleVerSugerencias(true)}}> 
                                     <Text style={styles.textOpcion}>Ver sugerencias</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setIsVisibleModificarTipos(true)}}>
+                                    <Text style={styles.textOpcion}>Modificar tipo</Text>
+                                </TouchableOpacity>
                                 <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setModalLugaresProblematicos(true)}}>
-                                    <Text style={styles.textOpcion}>Ver lugares</Text>
+                                    <Text style={styles.textOpcion}>Generar reporte</Text>
                                 </TouchableOpacity>
                             </>
                             

@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, Linking, Image, PermissionsAndroid, BackHandler} from "react-native";
+import {View,Text, Linking, Image, Alert, BackHandler} from "react-native";
 import {Provider, Dialog, Portal, Button } from "react-native-paper";
 import styles from "./styles";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -27,30 +27,48 @@ export default function Portada({navigation}){
     const dispatch = useDispatch();
 
     useEffect(() => {
+      const backAction = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      
+  
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      ); 
+  
+      return () => {
+          backHandler.remove(); 
+      };
+  
+    }, []);
+    
+
+    useEffect(() => {
        const obtenerDatosStorage = async() => {
         try {
           const jsonValue = await AsyncStorage.getItem('usuario')
           const datosUsuario = JSON.parse(jsonValue);
-          if(jsonValue !== null){
-              
-              let permiso = await obtenerPermisoUbicacion();
-          
-              if(permiso){
-                dispatch(guardarUsuarioRedux(datosUsuario));
-                getAlertas();
-                getComentarios();
-              
-                if(datosUsuario.tipo === "Administrador"){
-                  getSugerencias();
-                } 
+          if(datosUsuario !== null){
+              obtenerPermisoUbicacion().then((result) => {
+                if(result){
+                  dispatch(guardarUsuarioRedux(datosUsuario));
+                  getAlertas();
+                  getComentarios();
+                
+                  if(datosUsuario.tipo === "Administrador"){
+                    getSugerencias();
+                  } 
 
-              }else{
-                setPermisoLocalizacion(true)
-              }
-              
-              
-              navigation.navigate("Home")
-            
+                  Alert.alert("Bienvenido", "Bienvenido a la aplicación de alertas de la ciudad de Cuenca");
+                  navigation.navigate("Home")
+                }else{
+                  setPermisoLocalizacion(true)
+                }
+              }).catch((err) => {
+                Alert.alert("Error", "No se pudo obtener la ubicación");
+              });
           }else{
             navigation.navigate("Login")
           }
@@ -74,6 +92,7 @@ export default function Portada({navigation}){
             dispatch(daLikeAlertaRedux(likeAlertas));
            }
         }).catch((err) => {
+            Alert.alert("Error", "No se encontraron alertas"); 
            console.log("no se encontraron alertas");
         });
        }
@@ -95,7 +114,7 @@ export default function Portada({navigation}){
           }
 
         }).catch((err) => {
-           console.log("no se encontraron comentarios");
+          Alert.alert("Error", "No se encontraron comentarios"); 
         });
        }
 
@@ -103,26 +122,28 @@ export default function Portada({navigation}){
         await obtenerSugerencias().then((result) => {
            dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-           console.log("no se encontraron sugerencias");
+          Alert.alert("Error", "No se pudo obtener las sugerencias"); 
+          console.log("no se encontraron sugerencias");
         });
        } 
 
        const obtenerPermisoUbicacion = async() => {
-          
             try {
-              const granted = await PermissionsAndroid.check(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-             
-              if (granted === true) {
+              /* const granted = await PermissionsAndroid.check(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); */
+                let { status } = await Location.requestForegroundPermissionsAsync();
+                
+                if (status !== 'granted') {
+                  setErrorMsg('Permission to access location was denied');
+                  return false;
+                }
                 let location = await Location.getCurrentPositionAsync({});
                 dispatch(guardarUbicacionRedux(location));
                 return true;
-              } else {
-                setPermisoLocalizacion(true)
-              }
+
             } catch (err) {
               console.log(err);
-            }   
+            }
        }
 
        obtenerDatosStorage();

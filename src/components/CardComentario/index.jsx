@@ -8,15 +8,13 @@ import {like, dislike} from "../../data/comentarios";
 import { useSelector, useDispatch} from "react-redux";
 
 
-export default function CardComentario({comentario, socket, alertaId, setModalEditar, setComentarioEditado}){
+export default function CardComentario({comentario, socket, setModalEditar, setComentarioEditado}){
     const [liked, setLiked] = useState(false);
     const [contadorLikes, setContadorLikes] = useState(0);
     const likesComentariosRedux = useSelector(state => state.likesComentario.usuarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
    
-    
-
     useEffect(() => {
         if(likesComentariosRedux !== null ){
             let cont = 0;
@@ -80,7 +78,7 @@ export default function CardComentario({comentario, socket, alertaId, setModalEd
         <View style={styles.containerComentario}>
             <View style={styles.containerDatosComentario}>
                 <View style={styles.containerUsuario}>
-                    <Text style={styles.usuario}><Text style={styles.nombreUsuario}>aa </Text>{comentario.comentario}</Text>
+                    <Text style={styles.usuario}><Text style={styles.nombreUsuario}>{comentario.usuario.nombre} {comentario.usuario.apellido}</Text> {comentario.comentario}</Text>
                 </View>
                 <View style={styles.textoDatosComentario}>
                     <Text style={styles.datoComentario}>{comentario.fecha.slice(11,16)}</Text>

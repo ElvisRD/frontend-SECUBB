@@ -27,23 +27,38 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
     const dispatch = useDispatch();
 
     useEffect(() => {
+      const backAction = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      ); 
+      return () => {
+          backHandler.remove(); 
+      };
+    }, []);
 
+    useEffect(() => {
       const getPermisoLocalizacion = async () => {
         try {
-          const granted = await PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-          if (granted === true) {
+          /* const granted = await PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); */
+
+            let { status } = await Location.requestForegroundPermissionsAsync();
+                
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              return false;
+            }
             let location = await Location.getCurrentPositionAsync({});
             dispatch(guardarUbicacionRedux(location));
             return true;
-          } else {
-            setPermisoLocalizacion(true);
-            return false;
-          }
+            
         } catch (err) {
-          console.log(err);
+          Alert.alert("Error", "No se obtuvo el permiso de localización"); 
         }
-    
       }
 
       const getAlertas = () => {
@@ -62,7 +77,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
            }
          
         }).catch((err) => {
-           console.log("no se encontraron alertas");
+          Alert.alert("Error", "No se obtuvieron las alertas"); 
         });
        }
        
@@ -83,6 +98,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
          
         }).catch((err) => {
            console.log("no se encontraron comentarios");
+           Alert.alert("Error", "No se obtuvieron los comentarios"); 
         });
        }
 
@@ -91,7 +107,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         obtenerSugerencias().then((result) => {
             dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-            console.log("no se encontraron sugerencias");
+          Alert.alert("Error", "No se obtuvieron las sugerencias"); 
         })
      
        }
@@ -105,16 +121,21 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         dispatch(guardarUsuarioRedux(datosUsuario));
        
        getPermisoLocalizacion().then((result) => {
-            getAlertas();
-            getComentarios();
-            
-            if(datosUsuario.tipo === "Administrador"){
-              getSugerencias();
-            }
-            setPortadaAfterLogin(false);
-            navigation.navigate("Home");
-         }).catch((err) => {
-           console.log(err);
+        console.log(result);
+        if(result === true){
+          getAlertas();
+          getComentarios();
+          
+          if(datosUsuario.tipo === "Administrador"){
+            getSugerencias();
+          }
+          setPortadaAfterLogin(false);
+          navigation.navigate("Home");
+        }else{
+          setPermisoLocalizacion(true);
+        } 
+        }).catch((err) => {
+          Alert.alert("Error", "No se obtuvo el permiso de localización"); 
         });  
       
        }

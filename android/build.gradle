@@ -12,6 +12,9 @@ buildscript {
             kotlinVersion = findProperty('android.kotlinVersion')
         }
         frescoVersion = findProperty('expo.frescoVersion') ?: '2.5.0'
+        
+        googlePlayServicesVersion = "16.1.0" // or set latest version
+        androidMapsUtilsVersion = "0.5+"
 
         if (System.properties['os.arch'] == 'aarch64') {
             // For M1 Users we need to use the NDK 24 which added support for aarch64
@@ -34,6 +37,7 @@ buildscript {
     }
 }
 
+
 allprojects {
     repositories {
         mavenLocal()
@@ -54,6 +58,9 @@ allprojects {
                 excludeGroup 'com.facebook.react'
             }
         }
-        maven { url 'https://www.jitpack.io' }
+       maven {
+        // expo-camera bundles a custom com.google.android:cameraview
+        url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
     }
 }

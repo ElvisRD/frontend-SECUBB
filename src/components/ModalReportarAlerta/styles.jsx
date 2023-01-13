@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
         
     },
     containerError: {
-        marginTop: "1%"
+        width: wp(88),
+        marginTop: hp(1)
     },
     textoError: {
         color: "red"

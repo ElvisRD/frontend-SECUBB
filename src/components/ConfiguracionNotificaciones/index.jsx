@@ -1,11 +1,41 @@
-import React,{useState} from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import React,{useState,useEffect} from 'react'
+import { View, Text } from 'react-native'
 import IconAD from 'react-native-vector-icons/AntDesign'
 import { TextInput, Button, Appbar, Switch } from 'react-native-paper'
 import styles from './styles'
+import { editarNotificaciones } from '../../data/usuarios'
+import { guardarUsuarioRedux } from '../../redux/actions/usuarioActions'
+import { useSelector, useDispatch} from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ConfiguracionNotificaciones({setVisibleConfiguracionNotificaciones}){
-    const [notificaciones, setNotificaciones] = useState(false)
+    const usuarioRedux = useSelector(state => state.usuario.usuario)
+    const [notificaciones, setNotificaciones] = useState(usuarioRedux.notificaciones)
+    const dispatch = useDispatch();
+   
+    const guardarNotificaciones = async () => {
+        const jsonValue = await AsyncStorage.getItem('usuario')
+        const datosUsuario = JSON.parse(jsonValue);
+        datosUsuario.notificaciones = notificaciones;
+       
+        const body = {
+            id: usuarioRedux.id,
+            notificaciones: notificaciones
+        }
+
+        try {
+            await AsyncStorage.setItem('usuario', JSON.stringify(datosUsuario))
+        }catch (e) {
+            console.log("error al guardar notificaciones");
+        } 
+
+        editarNotificaciones(body).then(async () => {
+           dispatch(guardarUsuarioRedux(datosUsuario))
+        }).catch((err) => {
+            console.log("error al editar notificaciones");
+        }); 
+        
+    }
 
     return(
         <View style={styles.containerConfiguracionNotificaciones}>
@@ -20,8 +50,14 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
                     <Text style={styles.textoNotificaciones}>Activas notificaciones</Text>
                     <Switch style={styles.inputActivarNotificaciones} value={notificaciones} onValueChange={()=> {notificaciones ? setNotificaciones(false):setNotificaciones(true)}} />
                 </View>
+                
             </View>
-            
+            <View style={styles.containerBoton}>
+                <Button style={styles.botonGuardar} mode="contained" onPress={guardarNotificaciones} disabled={
+                    usuarioRedux.notificaciones === notificaciones
+                } >Guardar</Button>
+            </View>
+ 
         </View>
     )
 }

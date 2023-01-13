@@ -22,9 +22,6 @@ import departamentoSiluetas from "../../json/departamentosSiluetas.json";
 import * as geolib from 'geolib';
 import  coordenadasUbb  from "../../json/coordenadasUbb";
 
-
-
-
 export default function Mapa({ socket}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
@@ -47,9 +44,6 @@ export default function Mapa({ socket}) {
         }
     }, [usuarioRedux.coordenadas])
     
-
-
-
     const [initialRegion, _] = useState({
         latitude: -36.821884,
         longitude: -73.012440,
@@ -199,15 +193,11 @@ export default function Mapa({ socket}) {
                 if(tipo === "Consumo de drogas"){
                     return <IconFA5 name="map-marker-alt" size={40} color="purple"/>
                 }
-
     }
-
     const mostrarAlerta = (alerta) => {
         setAlertaSeleccionada(alerta);
         setVerAlerta(true);
     }
-
-
     return (
         <>
         {isVisibleModal ? (
@@ -222,11 +212,7 @@ export default function Mapa({ socket}) {
             verTiposAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setVerTiposAlertas} />):(null)
         }
 
-       
-
-         
          <View style={styles.container}>
-
              <MapView
                 provider={PROVIDER_GOOGLE}
                 initialRegion={initialRegion}  
@@ -238,6 +224,7 @@ export default function Mapa({ socket}) {
                 zoomTapEnabled={false}
                 showsBuildings={false}
                 showsScale={true}
+                
                 //showsMyLocationButton={true}
                 
                 
@@ -266,9 +253,8 @@ export default function Mapa({ socket}) {
                     )
                 )):(null)
 
-    
               }
-
+{/* 
               {
                 departamentos.map((depa, i) => (
                     <Marker
@@ -319,8 +305,8 @@ export default function Mapa({ socket}) {
                     </Marker>
                 ))
               }
-
-              {departamentoSiluetas.map((departamento, i) => (
+ */}
+             {/*  {departamentoSiluetas.map((departamento, i) => (
                 <Polygon 
                     key={i}
                     coordinates={departamento.coordenadas}
@@ -330,7 +316,7 @@ export default function Mapa({ socket}) {
                 />
               ))
             }
-
+ */}
             </MapView>
 
             <Icon
@@ -357,27 +343,9 @@ export default function Mapa({ socket}) {
                     size= {40}
                 />
             </TouchableOpacity> 
-
-            <Provider >
-                    <Portal>
-                        <Dialog  visible={modalAvisoAlerta} onDismiss={()=>setModalAvisoAlerta(false)}>
-                            <Dialog.Icon icon="alert" />
-                            <Dialog.Title>¿Estás seguro que deseas cerrar sesión?</Dialog.Title>
-                            <Dialog.Actions>
-                                <Button onPress={()=>setModalAvisoAlerta(false)}>Cancelar</Button>
-                                <Button onPress={()=>setModalAvisoAlerta(false)}>Confirmar</Button>
-                            </Dialog.Actions>
-                        </Dialog>
-                    </Portal>
-            </Provider>
-
         </View>
-        
         </>
-
     )
-            
-
 }
 
 

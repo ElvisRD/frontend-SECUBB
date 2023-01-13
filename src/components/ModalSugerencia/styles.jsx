@@ -51,12 +51,19 @@ const styles = StyleSheet.create({
         width: "90%",
         zIndex: 7,
     },
+    containerError: {
+        width: "100%",
+        marginTop: hp(0.5),
+        paddingLeft: wp(5.5),
+    },
+    textoError: {
+        color: "red",
+    },
     containerBotonEnviar: {
         width: "100%",
-        height: 80,
         alignItems: "center",
         marginTop: hp(10),
-        marginBottom: hp(25)
+        marginBottom: hp(15)
     },
     botonEnviar: {
         width: "45%",

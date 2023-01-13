@@ -12,19 +12,44 @@ import Comentarios from "../Comentarios";
 export default function Alertas({handlePressButtons,socket}) {
 
     const [alertas, setAlertas] = useState([])
+    const [likesAlertas, setLikesAlertas] = useState(null);
     const alertasRedux = useSelector(state => state.alertas.alertas)
     const [alertaSeleccionada, setAlertaSeleccionada] = useState(null)
     const [verAlerta, setVerAlerta] = useState(null)
     const [verComentarios, setVerComentarios] = useState(false);
     const [isVisibleAlerta, setIsVisibleAlerta] = useState(false);
     const dimensionesPantalla = Dimensions.get("window");
-
+    const comentariosRedux = useSelector(state => state.comentarios.comentarios)
+    const likesAlertaRedux = useSelector(state => state.likesAlerta.usuarios)
 
     useEffect(() => {
         if(alertasRedux !== undefined){
+            //console.log(alertasRedux);
             setAlertas(alertasRedux);
         }
     },[alertasRedux]) 
+
+    useEffect(() => {
+      if(likesAlertaRedux !== null){
+        setLikesAlertas(likesAlertaRedux);
+      }
+    }, [likesAlertaRedux])
+    
+    const filtrarLikesAlerta = (alertaId) => {
+        if(likesAlertas !== null && likesAlertas !== undefined){
+            const likes = [];
+            likesAlertas.map(like => {
+                if(like.alertaId === alertaId){
+                    likes.push(like)
+                }
+            })
+           
+            return likes;
+        }else{
+            return null
+        }
+       
+    }
 
     return(
         <>
@@ -41,7 +66,7 @@ export default function Alertas({handlePressButtons,socket}) {
                        {alertas !== null ? (
                             alertas.map((alerta,i) => (
                                alerta.activa === true ? 
-                                    <CardAlerta socket={socket} alerta={alerta} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
+                                    <CardAlerta socket={socket} alerta={alerta} likesUsuarios={filtrarLikesAlerta(alerta.id)} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
                                :(null)   
                             ))
                         ):(

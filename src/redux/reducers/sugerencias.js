@@ -5,7 +5,7 @@ const valorInicial = {
 const state = (state = valorInicial, action) => {
     if(action.type === "guardarSugerencia"){
         if(state.sugerencias !== null && state.sugerencias[0] !== undefined){
-            return {sugerencias: [action.data, ...state.alertas]}
+            return {sugerencias: [action.data, ...state.sugerencias]}
         }else{
             if(action.data[0] !== undefined){
                 return {sugerencias: action.data}

@@ -1,71 +1,46 @@
 import React,{useState, useEffect} from "react"
 import { View, Text, TouchableOpacity, Pressable, Image } from 'react-native';
 import styles from "./styles"
-import { Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {like,dislike} from "../../data/alertas";
 import { useSelector, useDispatch } from "react-redux";
 import { daLikeAlertaRedux, borrarLikeAlertaRedux } from "../../redux/actions/likesActions";
 
-
-
-
-
-
-export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta, setVerComentarios,setAlertaSeleccionada}){
+export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta, setVerComentarios,setAlertaSeleccionada, likesUsuarios}){
     const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(null);
     const [cantidadComentarios, setCantidadComentarios] = useState(0);
     const [contadorLikes, setContadorLikes] = useState(0);
     const dispatch = useDispatch();
-    const comentariosRedux = useSelector(state => state.comentarios.comentarios)
-    const likesAlertaRedux = useSelector(state => state.likesAlerta.usuarios)
-    const alertasRedux = useSelector(state => state.alertas.alertas)
+
     const usuarioRedux = useSelector(state => state.usuario.usuario)
-
-
     
+
     useEffect(() => {
-        if(comentariosRedux !== null){
-            let cont = 0;
-            comentariosRedux.map(comentario => {
-                if(comentario.alertaId === alerta.id){
-                    cont++;
+        if(likesUsuarios !== null){
+            setLiked(false);
+            setLikes(likesUsuarios)
+            let cont=0;
+            likesUsuarios.map(like => {
+                cont++;
+                if(like.alertaId === alerta.id && like.usuarioId === usuarioRedux.id){
+                    setLiked(true)
                 }
             })
-            setCantidadComentarios(cont);
-        } 
-    }, [comentariosRedux])
+            setContadorLikes(cont);
+        }else{
+            console.log("hola");
+            setLiked(false);
+            setLikes(null);
+            setContadorLikes(0);
+        }
+    },[likesUsuarios])
 
     const seleccionarAlerta = () => {
         setVerAlerta(alerta)
         setIsVisibleAlerta(true) 
     }
 
-    useEffect(() => {
-        if(likesAlertaRedux !== null){
-
-            if(liked === true){
-                setLiked(false)
-            }
-            
-            let cont = 0;
-            likesAlertaRedux.map(like => {
-                if(like.alertaId === alerta.id){
-                    cont++;
-                    if(like.usuarioId === usuarioRedux.id){
-                        setLiked(true)
-                    }
-        
-                }
-            })
-            setContadorLikes(cont);
-           
-        }else{
-            setContadorLikes(0);
-            setLiked(false)
-        }
-    }, [likesAlertaRedux])
- 
     const handleLike = async () => {
 
         const body = {  
@@ -74,34 +49,34 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
         }
 
         let positionArray = null;
-        if(likesAlertaRedux !== null){
-            for(let i=0; i<likesAlertaRedux.length; i++){
-                if(likesAlertaRedux[i].alertaId === alerta.id && likesAlertaRedux[i].usuarioId === usuarioRedux.id){
-                positionArray = i;
-                break;
+        if(likes !== null){
+            for(let i=0; i<likes.length; i++){
+                if(likes[i].alertaId === alerta.id && likes[i].usuarioId === usuarioRedux.id){
+                    positionArray = i;
+                    break;
                 }
             }
-        }
+        }  
+
+        console.log(likes);
+        //console.log(positionArray);
 
         if(liked){
-            dislike(body);
-            dispatch(borrarLikeAlertaRedux(body, positionArray));
-            await socket.emit("daDislikeAlerta", body, positionArray);
-            setLiked(false);
-    
+            //dislike(body);
+           setLiked(false)
+           dispatch(borrarLikeAlertaRedux(body, positionArray));
+            //await socket.emit("daDislikeAlerta", body, positionArray);
         }else{
-            like(body);
+            //like(body);
+            console.log("se dio like");
             dispatch(daLikeAlertaRedux(body));
             await socket.emit("daLikeAlerta", body);
-            setLiked(true);
         }
-
     }
 
     const verComentariosAlerta = () => {
         setAlertaSeleccionada(alerta)
         setVerComentarios(true)
-    
     }
 
     return(

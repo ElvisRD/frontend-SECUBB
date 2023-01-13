@@ -9,6 +9,11 @@
     "orientation": "portrait",
     "android": {
       "package": "package.json"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0127acce-a365-49dc-93d9-866ae67c298d"
+      }
     }
   }
 }

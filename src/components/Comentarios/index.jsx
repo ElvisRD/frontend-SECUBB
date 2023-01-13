@@ -47,7 +47,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
             hideSubscription.remove();
         };
 
-      }, []);
+    }, []);
 
       useEffect(() => {
         if(comentariosRedux !== null){
@@ -59,62 +59,86 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
       }, [comentariosRedux])
       
       const crearUnComentario = async () => {
-
-        const body = {
-            alertaId: alertaId,
-            comentario: inputComentario,
-            usuarioId: usuarioRedux.id,
-
-        }
-
-        let comentario = null;
-       
-        await crearComentario(body).then((result) => {
-            comentario=result.nuevoComentario;
-          }).catch((err) => {
-            console.log(err);
-          }); 
-
-        await socket.emit("comentario", comentario);
-        dispatch(guardarComentarioRedux(comentario));
-
-        Keyboard.dismiss()
-        if (scrollRef && scrollRef.current) {
-            scrollRef.current?.scrollToEnd();
-        }
-        setInputComentario("");
-        setConfirmacion(false)
-      }
-
-      const guardarComentarioEditado = async () => {
-
-        const body = {
-            id: comentarioEditado.id,
-            comentario: comentarioEditado.comentario,
-        } 
-
-        editarComentario(body).then(() => {
-            Toast.show({
-                type: 'success',
-                position: 'top',
-                text1: 'El comentario fue editado con éxito.',
-                visibilityTime: 2000,
-            });
-        }).catch((err) => {
+        if(inputComentario !== ""){
+            const body = {
+                alertaId: alertaId,
+                comentario: inputComentario,
+                usuarioId: usuarioRedux.id,
+    
+            }
+    
+            let comentario = null;
+           
+            await crearComentario(body).then((result) => {
+                comentario=result.nuevoComentario;
+              }).catch((err) => {
+                console.log(err);
+              }); 
+    
+            await socket.emit("comentario", comentario);
+            dispatch(guardarComentarioRedux(comentario));
+    
+            Keyboard.dismiss()
+            if (scrollRef && scrollRef.current) {
+                scrollRef.current?.scrollToEnd();
+            }
+            setInputComentario("");
+            setConfirmacion(false)
+        }else{
             Toast.show({
                 type: 'error',
                 position: 'top',
-                text1: 'Ocurrio un error al editar el comentario.',
-                visibilityTime: 2000,
+                text1: 'Error',
+                text2: 'El comentario no puede estar vacío',
+                visibilityTime: 3000,
             });
-        });
-        
-        await socket.emit("editarComentario", comentarioEditado);
-        dispatch(editarComentarioRedux(comentarioEditado));
-        setModalEditar(false)
+        }
+      }
 
+      const guardarComentarioEditado = async () => {
+        if(comentarioEditado.comentario !== ""){
+            const body = {
+                id: comentarioEditado.id,
+                comentario: comentarioEditado.comentario,
+            } 
+            editarComentario(body).then(() => {
+                Toast.show({
+                    type: 'success',
+                    position: 'top',
+                    text1: 'El comentario fue editado con éxito.',
+                    visibilityTime: 3000,
+                });
+            }).catch((err) => {
+                if(err.response.status === 404){
+                    Toast.show({
+                        type: 'error',
+                        position: 'top',
+                        text1: 'Error al editar el comentario.',
+                        visibilityTime: 3000,
+                    });
+                }else{
+                    Toast.show({
+                        type: 'info',
+                        position: 'top',
+                        text1: 'El comentario es el mismo',
+                        visibilityTime: 3000,
+                    });
+                }
+            });
+            
+            await socket.emit("editarComentario", comentarioEditado);
+            dispatch(editarComentarioRedux(comentarioEditado));
+            setModalEditar(false) 
+        }else{
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Error',
+                text2: 'El comentario no puede estar vacío',
+                visibilityTime: 3000,
+            });
+        }
     }
-
 
     return (
     <View style={styles.containerComentarios} >
@@ -133,7 +157,6 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                                         <CardComentario comentario={comentario} socket={socket} alertaId={alertaId} setModalEditar={setModalEditar} setComentarioEditado={setComentarioEditado} />
                                      </View>
                                 )
-                                
                             })
                         ) : (
                             <View style={styles.containerErrorComentarios}> 

@@ -52,8 +52,6 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
       setLoading(false)
       
     }
-
-
     
     return(
       <>
@@ -61,11 +59,12 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
         {visibleCamara ? <Camara setVisibleCamara={setVisibleCamara} setImagen={setImagen} setLoading={setLoading}/> : (null)}
 
         <View style={styles.containerModalReportar}>
-          <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
           <Appbar.Header style={styles.containerNav} >
                 <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setModalReportar(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
                 <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
           </Appbar.Header>
+          <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
+          
           <View style={styles.containerTitle}>
             <Text style={styles.title}>Crear alerta</Text>
           </View>
@@ -84,13 +83,11 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       descripcion_ubicacion: values.descripcion_ubicacion,
                       latitude: values.latitude,
                       longitude: values.longitude,
-                      activa: true,
                       usuarioId: usuarioRedux.id
                       
-                    }        
-                          
-                    let nuevaAlerta = null;
+                    }     
 
+                    let nuevaAlerta = null;
                     setLoading(true);
 
                     await crearAlerta(body).then((result) => {
@@ -100,7 +97,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                         position: 'top',
                         text1: 'La alerta fue creada con éxito',
                         visibilityTime: 3000,
-                      });; 
+                      });
                     }).catch((err) => {
                       Toast.show({
                         type: 'error',
@@ -110,10 +107,9 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       });; 
                     }); 
 
-                    
-                    setLoading(false);
+                    setLoading(false); 
 
-                    let tipoSinEspacios = values.tipo.replace(/ /g,"_");
+                     let tipoSinEspacios = values.tipo.replace(/ /g,"_");
 
                     if(imagen !== ""){
 
@@ -129,11 +125,11 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                       }).catch((err) => {
                         console.log(err);
                       }); 
-                    }    
+                    }     
                     
                     await socket.emit("alerta", nuevaAlerta);
 
-                    dispatch(guardarAlertaRedux(nuevaAlerta));
+                    dispatch(guardarAlertaRedux(nuevaAlerta)); 
                 
                     setModalReportar(false);
                    
@@ -152,7 +148,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
                   </View>
                   
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" label="Ubicación" multiline={true} numberOfLines={2} value={values.ubicacion} disabled/>
+                    <TextInput mode="outlined" label="Ubicación" multiline={true} numberOfLines={1} value={values.ubicacion} disabled/>
                   </View>
 
                   <View style={styles.containerInputs}>

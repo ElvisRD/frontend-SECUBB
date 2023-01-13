@@ -7,7 +7,7 @@ import Menu from "../../components/Menu/"
 import Alertas from "../../components/Alertas"
 
 import {URL_CONNECT_BACKEND} from "../../../env"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { guardarAlertaRedux,eliminarAlertaRedux} from '../../redux/actions/alertasActions';
 import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux } from '../../redux/actions/comentariosActions';
 import { guardarSugerenciaRedux, eliminarSugerenciaRedux } from '../../redux/actions/sugerenciasActions';
@@ -20,6 +20,7 @@ const socket = io(URL_CONNECT_BACKEND);
 export default function Home({navigation}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const [isVisibleNoticias, setIsVisibleNoticias] = useState(false);
+  const  usuario = useSelector((state) => state.usuario.usuario);
 
   useEffect(() => {
 
@@ -76,14 +77,16 @@ export default function Home({navigation}) {
       dispatch(editarComentarioRedux(comentario));
     })
 
-    socket.on("guardarSugerencia", (sugerencia) => {
-      dispatch(guardarSugerenciaRedux(sugerencia));
-    })
+    if(usuario.tipo === "Administrador"){
+      socket.on("guardarSugerencia", (sugerencia) => {
+        dispatch(guardarSugerenciaRedux(sugerencia));
+      })
 
-    socket.on("eliminarSugerencia", (sugerencia) => {
-      dispatch(eliminarSugerenciaRedux(sugerencia));
-    })
-
+      socket.on("eliminarSugerencia", (sugerencia) => {
+        dispatch(eliminarSugerenciaRedux(sugerencia));
+      })
+    }
+    
     socket.on("notificacion", (notificacion) => {
       dispatch(guardarNotificacionRedux(notificacion));
     });
@@ -136,7 +139,7 @@ export default function Home({navigation}) {
               <Alertas handlePressButtons={handlePressButtons} socket={socket}/>
             ): (null)}
 
-          <Mapa socket={socket}/>
+          <Mapa socket={socket}/> 
         </View>
         <View style={styles.containerBotones}> 
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("mapa")}} >
