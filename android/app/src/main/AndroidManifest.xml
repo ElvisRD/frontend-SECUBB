@@ -19,7 +19,7 @@
     <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@2soul2/SECUBB"/>
     <meta-data android:name="expo.modules.updates.EXPO_RELEASE_CHANNEL" android:value="default"/>
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="your-API-key-goes-here"/>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAHoiLDOEHlC38XnXgkwO-zo0vVj9lRA7Y"/>
     <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true">

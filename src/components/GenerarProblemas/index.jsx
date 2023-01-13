@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text  } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
-
+import {Picker} from '@react-native-picker/picker';
 import { Portal, Provider, Button, Dialog, Appbar } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
@@ -148,7 +148,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                 
                 <View  style={styles.containerLugares}>
                     <Text style={styles.tituloSelect}>Tipo de alerta</Text>
-                   {/*  <Picker
+                    <Picker
                         style={styles.select}
                         ref={pickerRef}
                         selectedValue={valorSeleccionado}
@@ -159,7 +159,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
                         <Picker.Item label="Perros rondando" value="Perros rondando" />
                         <Picker.Item label="Emergencia de salud" value="Emergencia de salud" />
                         <Picker.Item label="Consumo de drogas" value="Consumo de drogas" />
-                    </Picker> */}
+                    </Picker> 
                 </View >
                 <View style={styles.containerInputFechas}>
                     <View style={styles.containerTituloFecha}>
