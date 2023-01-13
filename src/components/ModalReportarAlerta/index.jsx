@@ -37,11 +37,10 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
   
     const handleBotonImagen = async () => {
       setLoading(true)
-      const {status} = Camera.requestCameraPermissionsAsync()
-
+      const {status} = await Camera.requestCameraPermissionsAsync()
+      
       if(status !== "granted"){
         setPermisoCamara(true);
-        console.log("no se pudo obtener el permiso de la camara");
       }else{
         setVisibleCamara(true);
         setPermisoCamara(false);
