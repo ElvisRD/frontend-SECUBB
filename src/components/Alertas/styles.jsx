@@ -10,29 +10,6 @@ const styles = StyleSheet.create({
         height: "100%",
         
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
-    containerTitle: {
-        width: "100%",
-        justifyContent: "center",
-        height: "100%",
-    },
-    title: {
-        fontSize: wp(10),
-        paddingLeft: wp(2)
-    },
-    botonCerrar: {
-        borderRadius: 100,
-        right: wp(2),
-    },
-    iconCerrar: {
-        borderRadius: 100,
-    },
     
     alertasPantallaGrand: {
         width: "100%",

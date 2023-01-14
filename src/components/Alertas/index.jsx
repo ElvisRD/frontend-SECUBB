@@ -5,8 +5,9 @@ import CardAlerta from "../CardAlerta"
 import { useSelector } from "react-redux";
 import IconAD from 'react-native-vector-icons/AntDesign';
 import Alerta from "../Alerta"
-import { Appbar } from 'react-native-paper';
+//import { Appbar } from 'react-native-paper';
 import Comentarios from "../Comentarios";
+import Appbar from "../Appbar"
 
 
 export default function Alertas({handlePressButtons,socket}) {
@@ -75,16 +76,20 @@ export default function Alertas({handlePressButtons,socket}) {
         }
     }
 
+
+
     return(
         <>
             {isVisibleAlerta ? <Alerta socket={socket} setIsVisibleAlerta={setIsVisibleAlerta} verAlerta={verAlerta} /> : null }
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={alertaSeleccionada.id} /> : (null)} 
 
             <View style={styles.containerAlertas} >
-            <Appbar.Header style={styles.containerNav}>
+            {/* <Appbar.Header style={styles.containerNav}>
                 <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
                 <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}} icon={props => <IconAD name="close" size={35} color="black" />} />
-            </Appbar.Header>
+            </Appbar.Header> */}
+                <Appbar titulo="Alertas" handlePressButton={()=>{handlePressButtons("mapa")}} icono="close" />
+            
                 <View style={dimensionesPantalla.height < 700 ? styles.alertasPantallaPeque: styles.alertasPantallaGrand}>
                     <ScrollView style={styles.containerAlertasActuales}> 
                        {alertas !== null ? (
