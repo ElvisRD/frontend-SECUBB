@@ -1,17 +1,13 @@
 import React from 'react';
 import styles from './styles';
-import { View, StyleSheet, Text,TouchableOpacity } from 'react-native';
-import IconAD from 'react-native-vector-icons/AntDesign';
-import { Appbar } from 'react-native-paper';
+import { View } from 'react-native';
 import RepresentacionPin from './representacionPin';
+import Appbar from '../Appbar';
 
 export default function TiposAlertaMapa({setVerTiposAlertas}) {
     return (
         <View style={styles.containerTiposAlertas}>
-             <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Tipos de alertas" />
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVerTiposAlertas(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
-            </Appbar.Header>
+             <Appbar titulo="Tipo de alertas" handlePressButtonRight={()=>{setVerTiposAlertas(false)}} iconoDerecha="close" />
             <View style={styles.containerAlertas}>
                 <RepresentacionPin colorPin="red" tipoAlerta="hola" />
                 <RepresentacionPin colorPin="red" tipoAlerta="hola" />

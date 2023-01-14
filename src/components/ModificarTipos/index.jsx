@@ -1,14 +1,14 @@
 import React,{useState,useRef} from "react";
 import { View, Text } from "react-native";
-import { Appbar, TextInput, Button } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import IconAD from "react-native-vector-icons/AntDesign";
 import {validacionCorreo} from "../../utils/validaciones"
 import {modificarTipoUsuario} from "../../data/usuarios"
 import {Picker} from '@react-native-picker/picker';
 import { Formik } from "formik";
 import Toast  from "react-native-toast-message";
+import Appbar from "../Appbar";
 
 export default function ModificarTipos({setIsVisible}){
     const [valorSeleccionado, setValorSeleccionado] = useState("Usuario");
@@ -30,10 +30,7 @@ export default function ModificarTipos({setIsVisible}){
 
     return (
         <View style={styles.containerModificarTipos}>
-            <Appbar.Header style={styles.containerNav}>
-                        <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisible(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
-            
+            <Appbar handlePressButtonLeft={()=>{setIsVisible(false)}} iconoIzquierda="arrowleft" />
             <KeyboardAwareScrollView style={styles.modificarTipos}>
                 <Formik
                     initialValues={initialValues}

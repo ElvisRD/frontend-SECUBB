@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
-import { TextInput, Button,Appbar, Provider, Portal, Dialog } from 'react-native-paper';
+import { TextInput, Button, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -15,10 +15,11 @@ import {guardarImagen} from "../../data/imagenes"
 import Toast from 'react-native-toast-message';
 import {Camera} from "expo-camera"
 import Cargando from "../Cargando"
+import Appbar from "../Appbar";
 
 
 
-export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta, ubicacion}){
+export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibleModal, socket, coordenadasAlerta, ubicacion}){
     const [visibleCamara, setVisibleCamara] = useState(false);
     const [imagen, setImagen] = useState("");
     const usuarioRedux = useSelector(state => state.usuario.usuario);
@@ -54,10 +55,7 @@ export default function ModalReportarAlerta({tipoAlerta, setModalReportar,setIsV
         {visibleCamara ? <Camara setVisibleCamara={setVisibleCamara} setImagen={setImagen} setLoading={setLoading}/> : (null)}
 
         <View style={styles.containerModalReportar}>
-          <Appbar.Header style={styles.containerNav} >
-                <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setModalReportar(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
-          </Appbar.Header>
+          <Appbar handlePressButtonLeft={()=>{setModalReportar(false)}} iconoIzquierda="arrowleft" />
           <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
           
           <View style={styles.containerTitle}>

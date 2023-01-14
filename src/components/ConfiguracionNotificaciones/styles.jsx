@@ -8,12 +8,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         zIndex: 7,
    },
-   containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-   },
+   
    containerTitle: {
         width: "100%",
         marginTop: hp(1),
@@ -21,13 +16,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: wp(10),
         paddingLeft: hp(2),
-    },
-    botonCerrar: {
-        borderRadius: 100,
-        marginLeft: wp(2)
-    },
-    iconCerrar: {
-        borderRadius: 100,
     },
     contanierNotificaciones: {
         width: "100%",

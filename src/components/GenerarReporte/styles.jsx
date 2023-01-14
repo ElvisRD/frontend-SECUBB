@@ -13,26 +13,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
+   
     containerTitle: {
         width: "100%",
     },
     title: {
         fontSize: wp(10),
         paddingLeft: hp(2),
-    },
-     botonCerrar: {
-        borderRadius: 100,
-        marginLeft: wp(2)
-    },
-    iconCerrar: {
-        borderRadius: 100,
     },
     containerLugares: {
         width: "100%",

@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import { View, Text } from 'react-native'
 import IconAD from 'react-native-vector-icons/AntDesign'
-import { TextInput, Button, Appbar, Switch } from 'react-native-paper'
+import { TextInput, Button, Switch } from 'react-native-paper'
 import styles from './styles'
 import { editarNotificaciones } from '../../data/usuarios'
 import { guardarUsuarioRedux } from '../../redux/actions/usuarioActions'
 import { useSelector, useDispatch} from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Appbar from '../Appbar'
 
 export default function ConfiguracionNotificaciones({setVisibleConfiguracionNotificaciones}){
     const usuarioRedux = useSelector(state => state.usuario.usuario)
@@ -39,9 +40,8 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
 
     return(
         <View style={styles.containerConfiguracionNotificaciones}>
-            <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVisibleConfiguracionNotificaciones(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
+            <Appbar handlePressButtonLeft={()=>{setVisibleConfiguracionNotificaciones(false)}} iconoIzquierda="arrowleft" />
+            
             <View style={styles.containerTitle}>
                     <Text style={styles.title}>Notificaciones</Text>
             </View> 

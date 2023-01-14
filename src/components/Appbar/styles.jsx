@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: hp(8),
         flexDirection: "row",
+        justifyContent: "space-between",
         borderBottomWidth: 1,
         borderColor: "#E5E5E5",
         
@@ -15,14 +16,19 @@ const styles = StyleSheet.create({
     },
     titulo: {
         fontSize: wp(10),
-        paddingLeft: wp(2)
+        paddingLeft: wp(5)
     },
-
-    containerBoton: {
+    containerBotonIzquierda: {
         width: wp(15),
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
+        
+    },
+
+    containerBotonDerecha: {
+        width: wp(15),
+        justifyContent: "center",
+        alignItems: "center",
     },
     boton: {
         padding: wp(2),

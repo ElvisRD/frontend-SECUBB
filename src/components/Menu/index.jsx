@@ -1,10 +1,9 @@
 import React,{useState} from "react"
 import { View, Text, TouchableOpacity} from 'react-native';
 import styles from "./styles"
-import { Dialog, Portal, Appbar, Provider, Button } from 'react-native-paper';
-import IconAD from 'react-native-vector-icons/AntDesign';
+import { Dialog, Portal, Provider, Button } from 'react-native-paper';
 import ModalSugerencia from "../ModalSugerencia";
-import ModalLugaresProblematicos from "../GenerarProblemas";
+import ModalLugaresProblematicos from "../GenerarReporte";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfiguracionNotificaciones from "../ConfiguracionNotificaciones";
 import ModalVerSugerencias from "../ModalVerSugerencias";
@@ -12,6 +11,7 @@ import {limpiarRedux} from "../../redux/actions/usuarioActions";
 import ModificarContraseña from "../ModificarContraseña"
 import ModificarTipos from "../ModificarTipos"
 import {useSelector, useDispatch} from "react-redux"
+import Appbar from "../Appbar";
 
 export default function Menu({handlePressButtons, navigation, socket}){
     const [isVisibleLugares, setModalLugaresProblematicos] = useState(false);
@@ -50,11 +50,7 @@ export default function Menu({handlePressButtons, navigation, socket}){
         
         <View style={styles.containerMenu} >
               <View style={styles.menu}>
-                <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Menú" />
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{handlePressButtons("mapa")}} icon={props => <IconAD name="close" size={35} color="black" />} />
-                </Appbar.Header>
-
+                <Appbar titulo="Menú" handlePressButtonRight={()=>{handlePressButtons("mapa")}} iconoDerecha="close" />
                 <View style={styles.containerOpciones}> 
                     <TouchableOpacity style={styles.opcionPerfil} onPress={()=>{setVisibleConfiguracionNotificaciones(true)}} >
                         <Text style={styles.textOpcion}>Notificaciones</Text>

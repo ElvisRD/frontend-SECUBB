@@ -1,8 +1,7 @@
-import React,{useState, useEffect, useRef} from 'react';
+import React,{useState, useEffect} from 'react';
 import { View , Text,TouchableOpacity, Dimensions } from 'react-native';
 import MapView,{Marker,PROVIDER_GOOGLE, Polygon} from 'react-native-maps';
-import { Dialog, Portal, Provider, Button } from 'react-native-paper';
-import ModalAlerts from "../ModalAlertas";
+import CrearAlerta from "../CrearAlerta";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
@@ -14,7 +13,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from "./styles"
 import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
-import Alerta from "../Alerta";
+import Alerta from "../DetallesAlerta";
 import TiposAlertaMapa from "./tiposAlertaMapa";
 import mapStyle from "../../json/styleMap.json";
 import departamentos from "../../json/depatamentosUbb.json";
@@ -203,7 +202,7 @@ export default function Mapa({ socket}) {
     return (
         <>
         {isVisibleModal ? (
-            <ModalAlerts setIsVisibleModal={setIsVisibleModal} socket={socket} coordenadasAlerta={coordenadasAlerta} ubicacion={ubicacion}/>
+            <CrearAlerta setIsVisibleModal={setIsVisibleModal} socket={socket} coordenadasAlerta={coordenadasAlerta} ubicacion={ubicacion}/>
          ):(null)} 
 
        {verAlerta ? (

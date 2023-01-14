@@ -4,11 +4,12 @@ import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
 import styles from "./styles"
 import {editarComentario} from "../../data/comentarios";
-import { TextInput, Dialog, Portal, Paragraph, Button, Provider, Appbar } from 'react-native-paper';
+import { TextInput, Dialog, Portal, Paragraph, Button, Provider } from 'react-native-paper';
 import { useSelector, useDispatch } from "react-redux";
 import { crearComentario } from "../../data/comentarios";
 import { guardarComentarioRedux, editarComentarioRedux } from "../../redux/actions/comentariosActions";
 import Toast from 'react-native-toast-message';
+import Appbar from "../Appbar";
 
 
 
@@ -141,9 +142,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
 
     return (
     <View style={styles.containerComentarios} >
-        <Appbar.Header style={styles.containerNav}>
-            <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setVerComentarios(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-        </Appbar.Header>
+        <Appbar handlePressButtonLeft={()=>{setVerComentarios(false)}} iconoIzquierda="arrowleft" />
         <View style={styles.containerTitle}>
             <Text style={styles.title}>Comentarios</Text>
         </View>

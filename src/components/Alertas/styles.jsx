@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
         height: "100%",
         
     },
-    
     alertasPantallaGrand: {
         width: "100%",
         height: hp(84),

@@ -9,13 +9,6 @@ const styles = StyleSheet.create({
         zIndex: 8,
         height: "100%"
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
     modificarContraseña: {
         width: "100%",
         height: "100%",

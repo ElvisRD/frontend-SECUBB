@@ -9,12 +9,6 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         zIndex: 10,
    },
-   containerNav: {
-      width: "100%",
-      backgroundColor: "white",
-      borderBottomWidth: 1,
-      borderColor: "#E5E5E5",
-   },
    modificarTipos: {
       width: "100%",
       height: "100%",

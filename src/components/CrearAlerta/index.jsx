@@ -1,18 +1,15 @@
-import React,{useEffect, useState} from "react"
-import { View, Text, StyleSheet, TouchableOpacity  } from "react-native"
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React,{useState} from "react"
+import { View, Text, TouchableOpacity  } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
-import ModalReportarAlerta from "../ModalReportarAlerta";
-import { Appbar } from 'react-native-paper';
+import ModalReportarAlerta from "../ReportarAlerta";
+import Appbar from "../Appbar";
 
 
-export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta,ubicacion}){
+export default function CrearAlerta({setIsVisibleModal,socket,coordenadasAlerta,ubicacion}){
 
     const [modalReportar, setModalReportar] = useState(false);
     const [tipoAlerta, setTipoAlerta] = useState("");
-
 
     const clickAlerta = (tipo) => {
         setTipoAlerta(tipo)
@@ -28,10 +25,7 @@ export default function ModalAlertas({setIsVisibleModal,socket,coordenadasAlerta
            :(null)} 
 
             <View style={styles.containerModal}>
-                        <Appbar.Header style={styles.containerNav} >
-                            <Appbar.Content style={styles.containerTitle} titleStyle={styles.title} title="Alertas" />
-                            <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisibleModal(false)}} icon={props => <IconAD name="close" size={35} color="black" />} />
-                        </Appbar.Header>
+                        <Appbar titulo="Alertas" handlePressButtonRight={()=>{setIsVisibleModal(false)}} iconoDerecha="close" />
                         <View  style={styles.containerBotonesAlerta}>
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>

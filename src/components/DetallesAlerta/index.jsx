@@ -1,11 +1,10 @@
 import React,{useEffect, useState} from 'react'
-import { View, Text, TouchableOpacity, Image } from "react-native"
-import { Dialog, Portal, Appbar, Provider, Button } from 'react-native-paper'
+import { View, Text, Image } from "react-native"
+import { Dialog, Portal, Provider, Button } from 'react-native-paper'
 import styles from "./styles"
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import IconMI from 'react-native-vector-icons/MaterialIcons';
-import IconF from 'react-native-vector-icons/Feather';
 import { eliminarAlerta } from '../../data/alertas';
 import { URL_CONNECT_BACKEND } from '../../../env';
 import { eliminarComentarioRedux } from '../../redux/actions/comentariosActions'
@@ -15,9 +14,10 @@ import {obtenerImagen} from "../../data/imagenes"
 import Comentarios from '../Comentarios';
 import { useSelector, useDispatch } from 'react-redux'
 import Toast from 'react-native-toast-message';
+import Appbar from '../Appbar'
 
 
-export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
+export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
    
     const [spinnerFoto, setSpinnerFoto] = useState(true);
     const [spinnerComentarios, setSpinnerComentarios] = useState(true);
@@ -109,14 +109,16 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id}/> : (null)} 
 
             <View style={styles.containerAlerta}>
-                <Appbar.Header style={styles.containerNav} >
-                    <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setIsVisibleAlerta(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-                     {
-                        verAlerta.usuarioId === usuarioRedux.id ? (
-                            <Appbar.Action animated={false} style={styles.botonEliminar} onPress={()=>setModalEliminarAlerta(true)} icon={props => <IconMI name="delete-outline" size={35} color="black" />} /> 
-                        ):(null)
-                    } 
-                </Appbar.Header>
+
+                {
+                    verAlerta.usuarioId === usuarioRedux.id ? (
+                    <Appbar handlePressButtonLeft={()=>{setIsVisibleAlerta(false)}} handlePressButtonRight={()=>setModalEliminarAlerta(true)} 
+                    iconoIzquierda="arrowleft" iconoDerecha="delete-outline" 
+                    />) : (
+                    <Appbar handlePressButtonLeft={()=>{setIsVisibleAlerta(false)}} iconoIzquierda="arrowleft" /> 
+                    )
+                }
+                
                 <KeyboardAwareScrollView bounces={false} style={styles.alerta} >
                     <View style={styles.containerTituloAlerta}>
                         <Text style={styles.tituloAlerta}>{verAlerta.tipo}</Text>

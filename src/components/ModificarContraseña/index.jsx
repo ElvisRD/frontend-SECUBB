@@ -1,14 +1,14 @@
 import React,{useState} from "react"
 import { View, Text } from "react-native"
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { TextInput, Appbar,Button } from "react-native-paper"
-import IconAD from 'react-native-vector-icons/AntDesign';
+import { TextInput,Button } from "react-native-paper"
 import styles from "./styles"
 import {modificarContrasena} from "../../data/usuarios"
 import  {validacionModificarContrasena}  from "../../utils/validaciones";
 import { Formik } from "formik"
 import Toast from 'react-native-toast-message';
 import { useSelector } from "react-redux";
+import Appbar from "../Appbar";
 
 export default function ModificarContraseña({setIsVisible}) {
     const [visibleContraActual, setVisibleContraActual] = useState(false)
@@ -24,10 +24,7 @@ export default function ModificarContraseña({setIsVisible}) {
 
     return (
         <View style={styles.containerModificarContraseña}>
-            <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setIsVisible(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
-            
+            <Appbar handlePressButtonLeft={()=>{setIsVisible(false)}} iconoIzquierda="arrowleft" />
             <KeyboardAwareScrollView style={styles.modificarContraseña}>
             <Formik
                 initialValues={initialValues}

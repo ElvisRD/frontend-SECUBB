@@ -1,16 +1,17 @@
 import React,{useState, useRef} from "react"
-import { View, TouchableOpacity, Text  } from "react-native"
+import { View, Text  } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
-import { Portal, Provider, Button, Dialog, Appbar } from 'react-native-paper';
+import { Portal, Provider, Button, Dialog } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
+import Appbar from "../Appbar";
 
 
-export default function ModalLugaresProblematicos({setModalLugaresProblematicos}) {
+export default function GenerarReporte({setModalLugaresProblematicos}) {
 
     const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
     const [mostrarMapa, setMostrarMapa] = useState(false);
@@ -139,9 +140,7 @@ export default function ModalLugaresProblematicos({setModalLugaresProblematicos}
 
          <View style={styles.containerModalLugaresProblematicos}>
              <KeyboardAwareScrollView bounces={false} style={styles.modalLugaresProblematicos}>
-                <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setModalLugaresProblematicos(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-                </Appbar.Header>
+                <Appbar handlePressButtonLeft={()=>{setModalLugaresProblematicos(false)}} iconoIzquierda="arrowleft" />
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}>Lugares Problematicos</Text>
                 </View>

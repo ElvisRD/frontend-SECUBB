@@ -84,13 +84,6 @@ const styles = StyleSheet.create({
         fontSize: wp(8),
         paddingTop: hp(2.5),
     },
-    botonCerrar: {
-        borderRadius: 100,
-        right: wp(2),
-    },
-    iconCerrar: {
-        borderRadius: 100,
-    },
     containerAlertas: {
         width: "100%",
         height: "70%",
@@ -108,13 +101,6 @@ const styles = StyleSheet.create({
     },
     containerPinDepartamentos: {
         alignItems: "center",
-    },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
     },
     
 

@@ -1,13 +1,13 @@
 import React,{useState, useEffect} from "react"
 import { View, Text, ScrollView } from "react-native"
-import { Button, Appbar, Provider, Dialog, Portal } from "react-native-paper"
+import { Button, Provider, Dialog, Portal } from "react-native-paper"
 import styles from "./styles"
 import {eliminarSugerencia} from "../../data/sugerencias"
 import { eliminarSugerenciaRedux } from "../../redux/actions/sugerenciasActions"
 import {useSelector, useDispatch} from "react-redux"
 import CardSugerencia from "../CardSugerencia"
-import IconAD from 'react-native-vector-icons/AntDesign';
 import Toast from 'react-native-toast-message';
+import Appbar from "../Appbar";
 
 
 export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
@@ -56,10 +56,7 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
    
     return(
         <View style={styles.containerModalVerSugerencias}>
-            <Appbar.Header style={styles.containerNav}>
-                <Appbar.Action animated={false} style={styles.botonVolver} onPress={()=>{setModalVerSugerencias(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-                {/* se puede poner el boton para cerrar y volver al mapa */}
-            </Appbar.Header>
+            <Appbar handlePressButtonLeft={()=>{setModalVerSugerencias(false)}} iconoIzquierda="arrowleft" />
             <View style={styles.containerTitle}>
                 <Text style={styles.title}>Sugerencias</Text>
             </View>

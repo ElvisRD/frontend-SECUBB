@@ -9,33 +9,12 @@ const styles = StyleSheet.create({
         zIndex: 7
 
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
     alerta: {
         width: "100%",
         marginTop: hp(1.5),
         height: hp(75),
     },
-    containerBotones: {
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        height: hp(5),
-        marginTop: hp(5),
-       
-    },
-    botonVolver: {
-        marginLeft: wp(2)
-    },
-    botonEliminar: {
-        position: "absolute",
-        right: wp(4.5),
-    },
+    
     containerTituloAlerta: {
         width: "100%",
         paddingLeft: wp(5)

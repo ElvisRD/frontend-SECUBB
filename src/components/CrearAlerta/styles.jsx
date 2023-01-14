@@ -12,26 +12,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height: "100%",
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
     title: {
         fontSize: wp(10),
         paddingTop: hp(2.5),
         paddingLeft: wp(2)
     },
-    botonCerrar: {
-        borderRadius: 100,
-        right: wp(2),
-    },
-    iconCerrar: {
-        borderRadius: 100,
-    },
-    
     containerBotonesAlerta: {
         width: "100%",
         height: "100%",
