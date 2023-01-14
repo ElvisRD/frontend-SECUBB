@@ -1,14 +1,14 @@
 import React,{useState, useRef} from "react"
 import { View, Text  } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
-import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
-import { Portal, Provider, Button, Dialog } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
 import Appbar from "../Appbar";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 
 export default function GenerarReporte({setModalLugaresProblematicos}) {
@@ -16,7 +16,6 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
     const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
     const [mostrarMapa, setMostrarMapa] = useState(false);
     const [alertas, setAlertas] = useState(null);
-    const [modalNoHayAlertas, setModalNoHayAlertas] = useState(false);
 
     const [fechaInicialSeleccinada, setFechaInicialSeleccinada] = useState({
         fecha: "",
@@ -100,8 +99,16 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                 setAlertas(result);
                 setMostrarMapa(true);
             }).catch((err) => {
-                console.log(err);
-                setModalNoHayAlertas(true)
+                if(err.response.status === 404){
+                    Toast.show({
+                        type: "error",
+                        position: "top",
+                        text1: "No se encontraron alertas",
+                        visibilityTime: 3000,
+                    })
+                }else{
+                    console.log("ocurrio un error al obtener las alertas");
+                }
             });
 
         }
@@ -220,17 +227,6 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                     </Button>
                 </View>
             </KeyboardAwareScrollView>  
-            <Provider >
-                    <Portal>
-                        <Dialog visible={modalNoHayAlertas} onDismiss={()=>setModalNoHayAlertas(false)}>
-                            <Dialog.Icon icon="alert" />
-                            <Dialog.Title>No se encontraron alertas</Dialog.Title>
-                            <Dialog.Actions>
-                            <Button onPress={()=>setModalNoHayAlertas(false)}>Volver</Button>
-                            </Dialog.Actions>
-                        </Dialog>
-                    </Portal>
-            </Provider>
         </View>
         </>
 

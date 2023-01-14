@@ -1,7 +1,7 @@
 import React,{useState} from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, Text } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
-import { TextInput, Button, Appbar } from "react-native-paper"
+import { TextInput, Button } from "react-native-paper"
 import styles from "./styles"
 import {crearSugerencia} from "../../data/sugerencias"
 import {useSelector} from "react-redux"
@@ -10,6 +10,7 @@ import Toast from 'react-native-toast-message';
 import {validacionSugerencia} from "../../utils/validaciones"
 import {Formik} from "formik";
 import Cargando from "../Cargando"
+import Appbar from "../Appbar"
 
 export default function ModalSugerencia({setModalSugerencia,socket}){
     const [sugerencia, setSugerencia] = useState("");
@@ -32,9 +33,7 @@ export default function ModalSugerencia({setModalSugerencia,socket}){
         {cargando ? <Cargando/> : null}
 
         <View style={styles.containerModalSugerencia}>
-            <Appbar.Header style={styles.containerNav}>
-                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setModalSugerencia(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
+            <Appbar handlePressButtonLeft={()=>{setModalSugerencia(false)}} iconoIzquierda="arrowleft" />
              <KeyboardAwareScrollView bounces={false} style={styles.modalSugerencia}>
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}>Sugerencia</Text>

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     
     sugerencias: {
         width: "100%",
-        height: hp(84),
+        height: hp(86),
     },
     containerSugerencias: {
         width: "100%",

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     containerCardSugerencia: {
         width: "100%",
         alignItems: "center",
-        marginBottom: hp(2),
+        marginBottom: hp(3),
     },
     cardSugerencia: {
         width: "94%",

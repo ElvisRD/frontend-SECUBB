@@ -14,6 +14,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   
   return (
+    <>
     <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName='Portada'>
@@ -28,8 +29,10 @@ export default function App() {
             }} />
           </Stack.Navigator>
         </NavigationContainer>
-        <Toast  />
     </Provider>
+    <Toast />
+    </>
+    
    
   );
 }

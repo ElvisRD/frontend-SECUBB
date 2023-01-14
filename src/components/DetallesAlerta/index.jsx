@@ -163,7 +163,7 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                         
                     } 
                     <View style={styles.containerUsuario}> 
-                        <Text style={styles.atributoAlerta}>Reportado por </Text>
+                        <Text style={styles.atributoAlerta}>Creada por </Text>
                         <Text style={styles.ubicacion}>{verAlerta.usuario.nombre} {verAlerta.usuario.apellido}</Text> 
                     </View>
 

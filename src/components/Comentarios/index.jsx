@@ -73,7 +73,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                 comentario=result.nuevoComentario;
               }).catch((err) => {
                 console.log(err);
-              }); 
+            }); 
     
             await socket.emit("comentario", comentario);
             dispatch(guardarComentarioRedux(comentario));
