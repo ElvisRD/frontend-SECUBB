@@ -16,15 +16,12 @@ const state = (state = valorInicial, action) => {
     }else {
         if(action.type === "borrarLikeAlerta"){
             if(state.usuarios !== null){
-
                 if(action.position !== null){
             
                     let usuariosConlike1 = state.usuarios.slice(0,action.position);
                     let usuariosConlike2 = state.usuarios.slice(action.position+1);
                 
                     let usuariosConlike = usuariosConlike1.concat(usuariosConlike2);
-                    
-                    console.log(usuariosConlike);
 
                     if(usuariosConlike[0] !== undefined){
                         return {usuarios: usuariosConlike}

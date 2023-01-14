@@ -18,13 +18,18 @@ const state = (state = valorInicial, action) => {
     }else{
 
         if(action.type === "eliminarAlerta"){
-            const alertas = state.alertas.filter((alerta) => alerta.id !== action.data.id)
+            if(state.alertas !== null){
+                const alertas = state.alertas.filter((alerta) => alerta.id !== action.data.id)
 
-            if(alertas[0] !== undefined){
-                return {alertas: alertas}
+                if(alertas[0] !== undefined){
+                    return {alertas: alertas}
+                }else{
+                    return {alertas: null}
+                }
             }else{
-                return {alertas: null}
+                return {alertas: state.alertas}
             }
+            
         }else{
             if(action.type === "limpiarRedux"){
                 return {alertas: null}

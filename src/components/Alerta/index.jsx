@@ -67,15 +67,13 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                 text1: 'La alerta fue eliminada o desactivada',
                 visibilityTime: 2000,
             });
+            setVerComentarios(false);
             setIsVisibleAlerta(false);  
         }
       
     }, [alertasRedux])  
     
-
-
     const handlerEliminarAlerta = async () => {
-
         eliminarAlerta(verAlerta.id).then(() => {
             Toast.show({
                 type: 'success',
@@ -84,6 +82,7 @@ export default function Alerta({setIsVisibleAlerta, verAlerta, socket}){
                 visibilityTime: 2000,
             }); 
         }).catch((err) => {
+            console.log(err);
             Toast.show({
                 type: 'error',
                 position: 'top',

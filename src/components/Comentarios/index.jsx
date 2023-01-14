@@ -20,7 +20,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
     const [confirmacion, setConfirmacion] = useState(false);
     const comentariosRedux = useSelector(state => state.comentarios.comentarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
-    //const alertasRedux = useSelector(state => state.alertas.alertas);
+    const alertasRedux = useSelector(state => state.alertas.alertas);
     const [comentarioEditado, setComentarioEditado] = useState(null);
     const [modalEditar, setModalEditar] = useState(false);
     const dispatch = useDispatch();
@@ -46,7 +46,6 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
             //backHandler.remove(); 
             hideSubscription.remove();
         };
-
     }, []);
 
       useEffect(() => {

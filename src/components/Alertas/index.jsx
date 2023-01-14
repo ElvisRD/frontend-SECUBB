@@ -13,6 +13,7 @@ export default function Alertas({handlePressButtons,socket}) {
 
     const [alertas, setAlertas] = useState([])
     const [likesAlertas, setLikesAlertas] = useState(null);
+    const [comentariosAlertas, setComentariosAlertas] = useState(null);
     const alertasRedux = useSelector(state => state.alertas.alertas)
     const [alertaSeleccionada, setAlertaSeleccionada] = useState(null)
     const [verAlerta, setVerAlerta] = useState(null)
@@ -28,11 +29,23 @@ export default function Alertas({handlePressButtons,socket}) {
         }
     },[alertasRedux]) 
 
+
+
     useEffect(() => {
       if(likesAlertaRedux !== null){
         setLikesAlertas(likesAlertaRedux);
+      }else{
+        setLikesAlertas(null);
       }
     }, [likesAlertaRedux,alertasRedux])
+    
+    useEffect(() => {
+        if(comentariosRedux !== null){
+            setComentariosAlertas(comentariosRedux);
+          }else{
+            setComentariosAlertas(null);
+          }
+    }, [comentariosRedux,alertasRedux])
     
     const filtrarLikesAlerta = (alertaId) => {
         if(likesAlertas !== null && likesAlertas !== undefined){
@@ -42,12 +55,24 @@ export default function Alertas({handlePressButtons,socket}) {
                     likes.push(like)
                 }
             })
-           
             return likes;
         }else{
             return null
         }
-       
+    }
+
+    const filtrarComentariosAlerta = (alertaId) => {
+        if(comentariosAlertas !== null && comentariosAlertas !== undefined){
+            const comentarios = [];
+            comentariosAlertas.map(comentario => {
+                if(comentario.alertaId === alertaId){
+                    comentarios.push(comentario)
+                }
+            })
+            return comentarios;
+        }else{
+            return null
+        }
     }
 
     return(
@@ -65,7 +90,7 @@ export default function Alertas({handlePressButtons,socket}) {
                        {alertas !== null ? (
                             alertas.map((alerta,i) => (
                                alerta.activa === true ? 
-                                    <CardAlerta socket={socket} alerta={alerta} likesUsuarios={filtrarLikesAlerta(alerta.id)} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
+                                    <CardAlerta socket={socket} alerta={alerta} likes={filtrarLikesAlerta(alerta.id)} todosLosLikes={likesAlertas} comentarios={filtrarComentariosAlerta(alerta.id)} setIsVisibleAlerta={setIsVisibleAlerta} setVerAlerta={setVerAlerta} key={i} setVerComentarios={setVerComentarios} setAlertaSeleccionada={setAlertaSeleccionada}/>
                                :(null)   
                             ))
                         ):(

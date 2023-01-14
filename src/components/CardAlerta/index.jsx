@@ -6,22 +6,18 @@ import {like,dislike} from "../../data/alertas";
 import { useSelector, useDispatch } from "react-redux";
 import { daLikeAlertaRedux, borrarLikeAlertaRedux } from "../../redux/actions/likesActions";
 
-export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta, setVerComentarios,setAlertaSeleccionada, likesUsuarios}){
+export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAlerta, setVerComentarios,setAlertaSeleccionada, likes, todosLosLikes, comentarios}){
     const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(null);
     const [cantidadComentarios, setCantidadComentarios] = useState(0);
     const [contadorLikes, setContadorLikes] = useState(0);
     const dispatch = useDispatch();
-
     const usuarioRedux = useSelector(state => state.usuario.usuario)
-    
 
     useEffect(() => {
-        if(likesUsuarios !== null){
+        if(likes !== null){
             setLiked(false);
-            setLikes(likesUsuarios)
             let cont=0;
-            likesUsuarios.map(like => {
+            likes.map(like => {
                 cont++;
                 if(like.alertaId === alerta.id && like.usuarioId === usuarioRedux.id){
                     setLiked(true)
@@ -29,12 +25,25 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
             })
             setContadorLikes(cont);
         }else{
-            console.log("hola");
             setLiked(false);
-            setLikes(null);
             setContadorLikes(0);
         }
-    },[likesUsuarios])
+    },[likes])
+
+    useEffect(() => {
+        if(comentarios !== null){
+            let cont=0;
+            comentarios.map(comentario => {
+                if(comentario.alertaId === alerta.id){
+                    cont++;
+                }
+            })
+            setCantidadComentarios(cont);
+        }else{
+            setCantidadComentarios(0);
+        }
+    }, [comentarios])
+    
 
     const seleccionarAlerta = () => {
         setVerAlerta(alerta)
@@ -49,26 +58,22 @@ export default function CardAlerta({socket, alerta, setIsVisibleAlerta, setVerAl
         }
 
         let positionArray = null;
-        if(likes !== null){
-            for(let i=0; i<likes.length; i++){
-                if(likes[i].alertaId === alerta.id && likes[i].usuarioId === usuarioRedux.id){
+       
+        if(todosLosLikes !== null){
+            for(let i=0; i<todosLosLikes.length; i++){
+                if(todosLosLikes[i].alertaId === alerta.id && todosLosLikes[i].usuarioId === usuarioRedux.id){
                     positionArray = i;
                     break;
                 }
             }
         }  
-
-        console.log(likes);
-        //console.log(positionArray);
-
+       
         if(liked){
-            //dislike(body);
-           setLiked(false)
+           dislike(body);
            dispatch(borrarLikeAlertaRedux(body, positionArray));
-            //await socket.emit("daDislikeAlerta", body, positionArray);
+            await socket.emit("daDislikeAlerta", body, positionArray);
         }else{
-            //like(body);
-            console.log("se dio like");
+            like(body);
             dispatch(daLikeAlertaRedux(body));
             await socket.emit("daLikeAlerta", body);
         }
