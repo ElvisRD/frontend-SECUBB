@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, PermissionsAndroid, BackHandler, Linking} from "react-native";
+import {View,Text, BackHandler, Linking} from "react-native";
 import styles from "./styles";
 import {Provider, Portal, Button, Dialog} from "react-native-paper";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -68,7 +68,11 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
            }
          
         }).catch((err) => {
-          Alert.alert("Error", "No se obtuvieron las alertas"); 
+          if(err.response.status === 404){
+            console.log("No se encontraron alertas");
+          }else{
+            console.log("Error al obtener alertas");
+          }
         });
        }
        
@@ -88,8 +92,11 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
           }
          
         }).catch((err) => {
-           console.log("no se encontraron comentarios");
-           Alert.alert("Error", "No se obtuvieron los comentarios"); 
+          if(err.response.status === 404){
+            console.log("No se encontraron comentarios");
+          }else{
+            console.log("Error al obtener comentarios");
+          }
         });
        }
 
@@ -98,7 +105,11 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         obtenerSugerencias().then((result) => {
             dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-          Alert.alert("Error", "No se obtuvieron las sugerencias"); 
+          if(err.response.status === 404){
+            console.log("No hay sugerencias");
+          }else{
+            console.log("Error al obtener sugerencias");
+          }
         })
      
        }
@@ -125,7 +136,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
           setPermisoLocalizacion(true);
         } 
         }).catch((err) => {
-          Alert.alert("Error", "No se obtuvo el permiso de localización"); 
+          console.log("error al obtener permiso de localización");
         });  
       
        }

@@ -21,12 +21,9 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         height: "100%",
-
-        
     },
     title: {
         fontSize: wp(10),
-        paddingTop: hp(3.5),
         paddingLeft: wp(2)
     },
     botonCerrar: {

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     mapa: {
         justifyContent: 'center',
         width: "100%",
-        height: hp(110),
+        height: hp(96),
         zIndex: 1,
     },
     makerMapa: {
@@ -22,19 +22,19 @@ const styles = StyleSheet.create({
     },
     botonPregunta: {
         position: "absolute",
-        top: hp(5),
+        top: hp(1),
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 100,
         backgroundColor: "black",
         opacity: 0.4,
         padding: 4,
-        right: wp(5),
+        right: wp(2),
         zIndex: 2 
     },
     botonPlusPantallaGrand:{
         position: "absolute",
-        bottom: hp(16),
+        bottom: hp(6),
         padding: 5.5,
         justifyContent: "center",
         alignItems: "center",

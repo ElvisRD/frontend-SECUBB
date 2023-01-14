@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, Linking, Image, Alert, BackHandler} from "react-native";
+import {View,Text, Linking, BackHandler} from "react-native";
 import {Provider, Dialog, Portal, Button } from "react-native-paper";
 import styles from "./styles";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -52,7 +52,6 @@ export default function Portada({navigation}){
           const datosUsuario = JSON.parse(jsonValue);
           if(datosUsuario !== null){
               obtenerPermisoUbicacion().then((result) => {
-                
                 if(result){
                   dispatch(guardarUsuarioRedux(datosUsuario));
                   getAlertas();
@@ -67,13 +66,13 @@ export default function Portada({navigation}){
                   setPermisoLocalizacion(true)
                 }
               }).catch((err) => {
-                console.log(err);
+                console.log("error al obtener permiso de localización");
               });
           }else{
             navigation.navigate("Login")
           }
         } catch(e) {
-          console.log(e);
+          console.log("error al obtener datos de usuario");
         }
        }
 
@@ -92,7 +91,11 @@ export default function Portada({navigation}){
             dispatch(daLikeAlertaRedux(likeAlertas));
            }
         }).catch((err) => {
-          console.log("error peticion alertas");
+          if(err.response.status === 404){
+            console.log("No se encontraron alertas");
+          }else{
+            console.log("error al obtener alertas");
+          }
         });
        }
 
@@ -113,7 +116,11 @@ export default function Portada({navigation}){
           }
 
         }).catch((err) => {
-          console.log("error peticion comentarios");
+          if(err.response.status === 404){
+            console.log("No se encontraron comentarios");
+          }else{
+            console.log("error al obtener comentarios");
+          }
         });
        }
 
@@ -121,16 +128,17 @@ export default function Portada({navigation}){
         await obtenerSugerencias().then((result) => {
            dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-          console.log("error peticion sugerencias");
+          if(err.response.status === 404){
+            console.log("No se encontraron sugerencias");
+          }else{
+            console.log("error al obtener sugerencias");
+          }
         });
        } 
 
        const obtenerPermisoUbicacion = async() => {
-          
               let { status } = await Location.requestForegroundPermissionsAsync();
-              
               if (status !== 'granted') {
-                  
                  return false;
               }
               let location = await Location.getCurrentPositionAsync({});
