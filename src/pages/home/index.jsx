@@ -146,6 +146,7 @@ export default function Home({navigation}) {
             <IconMCI
                 name="map-outline"
                 style={styles.boton}
+                color= "#a3a2a0"
                 size= {35}
             />
             <Text style={styles.textBoton} >Mapa</Text>
@@ -155,6 +156,7 @@ export default function Home({navigation}) {
             <IconMCI
                 name="clipboard-alert-outline"
                 style={styles.boton}
+                color= "#a3a2a0"
                 size= {35}
             />
             <Text style={styles.textBoton}>Alertas</Text>
@@ -164,9 +166,10 @@ export default function Home({navigation}) {
             <IconMCI
                 name="menu"
                 style={styles.boton}
+                color= "#a3a2a0"
                 size= {35}
             />
-            <Text style={styles.textBoton}>Menu</Text>
+            <Text style={styles.textBoton}>Menú</Text>
           </TouchableOpacity>
         
         </View> 

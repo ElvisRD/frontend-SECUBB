@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
        
     },
     textBoton: {
-        fontSize: 9, 
+        fontSize: 12, 
     }
 });
 

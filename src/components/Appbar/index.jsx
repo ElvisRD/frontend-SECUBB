@@ -15,7 +15,7 @@ export default function Appbar({titulo,handlePressButtonRight,handlePressButtonL
                 ):(
                 <View style={styles.containerBotonIzquierda}>
                     <TouchableOpacity style={styles.boton} onPress={handlePressButtonLeft}>
-                        <IconAD name="arrowleft" size={35} color="black" />
+                        <IconAD name="arrowleft" size={35} color="white" />
                     </TouchableOpacity>
                 </View>)
             }
@@ -24,8 +24,8 @@ export default function Appbar({titulo,handlePressButtonRight,handlePressButtonL
                     <View style={styles.containerBotonDerecha}>
                         <TouchableOpacity style={styles.boton} onPress={handlePressButtonRight}> 
                         {
-                            iconoDerecha === "close" ? (<IconAD name={iconoDerecha} size={35} color="black" />)
-                            :(<IconMI name={iconoDerecha} size={35} color="black" />)
+                            iconoDerecha === "close" ? (<IconAD name={iconoDerecha} size={35} color="white" />)
+                            :(<IconMI name={iconoDerecha} size={35} color="white" />)
                         }
                         </TouchableOpacity>
                     </View>

@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: wp(5),
         marginTop: hp(0.5),
+        paddingBottom: hp(2),
+        borderBottomColor: "#E5E5E5",
+        borderBottomWidth: 1,
         
     },
     fecha: {
@@ -104,12 +107,14 @@ const styles = StyleSheet.create({
   
     },
     botonComentarios: {
-        minWidth: 100,
-        width: wp(44),
+        width: wp(40),
+        backgroundColor: "#01579b",
+
         //marginBottom: hp(5),
     },
     textoBotonComentarios: {
         fontSize: wp(3),
+        color: "white"
     }
    
 })

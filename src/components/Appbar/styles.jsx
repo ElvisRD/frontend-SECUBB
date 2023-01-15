@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     containerNav: {
         width: "100%",
         height: hp(8),
+        backgroundColor: "#01579b",
         flexDirection: "row",
         justifyContent: "space-between",
         borderBottomWidth: 1,
@@ -12,11 +13,13 @@ const styles = StyleSheet.create({
         
     },
     containerTitulo: {
-        width: wp(85),
+        width: wp(85),  
     },
     titulo: {
         fontSize: wp(10),
-        paddingLeft: wp(5)
+        paddingLeft: wp(5),
+        color: "white"
+      
     },
     containerBotonIzquierda: {
         width: wp(15),

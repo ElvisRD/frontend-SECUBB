@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     botonCerrarSesion: {
         width: wp(40),
-        paddingVertical: hp(0.5),
+        paddingVertical: hp(0.8),
         borderRadius: 40,
         alignItems: "center",
         shadowColor: "#000",
@@ -69,10 +69,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        backgroundColor: "#F2F2F2",
+        backgroundColor: "#01579b",
     },
     textCerrarSesion:{
-        fontSize: wp(5),
+        fontSize: wp(4),
+        color: "white"
     }
     
 

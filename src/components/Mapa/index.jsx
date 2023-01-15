@@ -328,7 +328,7 @@ export default function Mapa({ socket}) {
                 <IconAD 
                     name="question"
                     size={40}
-                    color="white"
+                    color="#a3a2a0"
                 
                 />
             </TouchableOpacity>
@@ -336,7 +336,7 @@ export default function Mapa({ socket}) {
             <TouchableOpacity style={dimensionesPantalla.height < 700 ? styles.botonPlusPantallaPeque : styles.botonPlusPantallaGrand} onPress={handleClickMap}>
                 <Icon
                     name="plus"
-                    color="white"
+                    color="#a3a2a0"
                     size= {40}
                 />
             </TouchableOpacity> 

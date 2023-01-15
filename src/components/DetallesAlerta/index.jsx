@@ -136,7 +136,7 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                     {
                         verAlerta.descripcion_ubicacion !== "" ? (
                         <View style={styles.containerDescripcionUbicacion}>
-                            <Text style={styles.atributoAlerta}>Descripción Ubicación </Text>
+                            <Text style={styles.atributoAlerta}>Descripción ubicación </Text>
                             <Text style={styles.descripcion}>{verAlerta.descripcion_ubicacion}</Text>
                         </View>
                         ):(null)
