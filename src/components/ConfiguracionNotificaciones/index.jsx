@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text} from 'react-native'
 import IconAD from 'react-native-vector-icons/AntDesign'
 import { TextInput, Button, Switch } from 'react-native-paper'
 import styles from './styles'
@@ -14,6 +14,8 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
     const [notificaciones, setNotificaciones] = useState(usuarioRedux.notificaciones)
     const dispatch = useDispatch();
    
+    
+
     const guardarNotificaciones = async () => {
         const jsonValue = await AsyncStorage.getItem('usuario')
         const datosUsuario = JSON.parse(jsonValue);
@@ -43,11 +45,11 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
             <Appbar handlePressButtonLeft={()=>{setVisibleConfiguracionNotificaciones(false)}} iconoIzquierda="arrowleft" />
             
             <View style={styles.containerTitle}>
-                    <Text style={styles.title}>Notificaciones</Text>
+                    <Text style={styles.title} adjustsFontSizeToFit >Notificaciones</Text>
             </View> 
             <View style={styles.contanierNotificaciones}>
                 <View style={styles.containterDesactivarNotificaciones}>
-                    <Text style={styles.textoNotificaciones}>Activas notificaciones</Text>
+                    <Text style={styles.textoNotificaciones}>Estado de notificaciones</Text>
                     <Switch style={styles.inputActivarNotificaciones} value={notificaciones} onValueChange={()=> {notificaciones ? setNotificaciones(false):setNotificaciones(true)}} />
                 </View>
                 
@@ -55,7 +57,7 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
             <View style={styles.containerBoton}>
                 <Button style={styles.botonGuardar} mode="contained" onPress={guardarNotificaciones} disabled={
                     usuarioRedux.notificaciones === notificaciones
-                } >Guardar</Button>
+                } ><Text style={styles.textoBotonGuardar}>Guardar</Text></Button>
             </View>
  
         </View>

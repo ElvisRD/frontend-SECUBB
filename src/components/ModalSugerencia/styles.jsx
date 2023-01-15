@@ -12,26 +12,13 @@ const styles = StyleSheet.create({
        width: "100%",
        height: "100%",
    },
-   containerNav: {
-    width: "100%",
-    backgroundColor: "white",
-    borderBottomWidth: 1,
-    borderColor: "#E5E5E5",
-    
-    },
+   
    containerTitle: {
     width: "100%",
     },
     title: {
-        fontSize: wp(10),
+        fontSize: wp(7),
         paddingLeft: hp(2),
-    },
-    botonCerrar: {
-        borderRadius: 100,
-        marginLeft: wp(2)
-    },
-    iconCerrar: {
-        borderRadius: 100,
     },
     containerTextoSugerencia: {
         width: "100%",
@@ -39,7 +26,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp(5),
     },
     texto: {
-        fontSize: wp(4.5),
+        fontSize: wp(4),
     },
     containerInput: {
         width: "100%",
@@ -63,10 +50,16 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         marginTop: hp(10),
-        marginBottom: hp(15)
+        marginBottom: hp(15),
+       
     },
     botonEnviar: {
         width: "45%",
+        backgroundColor: "#01579b",
+    },
+    textoBotonEnviar: {
+        fontSize: wp(3.5),
+        color: "white",
     }
 })
 

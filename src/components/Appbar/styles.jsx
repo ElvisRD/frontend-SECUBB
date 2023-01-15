@@ -13,10 +13,12 @@ const styles = StyleSheet.create({
         
     },
     containerTitulo: {
-        width: wp(85),  
+        width: wp(85),
+        justifyContent: "center",
+        height: "100%",  
     },
     titulo: {
-        fontSize: wp(10),
+        fontSize: wp(6),
         paddingLeft: wp(5),
         color: "white"
       

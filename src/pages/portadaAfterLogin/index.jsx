@@ -48,6 +48,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
               return false;
             }
             let location = await Location.getCurrentPositionAsync({});
+            console.log(location);
             dispatch(guardarUbicacionRedux(location));
             return true; 
       }

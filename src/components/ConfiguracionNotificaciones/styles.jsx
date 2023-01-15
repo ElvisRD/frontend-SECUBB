@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         marginTop: hp(1),
     },
     title: {
-        fontSize: wp(10),
+        fontSize: wp(7),
         paddingLeft: hp(2),
     },
     contanierNotificaciones: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     textoNotificaciones: {
         textAlignVertical: "center",
-        fontSize: wp(5),
+        fontSize: wp(4),
     },
     inputActivarNotificaciones: {
         marginRight: wp(8),
@@ -40,10 +40,15 @@ const styles = StyleSheet.create({
         position: "absolute",
         justifyContent: "center",
         alignItems: "center",
-        bottom: hp(20),
+        bottom: hp(10),
     },
     botonGuardar: {
         width: wp(40),
+        backgroundColor: "#01579b",
+    },
+    textoBotonGuardar: {
+        fontSize: wp(3.5),
+        color: "white",
     } 
 });
 

@@ -10,13 +10,13 @@ const styles = StyleSheet.create({
     mapa: {
         justifyContent: 'center',
         width: "100%",
-        height: hp(96),
+        height: hp(114),
         zIndex: 1,
     },
     makerMapa: {
         position: "absolute",
         justifyContent: "center",
-        top: hp(47),
+        top: hp(50),
         width: wp(17),
         zIndex: 2
     },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
     botonPlusPantallaGrand:{
         position: "absolute",
-        bottom: hp(3.5),
+        bottom: hp(19),
         padding: 5.5,
         justifyContent: "center",
         alignItems: "center",

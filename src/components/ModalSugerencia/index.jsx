@@ -107,7 +107,7 @@ export default function ModalSugerencia({setModalSugerencia,socket}){
                         }
                         <View style={styles.containerBotonEnviar}>
                             <Button mode="elevated" style={styles.botonEnviar} onPress={handleSubmit} >
-                            Enviar
+                                <Text style={styles.textoBotonEnviar}>Enviar</Text>
                             </Button>
                         </View>
                      </>

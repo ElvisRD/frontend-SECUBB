@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         color: "red"
     },
     botonCrearAlerta: {
-        width: "65%"
+        width: wp(65)
     },
 
 })

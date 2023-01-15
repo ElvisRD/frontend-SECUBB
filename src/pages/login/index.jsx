@@ -70,41 +70,41 @@ export default function Login({navigation}) {
                             values.contrasena = "";
                             setPortadaAfterLogin(true);
                         }).catch((err)=>{
-                      
-                          if(err.response.status === 401){
-                            Toast.show({
-                              type: 'error',
-                              text1: 'Error',
-                              text2: 'El correo ingresado no le pertenece a la universidad',
-                              visibilityTime: 3000,
-                              autoHide: true,
-                              topOffset: 60,
-                            
-                            });
-                          }else{
-                            if(err.response.status === 404){
+                    
+                            if(err.response.status === 401){
                               Toast.show({
                                 type: 'error',
                                 text1: 'Error',
-                                text2: 'El correo ingresado no tiene una cuenta asociada',
+                                text2: 'El correo ingresado no le pertenece a la universidad',
                                 visibilityTime: 3000,
                                 autoHide: true,
                                 topOffset: 60,
                               
                               });
                             }else{
-                              if(err.response.status === 400){
+                              if(err.response.status === 404){
                                 Toast.show({
                                   type: 'error',
                                   text1: 'Error',
-                                  text2: 'La contraseña ingresada es incorrecta',
+                                  text2: 'El correo ingresado no tiene una cuenta asociada',
                                   visibilityTime: 3000,
                                   autoHide: true,
                                   topOffset: 60,
                                 
                                 });
+                              }else{
+                                if(err.response.status === 400){
+                                  Toast.show({
+                                    type: 'error',
+                                    text1: 'Error',
+                                    text2: 'La contraseña ingresada es incorrecta',
+                                    visibilityTime: 3000,
+                                    autoHide: true,
+                                    topOffset: 60,
+                                  
+                                  });
+                                }
                               }
-                            }
                           }
                         })
                         

@@ -83,7 +83,6 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
                     let nuevaAlerta = null;
                     setLoading(true);
                    
-
                       await crearAlerta(body).then((result) => {
                       nuevaAlerta=result.alerta
                       Toast.show({

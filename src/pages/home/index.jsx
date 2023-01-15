@@ -147,7 +147,7 @@ export default function Home({navigation}) {
                 name="map-outline"
                 style={styles.boton}
                 color= "#a3a2a0"
-                size= {35}
+                size= {30}
             />
             <Text style={styles.textBoton} >Mapa</Text>
           </TouchableOpacity>
@@ -157,7 +157,7 @@ export default function Home({navigation}) {
                 name="clipboard-alert-outline"
                 style={styles.boton}
                 color= "#a3a2a0"
-                size= {35}
+                size= {30}
             />
             <Text style={styles.textBoton}>Alertas</Text>
           </TouchableOpacity>
@@ -167,7 +167,7 @@ export default function Home({navigation}) {
                 name="menu"
                 style={styles.boton}
                 color= "#a3a2a0"
-                size= {35}
+                size= {30}
             />
             <Text style={styles.textBoton}>Menú</Text>
           </TouchableOpacity>

@@ -12,14 +12,12 @@ const styles = StyleSheet.create({
     },
     alertasPantallaGrand: {
         width: "100%",
-        height: hp(84),
+        height: hp(88),
         flexGrow: 0,
-        
     },
     alertasPantallaPeque: {
         width: "100%",
         height: hp(79),
-        backgroundColor: "white",
     },
     containerAlertasActuales: {
         width: "100%",

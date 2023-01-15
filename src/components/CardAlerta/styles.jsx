@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     },
     AlertaCard: {
         width: "94%",
-        height: hp(22),
         paddingTop: hp(1),
         backgroundColor: "#F3F1F5",
         borderWidth: 1,
@@ -30,14 +29,17 @@ const styles = StyleSheet.create({
     containerTipo:{
         justifyContent: "space-between",
         paddingHorizontal: wp(4),
+        paddingBottom: hp(0.5),
         alignItems: "center",
-        flexDirection: "row"
+        flexDirection: "row",
+        borderColor: "#a3a2a0",
+        borderBottomWidth: 1,
     },
     textoTipo:{
-        fontSize: wp(6)
+        fontSize: wp(4.5)
     },
     textoHora: {
-        fontSize: 14,
+        fontSize: wp(3),
         marginTop: hp(1)
     },
     containerDescripcion: {
@@ -45,29 +47,27 @@ const styles = StyleSheet.create({
         height: hp(10),
         paddingHorizontal: wp(4),
         marginTop: hp(1),
-        
-
     },
     containerImagen: {
         width: "yellow"
     },
     containerBotones: {
         flexDirection: "row",
-        marginTop: hp(0.5),
+        marginVertical: hp(1),
         justifyContent: "space-around",
     },
     containerBotonLike: {
         flexDirection: "row",
     },
     likes: {
-        fontSize: wp(4.2),
+        fontSize: wp(3.5),
         marginLeft: wp(0.8)
     },
     containerBotonComentario: {
         flexDirection: "row",
     },
     comentarios: {
-        fontSize: wp(4.2),
+        fontSize: wp(3.5),
         marginLeft: wp(0.8)
     },
     botonComentarios: {

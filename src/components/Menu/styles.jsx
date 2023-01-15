@@ -13,13 +13,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    containerNav: {
-        width: "100%",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
-        
-    },
+   
     containerTitle: {
         width: "100%",
         justifyContent: "center",
@@ -30,25 +24,18 @@ const styles = StyleSheet.create({
         paddingTop: hp(2.5),
         paddingLeft: wp(2)
     },
-    botonCerrar: {
-        borderRadius: 100,
-        right: wp(2),
-    },
-    iconCerrar: {
-        borderRadius: 100,
-    },
+    
     containerOpciones: {
         backgroundColor: "white",
-        marginTop: hp(2.5),
-    
+        marginTop: hp(2),
     },
     opcionPerfil: {
         width: "100%",
         paddingVertical: "4%",
-        paddingLeft: "6%",
+        paddingLeft: wp(6),
     },
     textOpcion: {
-        fontSize: wp(5),
+        fontSize: 20,
     },
     containerBotonCerrarSesion: {
         position: "absolute",
@@ -57,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     botonCerrarSesion: {
-        width: wp(40),
+        width: wp(50),
         paddingVertical: hp(0.8),
         borderRadius: 40,
         alignItems: "center",

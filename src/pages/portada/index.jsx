@@ -22,8 +22,6 @@ export default function Portada({navigation}){
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0); 
     //const [cargando, setCargando] = useState(false);
-   
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -49,9 +47,11 @@ export default function Portada({navigation}){
        const obtenerDatosStorage = async() => {
         try {
           const jsonValue = await AsyncStorage.getItem('usuario')
+          console.log(jsonValue);
           const datosUsuario = JSON.parse(jsonValue);
           if(datosUsuario !== null){
               obtenerPermisoUbicacion().then((result) => {
+                console.log("result", result);
                 if(result){
                   dispatch(guardarUsuarioRedux(datosUsuario));
                   getAlertas();
@@ -91,10 +91,12 @@ export default function Portada({navigation}){
             dispatch(daLikeAlertaRedux(likeAlertas));
            }
         }).catch((err) => {
-          if(err.response.status === 404){
-            console.log("No se encontraron alertas");
-          }else{
-            console.log("error al obtener alertas");
+          if(err !== undefined){
+            if(err.response.status === 404){
+              console.log("No se encontraron alertas");
+            }else{
+              console.log("error al obtener alertas");
+            }
           }
         });
        }
@@ -116,10 +118,12 @@ export default function Portada({navigation}){
           }
 
         }).catch((err) => {
-          if(err.response.status === 404){
-            console.log("No se encontraron comentarios");
-          }else{
-            console.log("error al obtener comentarios");
+          if(err.response.status !== undefined){
+            if(err.response.status === 404){
+              console.log("No se encontraron comentarios");
+            }else{
+              console.log("error al obtener comentarios");
+            }
           }
         });
        }
@@ -128,20 +132,31 @@ export default function Portada({navigation}){
         await obtenerSugerencias().then((result) => {
            dispatch(guardarSugerenciaRedux(result))
         }).catch((err) => {
-          if(err.response.status === 404){
-            console.log("No se encontraron sugerencias");
-          }else{
-            console.log("error al obtener sugerencias");
+          if(err.response.status !== undefined){
+            if(err.response.status === 404){
+              console.log("No se encontraron sugerencias");
+            }else{
+              console.log("error al obtener sugerencias");
+            }
           }
         });
        } 
 
        const obtenerPermisoUbicacion = async() => {
               let { status } = await Location.requestForegroundPermissionsAsync();
+              console.log(status);
               if (status !== 'granted') {
                  return false;
               }
+              
+              Location.getCurrentPositionAsync().then((result) => {
+                console.log(result);
+              }).catch((err) => {
+                console.log(err);
+              });
+
               let location = await Location.getCurrentPositionAsync({});
+              console.log(location);
               dispatch(guardarUbicacionRedux(location));
               return true;
        }
