@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
    
    containerTitle: {
         width: "100%",
-        marginTop: hp(1),
+        marginTop: hp(2),
+        alignItems: "center",
     },
     title: {
         fontSize: wp(7),
-        paddingLeft: hp(2),
     },
     contanierNotificaciones: {
         width: "100%",
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     textoNotificaciones: {
         textAlignVertical: "center",
-        fontSize: wp(4),
+        fontSize: wp(4.2),
     },
     inputActivarNotificaciones: {
         marginRight: wp(8),

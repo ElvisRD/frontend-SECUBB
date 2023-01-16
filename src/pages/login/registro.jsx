@@ -8,6 +8,7 @@ import { Formik } from "formik";
 import  {validacionesRegistro}  from "../../utils/validaciones";
 import { crearUsuario } from "../../data/usuarios";
 import Toast from "react-native-toast-message";
+import formatText from "../../utils/modificarPrimeraLetra";
 
 export default function Registro({setRegistro}) {
  
@@ -16,7 +17,6 @@ export default function Registro({setRegistro}) {
         apellido: "",
         correo: "",
     }
-
 
     return (
         <View style={styles.containerRegistrar}>
@@ -29,7 +29,14 @@ export default function Registro({setRegistro}) {
                 validationSchema={validacionesRegistro}
                 onSubmit={(values) => {
                     Keyboard.dismiss();
-                    crearUsuario(values).then((res)=>{
+
+                    const body = {
+                        nombre: formatText(values.nombre),
+                        apellido: formatText(values.apellido),
+                        correo: values.correo,
+                    }
+
+                    crearUsuario(body).then((res)=>{
                         Toast.show({
                             type: 'success',
                             text1: 'Registro exitoso',

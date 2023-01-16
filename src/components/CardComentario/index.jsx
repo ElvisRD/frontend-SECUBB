@@ -1,36 +1,34 @@
 import React,{ useEffect, useState} from "react";
 import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import styles from "./styles";
-import { Provider, Portal, Dialog, Button } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { daLikeComentarioRedux, borrarLikeComentarioRedux } from "../../redux/actions/likesActions";
 import {like, dislike} from "../../data/comentarios";
+import { daLikeComentarioRedux, borrarLikeComentarioRedux } from "../../redux/actions/likesActions";
 import { useSelector, useDispatch} from "react-redux";
 
 
-export default function CardComentario({comentario, socket, setModalEditar, setComentarioEditado}){
+export default function CardComentario({comentario, likes, todosLosLikes, socket, setModalEditar, setComentarioEditado}){
     const [liked, setLiked] = useState(false);
     const [contadorLikes, setContadorLikes] = useState(0);
-    const likesComentariosRedux = useSelector(state => state.likesComentario.usuarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     const dispatch = useDispatch();
    
     useEffect(() => {
-        if(likesComentariosRedux !== null ){
-            let cont = 0;
-            likesComentariosRedux.map(like => {
-                if(comentario.id === like.comentarioId){
-                    cont++;
-                    if(like.usuarioId === usuarioRedux.id){
-                        setLiked(true);
-                    }
+        if(likes !== null){
+            setLiked(false);
+            let cont=0;
+            likes.map(like => {
+                cont++;
+                if(like.comentarioId === comentario.id && like.usuarioId === usuarioRedux.id){
+                    setLiked(true)
                 }
-            }) 
+            })
             setContadorLikes(cont);
         }else{
+            setLiked(false);
             setContadorLikes(0);
-        } 
-    }, [likesComentariosRedux])
+        }
+    },[likes])
 
     const handleLike = async () => {
         const body = {  
@@ -40,10 +38,9 @@ export default function CardComentario({comentario, socket, setModalEditar, setC
         }
 
         let positionArray = null;
-        if(likesComentariosRedux !== null){
-            for(let i=0 ; i < likesComentariosRedux.length ; i++){
-                if(likesComentariosRedux[i].comentarioId === comentario.id && likesComentariosRedux[i].usuarioId === usuarioRedux.id 
-                    && likesComentariosRedux[i].alertaId === comentario.alertaId){
+        if(todosLosLikes !== null){
+            for(let i=0 ; i < todosLosLikes.length ; i++){
+                if(todosLosLikes[i].comentarioId === comentario.id && todosLosLikes[i].usuarioId === usuarioRedux.id){
                     positionArray=i;
                     break;
                 }
@@ -51,19 +48,15 @@ export default function CardComentario({comentario, socket, setModalEditar, setC
 
         }
         
-
         if(liked){
-            
             dislike(body);
             dispatch(borrarLikeComentarioRedux(body, positionArray));
             await socket.emit("daDislikeComentario", body,positionArray);
-            setLiked(false);
+            
         }else{
-
             like(body);
             dispatch(daLikeComentarioRedux(body));
             await socket.emit("daLikeComentario", body);
-            setLiked(true);
         }
     }
     

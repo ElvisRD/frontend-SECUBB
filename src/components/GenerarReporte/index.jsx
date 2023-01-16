@@ -222,8 +222,8 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                     </View>
                 </View>
                 <View style={styles.containerBotonMostrarLugares}>
-                    <Button mode="elevated" onPress={obtenerAlertas}>
-                        Mostrar mapa
+                    <Button style={styles.botonMostrarMapa} mode="elevated" onPress={obtenerAlertas}>
+                       <Text style={styles.textoBoton}>Mostrar mapa</Text> 
                     </Button>
                 </View>
             </KeyboardAwareScrollView>  

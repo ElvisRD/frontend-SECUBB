@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from "react"
 import { View, Text, TouchableOpacity, BackHandler, Keyboard,ScrollView, Dimensions } from "react-native"
-import IconAD from 'react-native-vector-icons/AntDesign';
 import CardComentario from '../CardComentario';
 import styles from "./styles"
 import {editarComentario} from "../../data/comentarios";
@@ -10,6 +9,7 @@ import { crearComentario } from "../../data/comentarios";
 import { guardarComentarioRedux, editarComentarioRedux } from "../../redux/actions/comentariosActions";
 import Toast from 'react-native-toast-message';
 import Appbar from "../Appbar";
+import formatText from "../../utils/modificarPrimeraLetra";
 
 
 
@@ -20,8 +20,9 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
     const [iconoInput, setIconoInput] = useState(false);
     const [confirmacion, setConfirmacion] = useState(false);
     const comentariosRedux = useSelector(state => state.comentarios.comentarios);
+    const likesComentariosRedux = useSelector(state => state.likesComentario.usuarios);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
-    const alertasRedux = useSelector(state => state.alertas.alertas);
+    const [likesComentarios, setLikesComentarios] = useState(null);
     const [comentarioEditado, setComentarioEditado] = useState(null);
     const [modalEditar, setModalEditar] = useState(false);
     const dispatch = useDispatch();
@@ -57,12 +58,35 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         }
 
       }, [comentariosRedux])
+
+      useEffect(() => {
+        if(likesComentariosRedux !== null){
+            setLikesComentarios(likesComentariosRedux);
+        }else{
+            setLikesComentarios(null);
+        }
+
+      },[likesComentariosRedux])
+
+      const filtrarLikesComentarios = (comentarioId) => {
+        if(likesComentarios !== null && likesComentarios !== undefined){
+            const likes = [];
+            likesComentarios.map(like => {
+                if(like.comentarioId === comentarioId){
+                    likes.push(like)
+                }
+            })
+            return likes;
+        }else{
+            return null
+        }
+    }
       
       const crearUnComentario = async () => {
         if(inputComentario !== ""){
             const body = {
                 alertaId: alertaId,
-                comentario: inputComentario,
+                comentario: formatText(inputComentario),
                 usuarioId: usuarioRedux.id,
     
             }
@@ -99,8 +123,9 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         if(comentarioEditado.comentario !== ""){
             const body = {
                 id: comentarioEditado.id,
-                comentario: comentarioEditado.comentario,
+                comentario: formatText(comentarioEditado.comentario),
             } 
+
             editarComentario(body).then(() => {
                 Toast.show({
                     type: 'success',
@@ -126,6 +151,8 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                 }
             });
             
+            comentarioEditado.comentario = formatText(comentarioEditado.comentario);
+
             await socket.emit("editarComentario", comentarioEditado);
             dispatch(editarComentarioRedux(comentarioEditado));
             setModalEditar(false) 
@@ -152,7 +179,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                             comentarios.map((comentario, index) => {
                                 return (
                                     <View style={styles.containerUniqueCardComentario} key={index}>
-                                        <CardComentario comentario={comentario} socket={socket} alertaId={alertaId} setModalEditar={setModalEditar} setComentarioEditado={setComentarioEditado} />
+                                        <CardComentario comentario={comentario} todosLosLikes={likesComentarios} socket={socket} likes={filtrarLikesComentarios(comentario.id)} alertaId={alertaId} setModalEditar={setModalEditar} setComentarioEditado={setComentarioEditado} />
                                      </View>
                                 )
                             })

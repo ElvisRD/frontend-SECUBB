@@ -5,15 +5,14 @@ import { TextInput, Button } from "react-native-paper"
 import styles from "./styles"
 import {crearSugerencia} from "../../data/sugerencias"
 import {useSelector} from "react-redux"
-import IconAD from 'react-native-vector-icons/AntDesign';
 import Toast from 'react-native-toast-message';
 import {validacionSugerencia} from "../../utils/validaciones"
 import {Formik} from "formik";
 import Cargando from "../Cargando"
 import Appbar from "../Appbar"
+import formatText from "../../utils/modificarPrimeraLetra"
 
 export default function ModalSugerencia({setModalSugerencia,socket}){
-    const [sugerencia, setSugerencia] = useState("");
     const [cargando, setCargando] = useState(false);
     const usuarioRedux = useSelector(state => state.usuario.usuario);
     
@@ -56,7 +55,7 @@ export default function ModalSugerencia({setModalSugerencia,socket}){
                             setCargando(false);
                         }else{
                             const body = {
-                                sugerencia: sugerencia,
+                                sugerencia: formatText(values.sugerencia),
                                 usuarioId: usuarioRedux.id
                             }
                     

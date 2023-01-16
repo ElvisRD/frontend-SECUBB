@@ -19,7 +19,8 @@ const socket = io(URL_CONNECT_BACKEND);
 
 export default function Home({navigation}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
-  const [isVisibleNoticias, setIsVisibleNoticias] = useState(false);
+  const [isVisibleAlertas, setIsVisibleAlertas] = useState(false);
+  const [isVisibleTipoAlertas, setIsVisibleTipoAlertas] = useState(false);
   const  usuario = useSelector((state) => state.usuario.usuario);
 
   useEffect(() => {
@@ -106,12 +107,13 @@ export default function Home({navigation}) {
     switch(nombre){
       case "mapa": {
         setIsVisibleMenu(false);
-        setIsVisibleNoticias(false);
+        setIsVisibleAlertas(false);
         break;
       }
       case "noticias": {
-        setIsVisibleNoticias(true);
+        setIsVisibleAlertas(true);
         setIsVisibleMenu(false);
+        setIsVisibleTipoAlertas(false);
         break;
       }
       case "...": {
@@ -119,7 +121,8 @@ export default function Home({navigation}) {
       }
       case "home": {
         setIsVisibleMenu(true);
-        setIsVisibleNoticias(false);
+        setIsVisibleAlertas(false);
+        setIsVisibleTipoAlertas(false);
         break;
       }
     }
@@ -135,11 +138,11 @@ export default function Home({navigation}) {
               <Menu handlePressButtons={handlePressButtons} navigation={navigation} socket={socket} />
             ):(null)}
 
-            {isVisibleNoticias ? (
+            {isVisibleAlertas ? (
               <Alertas handlePressButtons={handlePressButtons} socket={socket}/>
             ): (null)}
 
-          <Mapa socket={socket}/> 
+          <Mapa socket={socket} verTipoAlertas={isVisibleTipoAlertas} setIsVisibleTipoAlertas={setIsVisibleTipoAlertas}/> 
         </View>
         <View style={styles.containerBotones}> 
           <TouchableOpacity style={styles.containerBoton} onPress={()=>{handlePressButtons("mapa")}} >

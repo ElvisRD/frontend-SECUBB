@@ -21,12 +21,11 @@ import departamentoSiluetas from "../../json/departamentosSiluetas.json";
 import * as geolib from 'geolib';
 import  coordenadasUbb  from "../../json/coordenadasUbb";
 
-export default function Mapa({ socket}) {
+export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) {
 
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
     const [coordenadasUsuario, setCoordenadasUsuario] = useState(null);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
-    const [verTiposAlertas, setVerTiposAlertas] = useState(false);
     const [modalAvisoAlerta, setModalAvisoAlerta] = useState(false);
     const [verAlerta, setVerAlerta] = useState(false);
     const [ubicacion, setUbicacion] = useState(null);
@@ -210,7 +209,7 @@ export default function Mapa({ socket}) {
         ) : (null)} 
 
         {
-            verTiposAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setVerTiposAlertas} />):(null)
+            verTipoAlertas ? (<TiposAlertaMapa setVerTiposAlertas={setIsVisibleTipoAlertas} />):(null)
         }
          <View style={styles.container}>
              <MapView
@@ -324,7 +323,7 @@ export default function Mapa({ socket}) {
 
             /> 
 
-            <TouchableOpacity style={styles.botonPregunta} onPress={()=>setVerTiposAlertas(true)} >
+            <TouchableOpacity style={styles.botonPregunta} onPress={()=>setIsVisibleTipoAlertas(true)} >
                 <IconAD 
                     name="question"
                     size={40}

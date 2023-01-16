@@ -29,10 +29,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp(4),
     },
     usuario: {
-        fontSize: wp(5),
+        fontSize: wp(4),
     },
     nombreUsuario: {
         fontWeight: "bold",
+        fontSize: wp(4.5),
     },
     textoDatosComentario:{
         width: "100%",

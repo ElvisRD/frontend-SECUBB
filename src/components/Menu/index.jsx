@@ -2,11 +2,11 @@ import React,{useState} from "react"
 import { View, Text, TouchableOpacity} from 'react-native';
 import styles from "./styles"
 import { Dialog, Portal, Provider, Button } from 'react-native-paper';
-import ModalSugerencia from "../ModalSugerencia";
+import ModalSugerencia from "../CrearSugerencia";
 import ModalLugaresProblematicos from "../GenerarReporte";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ConfiguracionNotificaciones from "../ConfiguracionNotificaciones";
-import ModalVerSugerencias from "../ModalVerSugerencias";
+import ModalVerSugerencias from "../VerSugerencias";
 import {limpiarRedux} from "../../redux/actions/usuarioActions";
 import ModificarContraseña from "../ModificarContraseña"
 import ModificarTipos from "../ModificarTipos"
@@ -27,7 +27,6 @@ export default function Menu({handlePressButtons, navigation, socket}){
     const eliminarToken = async () => {
         try {
           await AsyncStorage.removeItem('usuario')
-          console.log("el usuario fue removido");
         } catch(e) {
             console.log("error al remover el usuario");
         }
@@ -36,7 +35,6 @@ export default function Menu({handlePressButtons, navigation, socket}){
         dispatch(limpiarRedux());
         handlePressButtons("mapa");
         navigation.navigate("Login");
-      
     }
     
     return(

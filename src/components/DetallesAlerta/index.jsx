@@ -109,7 +109,6 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id}/> : (null)} 
 
             <View style={styles.containerAlerta}>
-
                 {
                     verAlerta.usuarioId === usuarioRedux.id ? (
                     <Appbar handlePressButtonLeft={()=>{setIsVisibleAlerta(false)}} handlePressButtonRight={()=>setModalEliminarAlerta(true)} 

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
     botonPlusPantallaGrand:{
         position: "absolute",
-        bottom: hp(19),
+        bottom: hp(24),
         padding: 5.5,
         justifyContent: "center",
         alignItems: "center",

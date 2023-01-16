@@ -15,20 +15,20 @@ const styles = StyleSheet.create({
     },
     containerTitle: {
         width: "100%",
+        marginTop: hp(2),
+        alignItems: "center",
     },
     title: {
-        fontSize: wp(10),
-        paddingTop: hp(2),
-        paddingLeft: wp(5.5)
+        fontSize: wp(7),
     },
     containerInputsModificarContra: {
         width: "100%",
         alignItems: "center",
-        marginTop: hp(10)
+        marginTop: hp(16)
     },
     input: {
         width: "88%",
-        marginTop: hp(1),
+        marginTop: hp(4),
     },
     containerError: {
         width: wp(100),
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     containerBoton: {
         width: "100%",
-        marginTop: hp(6),
+        marginTop: hp(10),
         marginBottom: hp(20),
         alignItems: "center",
     },

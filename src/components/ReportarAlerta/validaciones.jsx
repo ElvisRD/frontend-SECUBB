@@ -12,7 +12,6 @@ const validaciones = yup.object().shape({
     .string()
     //.min(4, "La ubicacion debe contener mínimo 4 letras.")
 	.max(250, "La ubicacion debe contener menos de 100 letras.")
-    .required("Por favor, ingresa una ubicacion")
     .matches(/^[A-Za-z0-9À-ÿ /,\u00f1\u00d1.]+$/g, "La ubicacion solo puede contener letras, números, puntos y comas."),
 });
 

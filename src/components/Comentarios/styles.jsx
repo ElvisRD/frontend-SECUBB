@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
     },
     containerTitle: {
         width: "100%",
+        marginTop: hp(2),
+        alignItems: "center",
     },
     title: {
-        fontSize: wp(10),
+        fontSize: wp(7),
         paddingLeft: hp(2),
     },
      botonCerrar: {
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     },
     containerErrorComentarios: {
         width: "100%",
-        marginTop: hp(2),
+        marginTop: hp(4),
         paddingLeft: wp(5),
     },
     textoErrorComentario: {

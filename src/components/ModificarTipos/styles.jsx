@@ -15,22 +15,22 @@ const styles = StyleSheet.create({
    },
    containerTitle: {
       width: "100%",
+      marginTop: hp(2),
+      alignItems: "center",
    },
    title: {
-      fontSize: wp(10),
-      paddingTop: hp(2),
-      paddingLeft: wp(5.5)
+      fontSize: wp(7),
    },
    containerInputs: {
       width: "100%",
-      marginTop: hp(4),
+      marginTop: hp(16),
    },
    containerSelect: {
       width: "100%",
       alignItems: "center",
    },
    tituloSelect: {
-      fontSize: wp(6),
+      fontSize: wp(4.5),
    },
    select: {
       width: wp(70),
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
    },
    textoInputCorreo: {
-      fontSize: wp(5),
+      fontSize: wp(4.5),
    },
    inputCorreo: {
       width: wp(88),
@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
       alignItems: "center",
    },
    boton: {
-      width: wp(55),
+      width: wp(45),
+      backgroundColor: "#01579b"
    },
    
 })

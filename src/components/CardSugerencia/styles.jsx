@@ -25,16 +25,23 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingBottom: hp(2),
     },
-    containerBotonCerrar: {
+    containerSuperior: {
         width: "100%",
-        alignItems: "flex-end",
+       flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    textoNombreUsuario: {
+        fontSize: wp(4.5),
+        fontWeight: "bold",
+
     },
     containerTextoSugerencia: {
         width: "100%",
         marginTop: hp(1),
     },
     textoSugerencia: {
-        fontSize: wp(4),
+        fontSize: wp(3.5),
     }
 });
 

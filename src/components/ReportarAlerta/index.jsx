@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
 import { TextInput, Button, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconAD from 'react-native-vector-icons/AntDesign';
 import styles from "./styles";
 import { Formik } from "formik";
 import Camara from "../Camara"
@@ -16,6 +15,7 @@ import Toast from 'react-native-toast-message';
 import {Camera} from "expo-camera"
 import Cargando from "../Cargando"
 import Appbar from "../Appbar";
+import formatText from "../../utils/modificarPrimeraLetra";
 
 
 
@@ -71,9 +71,9 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
                     
                     const body = {
                       tipo: values.tipo,
-                      descripcion: values.descripcion,
+                      descripcion: formatText(values.descripcion),
                       ubicacion: values.ubicacion,
-                      descripcion_ubicacion: values.descripcion_ubicacion,
+                      descripcion_ubicacion: formatText(values.descripcion_ubicacion),
                       latitude: values.latitude,
                       longitude: values.longitude,
                       usuarioId: usuarioRedux.id

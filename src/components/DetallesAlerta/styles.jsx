@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         
     },
     tituloAlerta: {
-        fontSize: wp(7.5),
+        fontSize: wp(7),
         fontWeight: "bold"
 
     },
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
         maxHeight: 200
     },
     atributoAlerta: {
-        fontSize: wp(6),
+        fontSize: wp(5.5),
         fontWeight: "bold"
     },
     descripcion: {
-        fontSize: wp(4)
+        fontSize: wp(3.5)
     },
     containerUbicacion: {
         width: "100%",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp(5),
     },
     ubicacion: {
-        fontSize: wp(4)
+        fontSize: wp(3.5)
     },
     containerDescripcionUbicacion: {
         width: "100%",
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: wp(5),
     },
     textUsuario: {
-        fontSize: wp(5)
+        fontSize: wp(3.5)
     },
     containerBotonVerComentarios: {
         position: "absolute",
@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
     botonComentarios: {
         width: wp(40),
         backgroundColor: "#01579b",
-
-        //marginBottom: hp(5),
+        marginBottom: hp(5),
     },
     textoBotonComentarios: {
         fontSize: wp(3),

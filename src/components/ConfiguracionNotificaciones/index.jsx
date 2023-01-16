@@ -13,8 +13,6 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
     const usuarioRedux = useSelector(state => state.usuario.usuario)
     const [notificaciones, setNotificaciones] = useState(usuarioRedux.notificaciones)
     const dispatch = useDispatch();
-   
-    
 
     const guardarNotificaciones = async () => {
         const jsonValue = await AsyncStorage.getItem('usuario')
@@ -43,7 +41,6 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
     return(
         <View style={styles.containerConfiguracionNotificaciones}>
             <Appbar handlePressButtonLeft={()=>{setVisibleConfiguracionNotificaciones(false)}} iconoIzquierda="arrowleft" />
-            
             <View style={styles.containerTitle}>
                     <Text style={styles.title} adjustsFontSizeToFit >Notificaciones</Text>
             </View> 
@@ -55,9 +52,11 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
                 
             </View>
             <View style={styles.containerBoton}>
-                <Button style={styles.botonGuardar} mode="contained" onPress={guardarNotificaciones} disabled={
-                    usuarioRedux.notificaciones === notificaciones
-                } ><Text style={styles.textoBotonGuardar}>Guardar</Text></Button>
+                {
+                    usuarioRedux.notificaciones === notificaciones ? <Button style={[styles.botonGuardar, {backgroundColor: "#E5E5E5"}]} mode="contained" onPress={guardarNotificaciones} disabled={true}
+                    ><Text style={styles.textoBotonGuardar}>Guardar</Text></Button> : <Button style={styles.botonGuardar} mode="contained" onPress={guardarNotificaciones}
+                    ><Text style={styles.textoBotonGuardar}>Guardar</Text></Button>
+                }
             </View>
  
         </View>

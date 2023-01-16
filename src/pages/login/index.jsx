@@ -70,7 +70,6 @@ export default function Login({navigation}) {
                             values.contrasena = "";
                             setPortadaAfterLogin(true);
                         }).catch((err)=>{
-                    
                             if(err.response.status === 401){
                               Toast.show({
                                 type: 'error',

@@ -16,21 +16,23 @@ const styles = StyleSheet.create({
    
     containerTitle: {
         width: "100%",
+        marginTop: hp(2),
+        alignItems: "center",
     },
     title: {
-        fontSize: wp(10),
+        fontSize: wp(7),
         paddingLeft: hp(2),
     },
     containerLugares: {
         width: "100%",
-        marginTop: hp(2),
+        marginTop: hp(10),
         marginBottom: hp(1),
         justifyContent: "center",
         alignItems: "center",
         zIndex: 7
     },
     tituloSelect: {
-        fontSize: wp(5),
+        fontSize: wp(4.5),
     },
     
     select: {
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
         paddingLeft: wp(5)
     },
     tituloFecha: {
-        fontSize: wp(5)
+        fontSize: wp(4.5)
     },
     containerFechaInicio: {
         marginTop: hp(2),
@@ -73,6 +75,14 @@ const styles = StyleSheet.create({
         marginTop: hp(6),
         height: 100,
         alignItems: "center"
+    },
+    botonMostrarMapa: {
+        width: wp(40),
+        backgroundColor: "#01579b",
+    },
+    textoBoton: {
+        fontSize: wp(3.5),
+        color: "white",
     }
     
 })

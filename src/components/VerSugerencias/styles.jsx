@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
   
    containerTitle: {
         width: "100%",
-        marginTop: hp(1),
+        marginTop: hp(2),
+        paddingBottom: hp(1),
+        alignItems: "center",
     },
     title: {
-        fontSize: wp(10),
-        paddingLeft: hp(2),
+        fontSize: wp(7),
     },
-    
     sugerencias: {
         width: "100%",
         height: hp(86),

@@ -47,11 +47,9 @@ export default function Portada({navigation}){
        const obtenerDatosStorage = async() => {
         try {
           const jsonValue = await AsyncStorage.getItem('usuario')
-          console.log(jsonValue);
           const datosUsuario = JSON.parse(jsonValue);
           if(datosUsuario !== null){
               obtenerPermisoUbicacion().then((result) => {
-                console.log("result", result);
                 if(result){
                   dispatch(guardarUsuarioRedux(datosUsuario));
                   getAlertas();
@@ -144,19 +142,11 @@ export default function Portada({navigation}){
 
        const obtenerPermisoUbicacion = async() => {
               let { status } = await Location.requestForegroundPermissionsAsync();
-              console.log(status);
               if (status !== 'granted') {
                  return false;
               }
               
-              Location.getCurrentPositionAsync().then((result) => {
-                console.log(result);
-              }).catch((err) => {
-                console.log(err);
-              });
-
               let location = await Location.getCurrentPositionAsync({});
-              console.log(location);
               dispatch(guardarUbicacionRedux(location));
               return true;
        }
