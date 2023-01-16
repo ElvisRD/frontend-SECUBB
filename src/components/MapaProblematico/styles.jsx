@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     containerMapa: {
         position: "absolute",
         backgroundColor: 'white',
-        marginTop: hp(4),
         zIndex: 8,
         width: "100%",
         justifyContent: "center",

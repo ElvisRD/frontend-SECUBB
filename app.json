@@ -2,10 +2,6 @@
   "expo": {
     "name": "SECUBB",
     "slug": "SECUBB",
-    "splash": {
-      "image": "./src/assets/iconoUBB.png",
-      "backgroundColor": "#01579b"
-    },
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

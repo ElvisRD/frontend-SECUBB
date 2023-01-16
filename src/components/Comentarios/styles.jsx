@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     containerTitle: {
         width: "100%",
         marginTop: hp(2),
+        paddingBottom: hp(1),
         alignItems: "center",
     },
     title: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     containerCardComentarioPantallaGrand: {
         width: "100%",
         marginBottom: hp(6),
-        height: hp(84),
+        height: hp(82),
     },
      containerCardComentarioPantallaPeque: {
         width: "100%",

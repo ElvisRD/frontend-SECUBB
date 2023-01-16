@@ -56,7 +56,6 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
                 initialRegion={initialRegion} 
                 onRegionChangeComplete={(e)=> {setCoordenadasAlerta(e)}}
                 style={styles.mapa}
-                loadingEnabled={true}
                 customMapStyle={mapStyle}
                 showsBuildings={false}
             >

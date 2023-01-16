@@ -194,8 +194,9 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
 
     }
     const mostrarAlerta = (alerta) => {
+       
         setAlertaSeleccionada(alerta);
-        setVerAlerta(true);
+        setVerAlerta(true);      
     }
 
     return (

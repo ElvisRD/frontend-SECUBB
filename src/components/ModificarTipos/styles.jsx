@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
    },
    containerBotonModificar: {
       width: "100%",
-      marginTop: hp(6),
+      marginTop: hp(8),
       marginBottom: hp(15),
       alignItems: "center",
    },

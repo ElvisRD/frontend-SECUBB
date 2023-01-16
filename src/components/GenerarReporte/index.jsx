@@ -3,7 +3,7 @@ import { View, Text  } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
-import { Button } from 'react-native-paper';
+import { Button, Dialog, Portal, Provider } from 'react-native-paper';
 import {obtenerAlertasPorFechaYTipo} from "../../data/alertas";
 import InputFecha from "./inputFecha";
 import MapaProblematico from "../MapaProblematico";
@@ -16,6 +16,9 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
     const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
     const [mostrarMapa, setMostrarMapa] = useState(false);
     const [alertas, setAlertas] = useState(null);
+    const [visibleAlertaFaltaDatos, setVisibleAlertaFaltaDatos] = useState(false);
+    const [visibleAlertaInicialMayor, setVisibleAlertaInicialMayor] = useState(false);
+    
 
     const [fechaInicialSeleccinada, setFechaInicialSeleccinada] = useState({
         fecha: "",
@@ -71,11 +74,12 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
     const obtenerAlertas = () => {
         
         if(fechaInicialSeleccinada.fecha === "" || fechaInicialSeleccinada.hora === "" || fechaFinalSeleccinada.fecha === "" || fechaFinalSeleccinada.hora === ""){
-            alert("Por favor seleccione una fecha y hora inicial y final");
+            setVisibleAlertaFaltaDatos(true);
         }else{
             const fechaInicialDividida = fechaInicialSeleccinada.fecha.split("/");
             const fechaFinalDividida = fechaFinalSeleccinada.fecha.split("/");
-            
+           
+           
             if(parseInt(fechaInicialDividida[0])<10){
                 fechaInicialDividida[0] = "0" + fechaInicialDividida[0];
             }
@@ -94,6 +98,10 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
             const fechaFinalModificada = fechaFinalDividida[2] + "-" + fechaFinalDividida[1] + "-" + fechaFinalDividida[0]+"T"+fechaFinalSeleccinada.hora+".000Z";
             valorSeleccionado.replace(" ","%20");
 
+            if(fechaInicialDividida > fechaFinalDividida){
+                setVisibleAlertaInicialMayor(true)
+                return null;
+            }
 
             obtenerAlertasPorFechaYTipo(valorSeleccionado,fechaInicialModificada,fechaFinalModificada).then((result) => {
                 setAlertas(result);
@@ -149,7 +157,7 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
              <KeyboardAwareScrollView bounces={false} style={styles.modalLugaresProblematicos}>
                 <Appbar handlePressButtonLeft={()=>{setModalLugaresProblematicos(false)}} iconoIzquierda="arrowleft" />
                 <View style={styles.containerTitle}>
-                    <Text style={styles.title}>Lugares Problematicos</Text>
+                    <Text style={styles.title}>Generar GenerarReporte</Text>
                 </View>
                 
                 <View  style={styles.containerLugares}>
@@ -227,6 +235,37 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                     </Button>
                 </View>
             </KeyboardAwareScrollView>  
+            <Provider >
+                    <Portal>
+                        <Dialog visible={visibleAlertaFaltaDatos} onDismiss={()=>setVisibleAlertaFaltaDatos(false)}>
+                            <Dialog.Icon icon="alert-circle-outline" />
+                            <Dialog.Title>
+                                <Text style={styles.textoAlerta}>Por favor, rellene las fechas y horas.</Text>
+                            </Dialog.Title>
+                            <Dialog.Actions>
+                                <Button onPress={()=>setVisibleAlertaFaltaDatos(false)}>
+                                    <Text style={styles.textoBotonAlerta}>Volver</Text>
+                                </Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+            </Provider>
+
+            <Provider >
+                    <Portal>
+                        <Dialog visible={visibleAlertaInicialMayor} onDismiss={()=>setVisibleAlertaInicialMayor(false)}>
+                            <Dialog.Icon icon="alert-circle-outline" />
+                            <Dialog.Title>
+                                <Text style={styles.textoAlerta}>La fecha inicial no puede ser mayor a la fecha final.</Text>
+                            </Dialog.Title>
+                            <Dialog.Actions>
+                                <Button onPress={()=>setVisibleAlertaInicialMayor(false)}>
+                                    <Text style={styles.textoBotonAlerta}>Volver</Text>
+                                </Button>
+                            </Dialog.Actions>
+                        </Dialog>
+                    </Portal>
+            </Provider>
         </View>
         </>
 

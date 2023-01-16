@@ -92,7 +92,6 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
             }
     
             let comentario = null;
-           
             await crearComentario(body).then((result) => {
                 comentario=result.nuevoComentario;
               }).catch((err) => {

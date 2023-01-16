@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
     textoBoton: {
         fontSize: wp(3.5),
         color: "white",
+    },
+    textoAlerta: {
+        fontSize: wp(4),
+    },
+    textoBotonAlerta:{
+        fontSize: wp(3.5),
+        color: "#01579b",
     }
     
 })

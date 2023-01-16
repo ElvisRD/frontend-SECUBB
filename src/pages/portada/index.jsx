@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {View,Text, Linking, BackHandler} from "react-native";
+import {View,Text, Linking, BackHandler, Image} from "react-native";
 import {Provider, Dialog, Portal, Button } from "react-native-paper";
 import styles from "./styles";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
@@ -14,6 +14,7 @@ import {obtenerComentarios} from "../../data/comentarios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { guardarUsuarioRedux, guardarUbicacionRedux } from "../../redux/actions/usuarioActions";
 import * as Location from 'expo-location';
+import logo from "../../assets/iconoUBB.png";
 import Cargando from "../../components/Cargando";
 
 
@@ -30,7 +31,6 @@ export default function Portada({navigation}){
         return true;
       };
       
-  
       const backHandler = BackHandler.addEventListener(
         "hardwareBackPress",
         backAction
@@ -159,11 +159,11 @@ export default function Portada({navigation}){
       <>
        {/* {cargando ? <Cargando /> : null} */}
         <View style={styles.containerPortada}>
-            <Text>Portada</Text>
+            <Image source={logo} />
         </View>
         <Provider >
                 <Portal>
-                          <Dialog visible={permisoLocalizacion} dismissable={false} >
+                         <Dialog visible={permisoLocalizacion} dismissable={false} >
                               <Dialog.Icon icon="alert" />
                               <Dialog.Title>Permiso de localización</Dialog.Title>
                               <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es obligatorio el permiso de localización,
@@ -177,10 +177,5 @@ export default function Portada({navigation}){
                 </Portal>
         </Provider>
       </>
-     
-      
-        
-  
     )
-    
 }

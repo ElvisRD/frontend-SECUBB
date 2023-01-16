@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
     },
     containerBoton: {
         width: "100%",
-        marginTop: hp(10),
-        marginBottom: hp(20),
+        marginTop: hp(25),
+        marginBottom: hp(10),
+        backgroundColor: "red",
         alignItems: "center",
     },
     botonCambiar: {

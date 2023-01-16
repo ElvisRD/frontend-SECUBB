@@ -27,10 +27,12 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} options={{
               headerShown: false,
             }} />
+            
           </Stack.Navigator>
+          <Toast />
         </NavigationContainer>
     </Provider>
-    <Toast />
+    
     </>
     
    
