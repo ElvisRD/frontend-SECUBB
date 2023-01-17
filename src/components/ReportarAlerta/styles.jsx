@@ -22,10 +22,11 @@ const styles = StyleSheet.create({
     },
     containerTitle: {
         width: "100%",
+        marginTop: hp(2),
+        alignItems: "center",
     },
     title: {
-        fontSize: wp(10),
-        paddingLeft: hp(2.5),
+        fontSize: wp(7),
     },
     botonCerrar: {
         position: "absolute",
@@ -40,11 +41,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     containerInputsModal: {
-        marginTop: "5%",
+        marginTop: hp(3),
         alignItems: "center"
     },
     containerInputs: {
-        width: "88%"
+        width: "88%",
+        marginTop: hp(1),
     },
     containerBotonFoto: {
         width: "30%"
@@ -96,8 +98,28 @@ const styles = StyleSheet.create({
         color: "red"
     },
     botonCrearAlerta: {
-        width: wp(65)
+        width: wp(55)
     },
+    containerTituloAlerta: {
+        alignItems: "center",
+        marginTop: hp(2),
+        
+    },
+    tituloAlerta: {
+        fontSize: wp(5),
+    },
+    containerTextoAlerta: {
+        alignItems: "center",
+    },
+    textoAlerta:{
+        fontSize: wp(3.5),
+    },
+    containerBotonAlerta: {
+        justifyContent: "center",
+    },
+    textoBotonAlerta: {
+        color: "#01579b"
+    }
 
 })
 

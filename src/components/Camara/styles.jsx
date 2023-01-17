@@ -1,23 +1,23 @@
 import { StyleSheet } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
     containerCamara: {
-        width: "100%",
-        height: "100%",
+        width: wp(100),
+        height: hp(105),
         backgroundColor: "black",
         zIndex: 20
     },
 
     containerBotonesCamara: {
         position: "absolute",
-        top: "8%",
-        width: "100%",
+        top: hp(8),
+        width: wp(100),
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        height: "5%",
-        paddingHorizontal: "6%",
+        height: hp(5),
+        paddingHorizontal: wp(6),
         zIndex: 31
     },
     botonVolver: {
@@ -26,32 +26,30 @@ const styles = StyleSheet.create({
     },
     containerBotonFlash: {
         position: "absolute", 
-        width: "50%",
-        top: "8%",
-        height: "4%",
+        width: wp(50),
+        top: hp(8),
+        height: hp(4),
         alignItems: "flex-end",
-        right: "0%",
+        right: 0,
         zIndex: 31
     },
     camera: {
         width: "100%",
-        marginTop: "9%"
     },
     containerImagen: {
-        width: "100%",
-        height: "100%",
+        width: wp(100),
+        height: hp(100),
         backgroundColor: "black ",
     },
     containerBotonSacarFoto: {
         position: "absolute",
-        bottom: heightPercentageToDP(1),
+        bottom: hp(4),
         width: "100%",
         position: "absolute",
         alignItems: "center",
 
     },
     botonSacarFoto: {
-       
         width: 80,
         height: 80,
         borderRadius: 100,
@@ -73,8 +71,6 @@ const styles = StyleSheet.create({
         backgroundColor: "gray",
         
     },
-    
-
 })
 
 export default styles

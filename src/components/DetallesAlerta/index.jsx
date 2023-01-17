@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { View, Text, Image } from "react-native"
-import { Dialog, Portal, Provider, Button } from 'react-native-paper'
+import { Dialog, Portal, Provider, Button, ActivityIndicator  } from 'react-native-paper'
 import styles from "./styles"
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import IconAD from 'react-native-vector-icons/AntDesign';
@@ -20,7 +20,6 @@ import Appbar from '../Appbar'
 export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
    
     const [spinnerFoto, setSpinnerFoto] = useState(true);
-    const [spinnerComentarios, setSpinnerComentarios] = useState(true);
     const [modalEliminarAlerta, setModalEliminarAlerta] = useState(false);
     const [verComentarios, setVerComentarios] = useState(false);
     const [errorImagen, setErrorImagen] = useState(false);
@@ -32,15 +31,13 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
 
     useEffect(() => {
        const getImagen = async() => {
-            setSpinnerFoto(true);
+        setSpinnerFoto(true);
             await obtenerImagen(verAlerta.id).then((result) => {
                 setImagen(result.url.replace(/\\/g, "/"));
-                setSpinnerFoto(false);
            }).catch((err) => {
                 setErrorImagen(true)
            });
        }
-       
        getImagen();
 
     }, [])
@@ -150,12 +147,21 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                     {
                         errorImagen !== true ? (
                             <>
-                            <View style = {styles.containerTituloImagen}>
-                                <Text style={styles.atributoAlerta}>Imagen</Text>
-                            </View>
-                            <View style={styles.containerImagen}>
-                                <Image style={styles.imagen} source={{uri: `${URL_CONNECT_BACKEND}/${imagen}`}} /> 
-                            </View>
+                                <View style = {styles.containerTituloImagen}>
+                                    <Text style={styles.atributoAlerta}>Imagen</Text>
+                                </View>
+                                
+                                    
+                                    <View style={styles.containerImagen}>
+                                        {spinnerFoto && 
+                                            <View style={styles.contenedorSpinner}>
+                                                <ActivityIndicator color='#01579b' size={30}/>
+                                            </View> }
+                                        <Image style={styles.imagen} onLoad={()=>{setSpinnerFoto(false)}} source={{uri: `${URL_CONNECT_BACKEND}/${imagen}`}} />
+                                    </View>
+                                    
+                                
+                               
                             </>
                         ):
                         (null)
@@ -178,10 +184,12 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                     <Portal>
                         <Dialog visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)} >
                             <Dialog.Icon icon="alert" />
-                            <Dialog.Title>¿Estás seguro que deseas eliminar la alerta?</Dialog.Title>
+                            <Dialog.Content style={styles.containerTextoAlertaEliminar}>
+                                <Text style={styles.textoAlertaEliminar}>¿Estás seguro/a que deseas eliminar la alerta?</Text>
+                            </Dialog.Content>
                             <Dialog.Actions>
-                            <Button onPress={()=>setModalEliminarAlerta(false)}>Cancelar</Button>
-                            <Button onPress={handlerEliminarAlerta}>Confirmar</Button>
+                            <Button onPress={()=>setModalEliminarAlerta(false)}><Text style={styles.textoBotonAlerta}>Cancelar</Text></Button>
+                            <Button onPress={handlerEliminarAlerta}><Text style={styles.textoBotonAlerta}>Confirmar</Text></Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

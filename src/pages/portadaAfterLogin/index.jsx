@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from "react";
 import {View,Text, BackHandler, Linking} from "react-native";
 import styles from "./styles";
-import {Provider, Portal, Button, Dialog} from "react-native-paper";
+import {Provider, Portal, Button, Dialog, ActivityIndicator} from "react-native-paper";
 import {guardarAlertaRedux} from "../../redux/actions/alertasActions";
 import { daLikeComentarioRedux } from "../../redux/actions/likesActions";
 import {obtenerAlertas} from "../../data/alertas";
@@ -22,7 +22,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     const [permisoLocalizacion, setPermisoLocalizacion] = useState(false);
     const [verificarActivacionPermiso, setVerificarActivacionPermiso] = useState(0);
-    //const [cargando, setCargando] = useState(false);
+    const [cargando, setCargando] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -122,7 +122,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         dispatch(guardarUsuarioRedux(datosUsuario));
        
        getPermisoLocalizacion().then((result) => {
-
+        setCargando(false);
         if(result === true){
           getAlertas();
           getComentarios();
@@ -130,7 +130,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
           if(datosUsuario.tipo === "Administrador"){
             getSugerencias();
           }
-          setPortadaAfterLogin(false);
+         
           navigation.navigate("Home");
         }else{
           setPermisoLocalizacion(true);
@@ -138,7 +138,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         }).catch((err) => {
           console.log("error al obtener permiso de localización");
         });  
-      
+        setPortadaAfterLogin(false);
        }
      
       obtenerDatos();
@@ -148,24 +148,28 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
 
     return (
       <>
-        {/* {cargando ? <Cargando /> : null} */}
+        {cargando ? <Cargando /> : null} 
         <View style={styles.containerPortada}>
-              <Text>Preparando datos...</Text>
+              <ActivityIndicator style={styles.spinner} animating={true} color="white" size={40} />
+              <Text style={styles.textoCargando}>Preparando datos...</Text>
         </View>
         <Provider>
-                        <Portal>
-                            <Dialog visible={permisoLocalizacion} dismissable={false} >
-                                <Dialog.Icon icon="alert" />
-                                <Dialog.Title>Permiso de localización</Dialog.Title>
-                                <Dialog.Content><Text>Para el correcto funcionamiento de la aplicación es obligatorio el permiso de localización,
-                                si usted rechaza este permiso la aplicación se cerrará.</Text></Dialog.Content>
-                                <Dialog.Actions style={{justifyContent: "center"}}>
-                                    <Button onPress={() => BackHandler.exitApp()}> Rechazar</Button>
-                                    <Button onPress={() => Linking.openSettings()}>Ir a Configuraciones</Button>
-                                    <Button onPress={() => {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setPermisoLocalizacion(false)}}>Verificar</Button>
-                                </Dialog.Actions>
-                            </Dialog>
-                        </Portal>
+                <Portal>
+                        <Dialog visible={permisoLocalizacion} dismissable={false} >
+                              <Dialog.Icon icon="alert" />
+                              <Dialog.Content style={styles.containerTituloAlerta}>
+                                <Text style={styles.tituloAlerta}>Permiso de localización</Text>
+                              </Dialog.Content>
+                              <Dialog.Content style={styles.containerTextoAlerta}>
+                                <Text style={styles.textoAlerta}>Para el correcto funcionamiento de la aplicación es obligatorio el permiso de localización.
+                                </Text>
+                              </Dialog.Content>
+                              <Dialog.Actions style={styles.containerBotonAlerta}>
+                                  <Button  onPress={() => Linking.openSettings()}><Text style={styles.textoBotonAlerta}>Ir a Configuraciones</Text></Button>
+                                  <Button  onPress={()=> {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setCargando(true)}}><Text style={styles.textoBotonAlerta}>Verificar</Text></Button>
+                              </Dialog.Actions>
+                          </Dialog>
+                </Portal>
         </Provider>
       </>
         

@@ -5,6 +5,7 @@ import { Camera } from 'expo-camera';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconMI from 'react-native-vector-icons/MaterialIcons'
+import Cargando from '../Cargando';
 
 
 
@@ -13,12 +14,13 @@ export default function Camara({setVisibleCamara, setImagen}){
     const [foto, setFoto] = useState(null);
     const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const camaraRef = useRef(null);
+    const [cargando, setCargando] = useState(false);
     const dimensionesPantalla = Dimensions.get("window");
     const height = Math.round((dimensionesPantalla.width * 16) / 9);
 
     
      const TomarFoto = async () => {
- 
+        //setCargando(true);
         if(camaraRef){
             await camaraRef.current.takePictureAsync().then((result) => {
                 setFoto(result.uri)
@@ -27,6 +29,12 @@ export default function Camara({setVisibleCamara, setImagen}){
             });
         }
      };
+
+   /*   useEffect(() => {
+        if(foto !== null){
+            setCargando(false);
+        }
+     }, [foto]); */
 
 
 
@@ -39,10 +47,9 @@ export default function Camara({setVisibleCamara, setImagen}){
         return (
             <>
                 <View style={styles.containerImagen}>
-                    <Image source={{uri: foto}} style={[styles.camera ,{height: "95%"}]}/>
+                    <Image source={{uri: foto}} style={[styles.camera ,{height: "100%"}]}/>
                 </View>
                 <View style={styles.containerBotonesFotoTomada}>
-                    
                     <TouchableOpacity style={styles.botonFotoTomada} onPress={()=>{setFoto(null)}}>
                         <IconMC
                             name='reload'
@@ -116,10 +123,9 @@ export default function Camara({setVisibleCamara, setImagen}){
 
     return(
         <View style={styles.containerCamara}>
-           
+            {/* {cargando ? <Cargando/> : null} */}
            {!foto ? <Camara/> :
             <Imagen />}
-            
         </View>
 
     )

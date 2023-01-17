@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
         width: "100%",
         marginTop: hp(25),
         marginBottom: hp(10),
-        backgroundColor: "red",
         alignItems: "center",
     },
     botonCambiar: {

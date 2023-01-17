@@ -33,23 +33,26 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
     const [alertas, setAlertas] = useState(null);
     const alertasRedux = useSelector(state => state.alertas.alertas)
     const notificacionRedux = useSelector(state => state.notificacion.notificacion)
-    const usuarioRedux = useSelector(state => state.usuario.usuario)
+    const usuarioRedux = useSelector(state => state.usuario)
     const dimensionesPantalla = Dimensions.get('window');
-
-    useEffect(() => {
-        if(usuarioRedux.coordenadas !== null){
-            setCoordenadasUsuario(usuarioRedux.coordenadas);
-        }
-    }, [usuarioRedux.coordenadas])
-    
-    const [initialRegion, _] = useState({
+    const [initialRegion, setInitialRegion] = useState({
         latitude: -36.821884,
         longitude: -73.012440,
         latitudeDelta: 0.001,
         longitudeDelta: 0.001,
+    }) 
 
-    })
+    useEffect(() => {
+        if(usuarioRedux.coordenadas !== null){
+            //console.log(usuarioRedux.coordenadas);
+            setCoordenadasUsuario(usuarioRedux.coordenadas);
+           //console.log(usuarioRedux.coordenadas.coords.latitude);
+            /* setInitialRegion({latitude: usuarioRedux.coordenadas.coords.latitude, 
+                longitude: usuarioRedux.coordenadas.coords.longitude});  */
 
+        }
+    }, [usuarioRedux.coordenadas])
+        
     useEffect(() => {
         if(alertasRedux !== null){
             setAlertas(alertasRedux);
@@ -62,18 +65,18 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
     useEffect(() => {
 
         if(notificacionRedux !== null && notificacionRedux !== undefined && usuarioRedux.notificaciones !== false){
-            let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
-                {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100);
-                //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
+           let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
+                {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100); 
+           /*  let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
+                    {latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude}, 100); */
                 //console.log(mostrarNotificacion);
             if(mostrarNotificacion){
                 console.log(usuarioRedux);
                 Toast.show({
                     type: 'info',
                     position: 'top',
-                    text1: 'Alerta',
-                    text2: 'Se creo una alerta cerca de tu ubicación',
-                    visibilityTime: 4000,
+                    text1: 'Fue creada una alerta cerca de tu ubicación',
+                    visibilityTime: 3000,
                 });
             }
         }
@@ -121,9 +124,8 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                     Toast.show({
                         type: 'error',
                         position: 'top',
-                        text1: 'Error',
-                        text2: 'Solo puedes crear alertas dentro de la UBB',
-                        visibilityTime: 2000,
+                        text1: 'Solo puedes crear alertas dentro de la UBB',
+                        visibilityTime: 3000,
                     })
                 }
                 
@@ -132,9 +134,8 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
             Toast.show({
                 type: 'error',
                 position: 'top',
-                text1: 'Error',
-                text2: 'Solo puedes crear alertas mientras estes dentro de la UBB',
-                visibilityTime: 2000,
+                text1: 'Solo puedes crear alertas estando dentro de la UBB',
+                visibilityTime: 3000,
             })
            } 
         
@@ -163,8 +164,8 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
 
     const usuarioSeEncuentraEnUbb = () => {
         let seEncuentraDentro = geolib.isPointInPolygon({ latitude: -36.82238193190107, longitude: -73.01337695114863 }, coordenadasUbb.coordenadas)
+        //let seEncuentraDentro = geolib.isPointInPolygon({ latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude }, coordenadasUbb.coordenadas)
         //-36.82238193190107, -73.01337695114863
-        //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
         //latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude
         return seEncuentraDentro;
     }
@@ -225,8 +226,9 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                 //loadingEnabled={true}
                 showsBuildings={false}
                 showsScale={true}
-                //showsMyLocationButton={true}
-                
+                /* showsUserLocation={true}
+                userLocationUpdateInterval={120000}
+                userLocationPriority="high" */
                 
                 //onTouchEnd={(e)=>console.log("aa")}
                 //onTouchStart={(e)=>console.log("aa")}
@@ -323,7 +325,7 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                 style={styles.makerMapa}
 
             /> 
-
+{/* 
             <TouchableOpacity style={styles.botonPregunta} onPress={()=>setIsVisibleTipoAlertas(true)} >
                 <IconAD 
                     name="question"
@@ -331,7 +333,7 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                     color="#a3a2a0"
                 
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
             <TouchableOpacity style={dimensionesPantalla.height < 700 ? styles.botonPlusPantallaPeque : styles.botonPlusPantallaGrand} onPress={handleClickMap}>
                 <Icon

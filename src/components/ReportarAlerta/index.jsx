@@ -9,7 +9,7 @@ import Camara from "../Camara"
 import {crearAlerta} from "../../data/alertas"
 import {useDispatch, useSelector} from "react-redux"
 import { guardarAlertaRedux } from "../../redux/actions/alertasActions";
-import validaciones from "./validaciones";
+import {validacionReportarAlerta} from "../../utils/validaciones"
 import {guardarImagen} from "../../data/imagenes"
 import Toast from 'react-native-toast-message';
 import {Camera} from "expo-camera"
@@ -63,7 +63,7 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
           </View>
             <Formik
                   initialValues={valoresIniciales} 
-                  validationSchema={validaciones}
+                  validationSchema={validacionReportarAlerta}
                   onSubmit={async (values) => {
 
                     values.longitude = coordenadasAlerta.longitude
@@ -95,8 +95,8 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
                         Toast.show({
                           type: 'error',
                           position: 'top',
-                          text1: 'Se produjo un error al crear la alerta',
-                          visibilityTime: 2000,
+                          text1: 'Error al crear la alerta',
+                          visibilityTime: 3000,
                         });; 
                       }); 
 
@@ -139,7 +139,7 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
                   </View>
 
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción ubicación" multiline={true} numberOfLines={4} maxLength={200} onBlur={handleBlur('ubicacion')} value={values.descripcion_ubicacion} onChangeText={handleChange('descripcion_ubicacion')}/>
+                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción ubicación" multiline={true} numberOfLines={4} maxLength={200} onBlur={handleBlur('descripcion_ubicacion')} value={values.descripcion_ubicacion} onChangeText={handleChange('descripcion_ubicacion')}/>
                   </View>
                   {errors.descripcion_ubicacion && touched.descripcion_ubicacion? 
                   (
@@ -189,16 +189,18 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
             </Formik>
           </KeyboardAwareScrollView>
 
-          <Provider >
+          <Provider>
                     <Portal>
                         <Dialog  visible={permisoCamara} dismissable={false} >
                             <Dialog.Icon icon="alert" />
-                            <Dialog.Title>Permiso de Cámara</Dialog.Title>
-                            <Dialog.Content><Text>Para el uso de la cámara, es necesario que se active el permiso en configuración, si usted rechaza este permiso, no podrá acceder a la cámara.</Text></Dialog.Content>
-                            <Dialog.Actions style={{justifyContent: "center"}}>
-                                <Button onPress={()=>setPermisoCamara(false)}>Rechazar</Button>
-                                <Button onPress={() => Linking.openSettings()}>ir a Configuración</Button>
-                                <Button onPress={handleBotonImagen}>Verificar</Button>
+                            <Dialog.Content style={styles.containerTituloAlerta}><Text style={styles.tituloAlerta}>Permiso de Cámara</Text></Dialog.Content>
+                            <Dialog.Content style={styles.containerTextoAlerta}>
+                              <Text style={styles.textoAlerta}>Para el uso de la cámara, es necesario que se active el permiso en configuración, si usted rechaza este permiso, no podrá acceder a la cámara.</Text>
+                            </Dialog.Content>
+                            <Dialog.Actions style={styles.containerBotonAlerta}>
+                                <Button onPress={()=>setPermisoCamara(false)}><Text style={styles.textoBotonAlerta}>Rechazar</Text></Button>
+                                <Button onPress={() => Linking.openSettings()}><Text style={styles.textoBotonAlerta}>ir a Configuración</Text></Button>
+                                <Button onPress={handleBotonImagen}><Text style={styles.textoBotonAlerta}>Verificar</Text></Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

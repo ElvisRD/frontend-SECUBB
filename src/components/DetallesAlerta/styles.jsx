@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    contenedorSpinner: {
+        position: "absolute",
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     imagen: {
         width: wp(90),
         borderRadius: 10,
@@ -102,18 +107,29 @@ const styles = StyleSheet.create({
     containerBotonVerComentarios: {
         position: "absolute",
         width: "100%",
+        height: hp(10),
         alignItems: "center",
-        bottom: hp(2),
+        justifyContent: "center",
+        bottom: 0
   
     },
     botonComentarios: {
         width: wp(40),
         backgroundColor: "#01579b",
-        marginBottom: hp(5),
     },
     textoBotonComentarios: {
         fontSize: wp(3),
         color: "white"
+    },
+    containerTextoAlertaEliminar: {
+        alignItems: "center",
+        marginTop: hp(2),
+    },
+    textoAlertaEliminar: {
+        fontSize: wp(4),
+    },
+    textoBotonAlerta: {
+       color: "#01579b",
     }
    
 })

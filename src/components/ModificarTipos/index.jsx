@@ -45,7 +45,7 @@ export default function ModificarTipos({setIsVisible}){
                         modificarTipoUsuario(body).then((result) => {
                             Toast.show({
                                 type: "success",
-                                text1: "Usuario modificado con éxito",
+                                text1: "Usuario modificado con éxito.",
                                 visibilityTime: 3000,
                                 autoHide: true,
                                 topOffset: 60,
@@ -57,7 +57,7 @@ export default function ModificarTipos({setIsVisible}){
                             if(err.response.status === 404){
                                 Toast.show({
                                     type: "error",
-                                    text1: "El usuario no existe",
+                                    text1: "El usuario no existe.",
                                     visibilityTime: 3000,
                                     autoHide: true,
                                     topOffset: 60,
@@ -65,7 +65,7 @@ export default function ModificarTipos({setIsVisible}){
                             }else{
                                 Toast.show({
                                     type: "info",
-                                    text1: "El usuario ya posee ese tipo",
+                                    text1: "El usuario ya posee ese tipo.",
                                     visibilityTime: 3000,
                                     autoHide: true,
                                     topOffset: 60,
@@ -103,6 +103,7 @@ export default function ModificarTipos({setIsVisible}){
                                         onChangeText={handleChange('correo')}
                                         onBlur={handleBlur('correo')}
                                         value={values.correo}
+                                        maxLength={50}
                                     />
                                     {errors.correo && touched.correo ? 
                                             (
@@ -120,7 +121,6 @@ export default function ModificarTipos({setIsVisible}){
                             </View>
                         </>
                     )}
-
                 </Formik>
             </KeyboardAwareScrollView>
         </View>

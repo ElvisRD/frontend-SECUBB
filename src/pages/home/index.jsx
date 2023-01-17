@@ -94,9 +94,15 @@ export default function Home({navigation}) {
 
     return () => {
       socket.off("comentario");
+      socket.off("alerta")
       socket.off("daLikeAlerta");
       socket.off("daDislikeAlerta");
-      socket.off("alerta")
+      socket.off("daLikeComentario");
+      socket.off("daDislikeComentario");
+      socket.off("eliminarAlerta");
+      socket.off("editarComentario");
+      socket.off("eliminarSugerencia");
+      socket.off("notificacion");
     }
     
   }, [])

@@ -83,84 +83,104 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
     }
       
       const crearUnComentario = async () => {
-        if(inputComentario !== ""){
-            const body = {
-                alertaId: alertaId,
-                comentario: formatText(inputComentario),
-                usuarioId: usuarioRedux.id,
-    
+        let inputComentarioEditado = inputComentario.replace("  ", '_');
+        if(inputComentario !== "" && inputComentario !== " "){
+            if(!inputComentarioEditado.includes("_")){
+                const body = {
+                    alertaId: alertaId,
+                    comentario: formatText(inputComentario),
+                    usuarioId: usuarioRedux.id,
+        
+                }
+        
+                let comentario = null;
+                await crearComentario(body).then((result) => {
+                    comentario=result.nuevoComentario;
+                  }).catch((err) => {
+                    console.log(err);
+                }); 
+        
+                await socket.emit("comentario", comentario);
+                dispatch(guardarComentarioRedux(comentario));
+        
+                Keyboard.dismiss()
+                if (scrollRef && scrollRef.current) {
+                    scrollRef.current?.scrollToEnd();
+                }
+                setInputComentario("");
+                setConfirmacion(false)
+            }else{
+                Toast.show({
+                    type: 'error',
+                    position: 'top',
+                    text1: 'Elimine los espacios seguidos.',
+                    visibilityTime: 3000,
+                });
             }
-    
-            let comentario = null;
-            await crearComentario(body).then((result) => {
-                comentario=result.nuevoComentario;
-              }).catch((err) => {
-                console.log(err);
-            }); 
-    
-            await socket.emit("comentario", comentario);
-            dispatch(guardarComentarioRedux(comentario));
-    
-            Keyboard.dismiss()
-            if (scrollRef && scrollRef.current) {
-                scrollRef.current?.scrollToEnd();
-            }
-            setInputComentario("");
-            setConfirmacion(false)
+            
         }else{
             Toast.show({
                 type: 'error',
                 position: 'top',
-                text1: 'Error',
-                text2: 'El comentario no puede estar vacío',
+                text1: 'Introduzca su comentario.',
                 visibilityTime: 3000,
             });
         }
       }
 
       const guardarComentarioEditado = async () => {
-        if(comentarioEditado.comentario !== ""){
-            const body = {
-                id: comentarioEditado.id,
-                comentario: formatText(comentarioEditado.comentario),
-            } 
-
-            editarComentario(body).then(() => {
-                Toast.show({
-                    type: 'success',
-                    position: 'top',
-                    text1: 'El comentario fue editado con éxito.',
-                    visibilityTime: 3000,
+        if(comentarioEditado.comentario !== "" && comentarioEditado.comentario !== " "){
+            let comentarioNuevo = comentarioEditado.comentario.replace("  ", '_');
+            if(!comentarioNuevo.includes("_")){
+                const body = {
+                    id: comentarioEditado.id,
+                    comentario: formatText(comentarioEditado.comentario),
+                } 
+    
+                editarComentario(body).then(() => {
+                    Toast.show({
+                        type: 'success',
+                        position: 'top',
+                        text1: 'El comentario fue editado con éxito.',
+                        visibilityTime: 3000,
+                    });
+                }).catch((err) => {
+                    if(err.response.status === 404){
+                        Toast.show({
+                            type: 'error',
+                            position: 'top',
+                            text1: 'Error al editar el comentario.',
+                            visibilityTime: 3000,
+                        });
+                    }else{
+                        Toast.show({
+                            type: 'info',
+                            position: 'top',
+                            text1: 'El comentario es el mismo',
+                            visibilityTime: 3000,
+                        });
+                    }
                 });
-            }).catch((err) => {
-                if(err.response.status === 404){
-                    Toast.show({
-                        type: 'error',
-                        position: 'top',
-                        text1: 'Error al editar el comentario.',
-                        visibilityTime: 3000,
-                    });
-                }else{
-                    Toast.show({
-                        type: 'info',
-                        position: 'top',
-                        text1: 'El comentario es el mismo',
-                        visibilityTime: 3000,
-                    });
-                }
-            });
+                
+                comentarioEditado.comentario = formatText(comentarioEditado.comentario);
+    
+                await socket.emit("editarComentario", comentarioEditado);
+                dispatch(editarComentarioRedux(comentarioEditado));
+                setModalEditar(false) 
+            }else{
+                Toast.show({
+                    type: 'error',
+                    position: 'top',
+                    text1: 'Elimine los espacios seguidos.',
+                    visibilityTime: 3000,
+                }); 
+            }
             
-            comentarioEditado.comentario = formatText(comentarioEditado.comentario);
-
-            await socket.emit("editarComentario", comentarioEditado);
-            dispatch(editarComentarioRedux(comentarioEditado));
-            setModalEditar(false) 
         }else{
             Toast.show({
                 type: 'error',
                 position: 'top',
-                text1: 'Error',
-                text2: 'El comentario no puede estar vacío',
+                text1: 'Introduzca su comentario.',
                 visibilityTime: 3000,
             });
         }
@@ -217,15 +237,15 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
         <Provider >
                 <Portal>
                         <Dialog visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
-                        <Dialog.Title>Editar comentario</Dialog.Title>
+                        <Dialog.Content style={styles.containerTituloAlerta}><Text style={styles.textoAlertaEditar}>Editar comentario</Text></Dialog.Content>
                         <Dialog.Content style={styles.containerInputEditComentario}>
                             <TextInput style={styles.textInput} autoFocus={true} multiline={true} activeUnderlineColor="transparent" defaultValue={comentarioEditado !== null ? comentarioEditado.comentario : ""}
                             onChangeText={(text) => setComentarioEditado({...comentarioEditado, comentario: text})} placeholder='Deja tu comentario' maxLength={100} />
                         </Dialog.Content>
                         <Dialog.Actions>
-                        <Button onPress={()=>setModalEditar(false)}>Cancelar</Button>
-                        <Button onPress={guardarComentarioEditado}>Confirmar</Button>
-                        </Dialog.Actions>
+                        <Button onPress={()=>setModalEditar(false)}><Text style={styles.textoBotonAlertaEditar}>Cancelar</Text></Button>
+                        <Button onPress={guardarComentarioEditado}><Text style={styles.textoBotonAlertaEditar}>Confirmar</Text></Button>
+                        </Dialog.Actions>  
                     </Dialog>
                 </Portal>
         </Provider>

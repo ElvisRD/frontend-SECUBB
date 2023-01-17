@@ -95,7 +95,16 @@ export default function ModalSugerencia({setModalSugerencia,socket}){
                             <Text style={styles.texto}>¿Tienes alguna sugerencia para la aplicación? ¡Escríbenos!</Text>
                         </View>
                         <View style={styles.containerInput}>
-                            <TextInput mode="outlined" style={styles.input} multiline={true} onBlur={handleBlur("sugerencia")} numberOfLines={10} values={values.sugerencia} label="Sugerencia" maxLength={200} onChangeText={handleChange("sugerencia")}/>
+                            <TextInput mode="outlined" style={styles.input} 
+                            multiline={true} 
+                            onBlur={handleBlur("sugerencia")} 
+                            numberOfLines={10} 
+                            values={values.sugerencia} 
+                            label="Sugerencia" 
+                            maxLength={200} 
+                            onChangeText={handleChange("sugerencia")}
+                            outlineColor="#E5E5E5" activeOutlineColor="gray"
+                            />
                         </View> 
                         {errors.sugerencia && touched.sugerencia ? 
                         (

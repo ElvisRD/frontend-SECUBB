@@ -61,8 +61,17 @@ const styles = StyleSheet.create({
     textCerrarSesion:{
         fontSize: wp(4),
         color: "white"
+    },
+    containerAlertaCerrarSesion: {
+        marginTop: hp(2),
+        alignItems: "center",
+    },
+    textoAlertaCerrarSesion: {
+        fontSize: wp(4),
+    },
+    textoBotonCerrarSesion: {
+        color: "#01579b",
     }
-    
 
 })
 

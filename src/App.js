@@ -7,7 +7,45 @@ import Home from "./pages/home"
 import store from "./redux/store";
 import Portada from "./pages/portada"
 import {Provider} from "react-redux"
-import Toast from 'react-native-toast-message';
+import Toast, { BaseToast, ErrorToast, InfoToast} from 'react-native-toast-message';
+
+const toastConfig = {
+  success: (props) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: 'green' }}
+      contentContainerStyle={{ paddingHorizontal: 8 }}
+      text1Style={{
+        fontSize: 12,
+        fontWeight: "600"
+      }}
+    />
+
+  ),
+  error: (props) => (
+    <ErrorToast
+      {...props}
+      style={{ borderLeftColor: 'red' }}
+      contentContainerStyle={{ paddingHorizontal: 8 }}
+      text1Style={{
+        fontSize: 12,
+        fontWeight: "600"
+      }}
+
+    />
+  ),
+  info: (props) => (
+    <InfoToast
+      {...props}
+      style={{ borderLeftColor: '#03a9f4' }}
+      contentContainerStyle={{ paddingHorizontal: 8 }}
+      text1Style={{
+        fontSize: 12,
+        fontWeight: "600"
+      }}
+    />
+  )
+}
 
 export default function App() {
   
@@ -29,7 +67,7 @@ export default function App() {
             }} />
             
           </Stack.Navigator>
-          <Toast />
+          <Toast config={toastConfig} />
         </NavigationContainer>
     </Provider>
     

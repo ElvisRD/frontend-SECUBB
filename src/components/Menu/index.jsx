@@ -95,11 +95,13 @@ export default function Menu({handlePressButtons, navigation, socket}){
                 <Provider >
                     <Portal>
                         <Dialog visible={isVisibleCerrarSesion} onDismiss={()=>setIsVisibleCerrarSesion(false)}>
-                            <Dialog.Icon icon="alert" />
-                            <Dialog.Title>¿Estás seguro que deseas cerrar sesión?</Dialog.Title>
+                            <Dialog.Icon icon="alert"  />
+                            <Dialog.Content style={styles.containerAlertaCerrarSesion}>
+                                <Text style={styles.textoAlertaCerrarSesion}>¿Estás seguro/a que deseas cerrar sesión?</Text>
+                            </Dialog.Content>
                             <Dialog.Actions>
-                            <Button onPress={()=>setIsVisibleCerrarSesion(false)}>Cancelar</Button>
-                            <Button onPress={eliminarToken}>Confirmar</Button>
+                            <Button onPress={()=>setIsVisibleCerrarSesion(false)}><Text style={styles.textoBotonCerrarSesion}>Cancelar</Text></Button>
+                            <Button onPress={eliminarToken}><Text style={styles.textoBotonCerrarSesion}>Confirmar</Text></Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

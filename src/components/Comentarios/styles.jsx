@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     containerCardComentarioPantallaGrand: {
         width: "100%",
         marginBottom: hp(6),
-        height: hp(82),
+        height: hp(72),
     },
      containerCardComentarioPantallaPeque: {
         width: "100%",
@@ -86,6 +86,16 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
+    },
+    containerTituloAlerta: {
+        alignItems: "center",
+    },
+    textoAlertaEditar: {
+        fontSize: wp(5),
+    },
+    textoBotonAlertaEditar: {
+        color: "#01579b",
     }
+
 })
 export default styles

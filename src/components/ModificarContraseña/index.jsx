@@ -41,8 +41,7 @@ export default function ModificarContraseña({setIsVisible}) {
                         Toast.show({
                             type: 'success',
                             position: 'Top',
-                            text1: 'Contraseña modificada',
-                            text2: 'La contraseña se modifico correctamente',
+                            text1: 'La contraseña fue modificada.',
                             visibilityTime: 3000,
                             topOffset: 60,
                         })
@@ -53,8 +52,7 @@ export default function ModificarContraseña({setIsVisible}) {
                             Toast.show({
                                 type: 'error',
                                 position: 'Top',
-                                text1: 'Contraseña incorrecta',
-                                text2: 'La contraseña actual no es correcta',
+                                text1: 'La contraseña actual no es correcta.',
                                 visibilityTime: 3000,
                                 topOffset: 60,
                             })

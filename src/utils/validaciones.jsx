@@ -64,6 +64,7 @@ const validacionSugerencia = yup.object().shape({
     sugerencia: yup
     .string()
     .min(10, "La sugerencia debe contener mínimo 10 caracteres")
+    .trim()
     .required("Por favor, ingrese su sugerencia")
     .matches(/^[A-Za-zÀ-ÿ. ]+$/g, "La sugerencia solo puede contener letras, puntos, espacios y tildes")
     .matches(/^[A-Za-zÀ-ÿ. ]+$/g, "La sugerencia solo puede contener letras, puntos, espacios y tildes")
@@ -71,8 +72,24 @@ const validacionSugerencia = yup.object().shape({
     
 })
 
+const validacionReportarAlerta = yup.object().shape({
+    descripcion: yup
+    .string()
+    //.min(10, "La descripción debe contener mínimo 10 letras.")
+	.max(250, "La descripción debe contener menos de 250 letras.")
+    .required("Por favor, ingresa una descripción")
+    .matches(/^(?=^[A-Za-zÀ-ÿ0-9., ]+$)(?=^(?!.*  )(?!^\s+$).*$)/, "La descripción solo puede contener letras, números, puntos y comas."),
+    
+    descripcion_ubicacion: yup
+    .string()
+    //.min(4, "La ubicacion debe contener mínimo 4 letras.")
+    .trim("error")
+	.max(250, "La ubicacion debe contener menos de 100 letras.")
+    .matches(/^(?=^[A-Za-zÀ-ÿ0-9., ]+$)(?=^(?!.*  )(?!^\s+$).*$)/, "La ubicación solo puede contener letras, números, puntos y comas."),
+})
 
-export {validacionesRegistro, validacionCorreo, validacionesLogin, validacionModificarContrasena,validacionSugerencia}
+
+export {validacionesRegistro, validacionCorreo, validacionesLogin, validacionModificarContrasena,validacionSugerencia,validacionReportarAlerta}
 
 
 

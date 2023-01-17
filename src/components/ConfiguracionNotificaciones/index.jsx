@@ -31,7 +31,7 @@ export default function ConfiguracionNotificaciones({setVisibleConfiguracionNoti
         } 
 
         editarNotificaciones(body).then(async () => {
-           dispatch(guardarUsuarioRedux(datosUsuario))
+           dispatch(guardarUsuarioRedux(datosUsuario));
         }).catch((err) => {
             console.log("error al editar notificaciones");
         }); 

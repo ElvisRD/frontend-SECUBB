@@ -9,6 +9,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#01579b",
         height: "100%", 
     },
+    spinner: {
+        marginBottom: hp(2),
+    },
+    textoCargando: {
+        color: "white",
+        fontSize: wp(5),
+        
+    },
+    containerTituloAlerta: {
+        alignItems: "center",
+        marginTop: hp(2),
+        
+    },
+    tituloAlerta: {
+        fontSize: wp(5),
+    },
+    containerTextoAlerta: {
+        alignItems: "center",
+    },
+    textoAlerta:{
+        fontSize: wp(3.5),
+    },
+    containerBotonAlerta: {
+        justifyContent: "center",
+    },
+    textoBotonAlerta: {
+        color: "#01579b"
+    }
     
 })
 

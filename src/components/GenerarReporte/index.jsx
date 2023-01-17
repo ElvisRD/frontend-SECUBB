@@ -111,11 +111,16 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                     Toast.show({
                         type: "error",
                         position: "top",
-                        text1: "No se encontraron alertas",
+                        text1: "No se encontraron alertas.",
                         visibilityTime: 3000,
                     })
                 }else{
-                    console.log("ocurrio un error al obtener las alertas");
+                    Toast.show({
+                        type: "error",
+                        position: "top",
+                        text1: "Ocurrió un error al obtener las alertas.",
+                        visibilityTime: 3000,
+                    })
                 }
             });
 
@@ -157,7 +162,7 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
              <KeyboardAwareScrollView bounces={false} style={styles.modalLugaresProblematicos}>
                 <Appbar handlePressButtonLeft={()=>{setModalLugaresProblematicos(false)}} iconoIzquierda="arrowleft" />
                 <View style={styles.containerTitle}>
-                    <Text style={styles.title}>Generar GenerarReporte</Text>
+                    <Text style={styles.title}>Generar reporte</Text>
                 </View>
                 
                 <View  style={styles.containerLugares}>
@@ -225,8 +230,6 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                                 tiempo="final"  
     
                         />
-                       
-
                     </View>
                 </View>
                 <View style={styles.containerBotonMostrarLugares}>
