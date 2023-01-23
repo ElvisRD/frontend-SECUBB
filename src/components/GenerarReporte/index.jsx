@@ -1,5 +1,5 @@
-import React,{useState, useRef} from "react"
-import { View, Text  } from "react-native"
+import React,{useState, useRef, useEffect} from "react"
+import { View, Text, TouchableOpacity, Alert } from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import styles from "./styles"
 import {Picker} from '@react-native-picker/picker';
@@ -13,7 +13,7 @@ import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 export default function GenerarReporte({setModalLugaresProblematicos}) {
 
-    const [valorSeleccionado, setValorSeleccionado] = useState("Problemas de iluminación");
+    const [valorSeleccionado, setValorSeleccionado] = useState("Persona sospechosa");
     const [mostrarMapa, setMostrarMapa] = useState(false);
     const [alertas, setAlertas] = useState(null);
     const [visibleAlertaFaltaDatos, setVisibleAlertaFaltaDatos] = useState(false);
@@ -34,9 +34,35 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
     const [abrirHoraInicial, setAbrirHoraInicial] = useState(false);
     const [abrirHoraFinal, setAbrirHoraFinal] = useState(false);
 
-   
+    useEffect(() => {
+
+        let nDate = new Date().toLocaleString('es-CL', {
+            timeZone: 'America/Santiago'
+        });
     
-    const pickerRef = useRef();
+        let nuevaFecha = new Date(nDate);
+        let horaModificada = new Date(nuevaFecha.setHours(nuevaFecha.getHours() - 3));
+
+        let fechaInicialModificada = new Date(horaModificada.setDate(horaModificada.getDate() - 14));
+        let fechaYhora = fechaInicialModificada.toISOString().split("T");
+        let fechaSeparada = fechaYhora[0].split("-");
+        let fechaModificada = parseInt(fechaSeparada[2]) + "/" + parseInt(fechaSeparada[1]) + "/" + fechaSeparada[0];
+        let horaSeparada = fechaYhora[1].split("."); 
+
+        setFechaInicialSeleccinada({fecha: fechaModificada, hora: horaSeparada[0]});
+
+        fechaInicialModificada = new Date(horaModificada.setDate(horaModificada.getDate() + 14));
+        fechaYhora = fechaInicialModificada.toISOString().split("T");
+        fechaSeparada = fechaYhora[0].split("-");
+        fechaModificada = parseInt(fechaSeparada[2]) + "/" + parseInt(fechaSeparada[1]) + "/" + fechaSeparada[0];
+        horaSeparada = fechaYhora[1].split(".");
+
+        setFechaFinalSeleccinada({fecha: fechaModificada, hora: horaSeparada[0]}) 
+       
+    }, []) 
+    
+    
+    const pickerRef = useRef(null);
 
     function open() {
       pickerRef.current.focus();
@@ -44,10 +70,9 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
     
     function close() {
       pickerRef.current.blur();
-    }
+    } 
 
     const guardarFecha = (e,date,tiempo) => {
-
         if(e.type === "set"){
             setAbrirCalendarioFechaInicial(false);
             const mes = date.getMonth() + 1;
@@ -60,27 +85,27 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                 setAbrirCalendarioFechaFinal(false);
                 setFechaFinalSeleccinada({...fechaFinalSeleccinada, fecha: fechaCortada})
             }
-           
         }else{
             if(tiempo === "inicial"){
                 setAbrirCalendarioFechaInicial(false);
             }else{
                 setAbrirCalendarioFechaFinal(false);
             }
-        }
+        } 
+   
 
     }
 
     const obtenerAlertas = () => {
-        
+       
         if(fechaInicialSeleccinada.fecha === "" || fechaInicialSeleccinada.hora === "" || fechaFinalSeleccinada.fecha === "" || fechaFinalSeleccinada.hora === ""){
             setVisibleAlertaFaltaDatos(true);
         }else{
+
             const fechaInicialDividida = fechaInicialSeleccinada.fecha.split("/");
             const fechaFinalDividida = fechaFinalSeleccinada.fecha.split("/");
            
-           
-            if(parseInt(fechaInicialDividida[0])<10){
+            if(parseInt(fechaInicialDividida[0])<10 ){
                 fechaInicialDividida[0] = "0" + fechaInicialDividida[0];
             }
             if(parseInt(fechaInicialDividida[1])<10){
@@ -101,9 +126,10 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
             if(fechaInicialDividida > fechaFinalDividida){
                 setVisibleAlertaInicialMayor(true)
                 return null;
-            }
+            } 
 
-            obtenerAlertasPorFechaYTipo(valorSeleccionado,fechaInicialModificada,fechaFinalModificada).then((result) => {
+           
+             obtenerAlertasPorFechaYTipo(valorSeleccionado,fechaInicialModificada,fechaFinalModificada).then((result) => {
                 setAlertas(result);
                 setMostrarMapa(true);
             }).catch((err) => {
@@ -122,18 +148,14 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                         visibilityTime: 3000,
                     })
                 }
-            });
-
-        }
-
-
+            }); 
+        } 
     }
 
     const guardarHora = (e,hora,tiempo) => {
         if(e.type === "set"){
             setAbrirHoraInicial(false);
             const horaCortada = hora.toString().split(" ")[4];
-            
             if(tiempo === "inicial"){
                 setAbrirHoraInicial(false);
                 setFechaInicialSeleccinada({...fechaInicialSeleccinada, hora: horaCortada})
@@ -173,11 +195,12 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                         selectedValue={valorSeleccionado}
                         onValueChange={(itemValue) => setValorSeleccionado(itemValue)}
                     >
-                        <Picker.Item label="Problemas de iluminación" value= "Problemas de iluminación" />
+                        <Picker.Item label="Persona sospechosa" value= "Persona sospechosa" />
                         <Picker.Item label="Actividad sospechosa" value="Actividad sospechosa" />
-                        <Picker.Item label="Perros rondando" value="Perros rondando" />
-                        <Picker.Item label="Emergencia de salud" value="Emergencia de salud" />
-                        <Picker.Item label="Consumo de drogas" value="Consumo de drogas" />
+                        <Picker.Item label="Falla de iluminación" value="Falla de iluminacion" />
+                        <Picker.Item label="Lugar con escasa iluminación" value="Lugar con escasa iluminacion" />
+                        <Picker.Item label="Incidente de robo" value="Incidente de robo" />
+                        <Picker.Item label="Incidente de violencia" value="Incidente de violencia" />
                     </Picker> 
                 </View >
                 <View style={styles.containerInputFechas}>
@@ -203,7 +226,7 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                             guardarDatosDataPicker={guardarHora}
                             tipoDatePicker="time"
                             tiempo="inicial"
-                       />
+                       /> 
                     </View>
                     <View style={styles.containerTituloFecha}>
                         <Text style={styles.tituloFecha}>Fecha final</Text>
@@ -229,13 +252,13 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
                                 tipoDatePicker="time"
                                 tiempo="final"  
     
-                        />
+                        /> 
                     </View>
                 </View>
                 <View style={styles.containerBotonMostrarLugares}>
-                    <Button style={styles.botonMostrarMapa} mode="elevated" onPress={obtenerAlertas}>
-                       <Text style={styles.textoBoton}>Mostrar mapa</Text> 
-                    </Button>
+                    <Button style={styles.botonMostrarMapa} onPress={obtenerAlertas} >
+                        <Text style={styles.textoBoton}>Mostrar mapa</Text>
+                    </Button> 
                 </View>
             </KeyboardAwareScrollView>  
             <Provider >

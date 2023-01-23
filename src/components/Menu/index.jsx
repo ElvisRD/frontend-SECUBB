@@ -42,7 +42,7 @@ export default function Menu({handlePressButtons, navigation, socket}){
         {isVisibleLugares ? <ModalLugaresProblematicos setModalLugaresProblematicos={setModalLugaresProblematicos} />:(null)} 
         {isVisibleSugerencia ? <ModalSugerencia setModalSugerencia={setModalSugerencia} socket={socket} />:(null)}
         {isVisibleCambiarContraseña ? <ModificarContraseña setIsVisible={setIsVisibleCambiarContraseña} />:(null)}
-        {isVisibleModificarTipos ? <ModificarTipos setIsVisible={setIsVisibleModificarTipos} />:(null)}
+        {isVisibleModificarTipos ? <ModificarTipos setIsVisible={setIsVisibleModificarTipos} socket={socket}/>:(null)}
         {isVisibleConfiguracionNotificaciones ? <ConfiguracionNotificaciones setVisibleConfiguracionNotificaciones={setVisibleConfiguracionNotificaciones} />:(null)}
         {isVisibleVerSugerencias ? <ModalVerSugerencias setModalVerSugerencias={setIsVisibleVerSugerencias} socket={socket} />:(null)}
         

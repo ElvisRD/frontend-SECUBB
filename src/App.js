@@ -6,6 +6,8 @@ import Login from "./pages/login"
 import Home from "./pages/home"
 import store from "./redux/store";
 import Portada from "./pages/portada"
+import RecuperarContra from "./pages/recuperarContraseña";
+import Registro from "./pages/registro";
 import {Provider} from "react-redux"
 import Toast, { BaseToast, ErrorToast, InfoToast} from 'react-native-toast-message';
 
@@ -65,12 +67,16 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} options={{
               headerShown: false,
             }} />
-            
+            <Stack.Screen name="RecuperarContraseña" component={RecuperarContra} options={{
+              headerShown: false,
+            }} />
+             <Stack.Screen name="Registro" component={Registro} options={{
+              headerShown: false,
+            }} />
           </Stack.Navigator>
           <Toast config={toastConfig} />
         </NavigationContainer>
-    </Provider>
-    
+    </Provider>   
     </>
     
    

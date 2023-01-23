@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     containerTituloAlerta: {
         alignItems: "center",
         marginTop: hp(2),
-        
     },
     tituloAlerta: {
         fontSize: wp(5),

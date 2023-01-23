@@ -66,7 +66,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
             setLikesComentarios(null);
         }
 
-      },[likesComentariosRedux])
+      },[likesComentariosRedux,comentariosRedux])
 
       const filtrarLikesComentarios = (comentarioId) => {
         if(likesComentarios !== null && likesComentarios !== undefined){
@@ -209,6 +209,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                         )
                     }
             </ScrollView>    
+
             <View style={styles.containerTextInputComentario}>
                 <TextInput style={styles.textInput} multiline={true} activeUnderlineColor="transparent" value={inputComentario} onFocus={()=>setIconoInput(true)}  
                 onChangeText={(text) => setInputComentario(text)}  placeholder='Deja tu comentario' maxLength={100} />
@@ -217,8 +218,8 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
                         <Text style={styles.textoBotonEnviar}>Enviar</Text>
                     </TouchableOpacity>
                 </View>
-                
             </View>
+           
         <Provider>
             <Portal>
             <Dialog visible={confirmacion} onDismiss={()=>setConfirmacion(false)}>

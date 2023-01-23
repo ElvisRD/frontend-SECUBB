@@ -6,13 +6,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "white",
-        zIndex: 7
+        zIndex: 9
 
     },
     alerta: {
         width: "100%",
         marginTop: hp(1.5),
-        height: hp(75),
+        height: hp(78),
     },
     
     containerTituloAlerta: {
@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
     containerBotonVerComentarios: {
         position: "absolute",
         width: "100%",
-        height: hp(10),
+        backgroundColor: "white",
+        paddingVertical: hp(2.5),
         alignItems: "center",
         justifyContent: "center",
         bottom: 0

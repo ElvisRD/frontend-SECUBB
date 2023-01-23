@@ -96,7 +96,7 @@ export default function Camara({setVisibleCamara, setImagen}){
                                 color={flash === Camera.Constants.FlashMode.off
                                 ? "gray" 
                                 : "white"}
-                                size={40}
+                                size={35}
                             />
                                         
                         </TouchableOpacity>

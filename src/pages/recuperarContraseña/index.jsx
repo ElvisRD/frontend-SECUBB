@@ -1,15 +1,15 @@
 import React,{useState} from "react"
-import { View, Text, Keyboard, ToastAndroid } from "react-native"
+import { View, Text, Keyboard } from "react-native"
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { TextInput, Appbar,Button } from "react-native-paper"
-import IconAD from 'react-native-vector-icons/AntDesign';
-import { styles } from "./style"
+import { TextInput,Button } from "react-native-paper"
+import styles from "./styles"
 import {recuperarContrasena} from "../../data/usuarios"
 import  {validacionCorreo}  from "../../utils/validaciones";
 import { Formik } from "formik"
 import Toast from 'react-native-toast-message';
+import Appbar from '../../components/Appbar';
 
-export default function RecuperarContra({setRecuperarContraseña}) {
+export default function RecuperarContra({navigation}) {
 
     const initialValues = {
         correo: ""
@@ -17,10 +17,8 @@ export default function RecuperarContra({setRecuperarContraseña}) {
 
     return (
         <View style={styles.containerRecuperarContraseña}>
-            <Appbar.Header style={styles.containerNav}>
-                    <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setRecuperarContraseña(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
-            <KeyboardAwareScrollView>
+            <Appbar handlePressButtonLeft={()=>{navigation.navigate("Login")}} iconoIzquierda="arrowleft" /> 
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validacionCorreo}
@@ -29,33 +27,23 @@ export default function RecuperarContra({setRecuperarContraseña}) {
                     recuperarContrasena(values).then((res)=>{
                         Toast.show({
                             type: 'success',
-                            text1: 'Correo de recuperación enviado con éxito',
-                            text2: 'Revisa tu correo electrónico',
+                            text1: 'Se envio tu contraseña a tu correo',
                             visibilityTime: 3000,
-                            autoHide: true,
-                            topOffset: 60,
                         });
                        
-                        setRecuperarContraseña(false);
                     }).catch((err)=>{
                         if(err.response.status === 400){
                             Toast.show({
                                 type: 'error',
-                                text1: 'Error',
-                                text2: 'El correo ingresado no le pertenece a la universidad',
+                                text1: 'El correo ingresado no le pertenece a la universidad',
                                 visibilityTime: 3000,
-                                autoHide: true,
-                                topOffset: 60,
                             });
                         }else{
-                       
                             Toast.show({
                                 type: 'error',
-                                text1: 'Error',
-                                text2: 'No se encontró cuenta asociada al correo ingresado',
+                                text1: 'No se encontró cuenta asociada al correo ingresado',
                                 visibilityTime: 3000,
-                                autoHide: true,
-                                topOffset: 60,
+                                
                              })
                         }
                     })

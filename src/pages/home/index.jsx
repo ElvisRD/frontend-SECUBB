@@ -4,9 +4,10 @@ import { View, Text,TouchableOpacity, BackHandler} from 'react-native';
 import Mapa from "../../components/Mapa/"
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import Menu from "../../components/Menu/"
+import {Provider, Dialog, Portal} from "react-native-paper";
 import Alertas from "../../components/Alertas"
-
 import {URL_CONNECT_BACKEND} from "../../../env"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { guardarAlertaRedux,eliminarAlertaRedux} from '../../redux/actions/alertasActions';
 import { guardarComentarioRedux, eliminarComentarioRedux, editarComentarioRedux } from '../../redux/actions/comentariosActions';
@@ -21,6 +22,7 @@ export default function Home({navigation}) {
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
   const [isVisibleAlertas, setIsVisibleAlertas] = useState(false);
   const [isVisibleTipoAlertas, setIsVisibleTipoAlertas] = useState(false);
+  const [alertaCambioTipo, setAlertaCambioTipo] = useState(false);
   const  usuario = useSelector((state) => state.usuario.usuario);
 
   useEffect(() => {
@@ -38,7 +40,6 @@ export default function Home({navigation}) {
       return () => backHandler.remove();
   }, [])
   
-
 
   const dispatch = useDispatch();
 
@@ -92,6 +93,17 @@ export default function Home({navigation}) {
       dispatch(guardarNotificacionRedux(notificacion));
     });
 
+    socket.on("cambioTipo", async (datos) => {
+      if(usuario.correo.toLowerCase() === datos.correo.toLowerCase()){
+        try {
+          await AsyncStorage.mergeItem('usuario', JSON.stringify({tipo: datos.tipo}))
+        } catch(e) {
+            console.log("error al editar el tipo de usuario");
+        }
+        setAlertaCambioTipo(true);
+      }
+    })
+
     return () => {
       socket.off("comentario");
       socket.off("alerta")
@@ -137,7 +149,6 @@ export default function Home({navigation}) {
   return (
 
     <>
-   
       <View style={styles.container}>
         <View style={styles.containerMapa}>
             {isVisibleMenu ? (
@@ -180,11 +191,23 @@ export default function Home({navigation}) {
             />
             <Text style={styles.textBoton}>Menú</Text>
           </TouchableOpacity>
-        
-        </View> 
+        </View>    
       </View>
+      <Provider >
+          <Portal>
+            <Dialog style={styles.containerAlerta} visible={alertaCambioTipo} dismissable={false} >
+              <Dialog.Icon icon="alert" />
+              <Dialog.Content style={styles.containerTituloAlerta}>
+                <Text style={styles.textoTituloAlerta}>
+                  Modificación de tipo de usuario
+                </Text>
+              </Dialog.Content>
+              <Dialog.Content style={styles.containerTextoAlerta}>
+                <Text>Su cuenta ha sido modificada, por favor reinicie la aplicación.</Text>
+              </Dialog.Content>
+            </Dialog>
+          </Portal>
+      </Provider> 
     </>
-   
-    
   );
 }

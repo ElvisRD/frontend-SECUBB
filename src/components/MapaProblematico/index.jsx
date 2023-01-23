@@ -6,6 +6,7 @@ import IconAD from 'react-native-vector-icons/AntDesign';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 import departamentos from "../../json/depatamentosUbb.json";
 import departamentoSiluetas from "../../json/departamentosSiluetas.json";
+import DetallesAlerta from "../DetallesAlerta"
 import mapStyle from "../../json/styleMap.json";
 import IconFA from "react-native-vector-icons/FontAwesome";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -15,8 +16,8 @@ import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function MapaProblematico({setMostrarMapa, alertas}) {
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
-    
-    
+    const [alertaSeleccionada, setAlertaSeleccionada] = useState(null);
+    const [verDetallesAlerta, setVerDetallesAlerta] = useState(false);
     
     const [initialRegion, setInitialRegion] = useState({
         latitude: -36.821884,
@@ -26,30 +27,37 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
 
     })
 
-
-
     const pinTipoAlerta = (tipo) => {
-            
-        if(tipo === "Actividad sospechosa"){
+        if(tipo === "Persona sospechosa"){
             return <IconFA5 name="map-marker-alt" size={40} color="red"/>
         }
-        if(tipo === "Problema de iluminación"){
+        if(tipo === "Actividad sospechosa"){
+            return <IconFA5 name="map-marker-alt" size={40} color="orange"/>
+        }
+        if(tipo === "Falla de iluminacion"){
             return <IconFA5 name="map-marker-alt" size={40} color="blue"/>
         }
-        if(tipo === "Perros rondando"){
-            return <IconFA5 name="map-marker-alt" size={40} color="yellow"/>
-        }
-        if(tipo === "Emergencia de salud"){
-            return <IconFA5 name="map-marker-alt" size={40} color="green"/>
-        }
-        if(tipo === "Consumo de drogas"){
+        if(tipo === "Lugar con escasa iluminacion"){
             return <IconFA5 name="map-marker-alt" size={40} color="purple"/>
         }
+        if(tipo === "Incidente de robo"){
+            return <IconFA5 name="map-marker-alt" size={40} color="green"/>
+        }
+        if(tipo === "Incidente de violencia"){
+            return <IconFA5 name="map-marker-alt" size={40} color="pink"/>
+        }
+    }
 
+    const mostrarAlerta = (alerta) => {
+        setAlertaSeleccionada(alerta)
+        setVerDetallesAlerta(true)
     }
 
     return (
+        
         <>
+       {verDetallesAlerta ? <DetallesAlerta setIsVisibleAlerta={setVerDetallesAlerta} verAlerta={alertaSeleccionada} permisos={false} /> : (null) }  
+
          <View style={styles.containerMapa}>
              <MapView
                 provider={PROVIDER_GOOGLE}
@@ -60,14 +68,13 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
                 showsBuildings={false}
             >
                { alertas.map((alerta,i) => (
-
                     <Marker
                         key={i}
                         coordinate={{
                             latitude: alerta.latitude ,
                             longitude: alerta.longitude
                         }}
-                        //onPress={()=>{mostrarAlerta(alerta)}}
+                        onPress={()=>{mostrarAlerta(alerta)}}
                                 
                     > 
                         {pinTipoAlerta(alerta.tipo)}
@@ -88,7 +95,6 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
                         opacity={0.5}
                         
                     >
-                         
                         <Text style={{position: "absolute"}}> </Text>
                         
                         {
@@ -146,7 +152,6 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
                     size= {40}
                 />
             </TouchableOpacity> 
-   
         </View>
         </>
     )    

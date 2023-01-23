@@ -3,7 +3,6 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 const styles = StyleSheet.create({
     containerModalLugaresProblematicos:{
-        position: "absolute",
         backgroundColor: "white",
         width: "100%",
         zIndex: 7,

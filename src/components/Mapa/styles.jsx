@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     containerTiposAlertas: {
         position: "absolute",
         width: "100%",
-        height: "50%",
+        height: hp(45),
         backgroundColor: "white",
         zIndex: 3,
     },

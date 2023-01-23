@@ -176,26 +176,26 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
     }
 
     const pinTipoAlerta = (tipo) => {
-            
-                if(tipo === "Actividad sospechosa"){
+                if(tipo === "Persona sospechosa"){
                     return <IconFA5 name="map-marker-alt" size={40} color="red"/>
                 }
-                if(tipo === "Problema de iluminación"){
+                if(tipo === "Actividad sospechosa"){
+                    return <IconFA5 name="map-marker-alt" size={40} color="orange"/>
+                }
+                if(tipo === "Falla de iluminacion"){
                     return <IconFA5 name="map-marker-alt" size={40} color="blue"/>
                 }
-                if(tipo === "Perros rondando"){
-                    return <IconFA5 name="map-marker-alt" size={40} color="yellow"/>
-                }
-                if(tipo === "Emergencia de salud"){
-                    return <IconFA5 name="map-marker-alt" size={40} color="green"/>
-                }
-                if(tipo === "Consumo de drogas"){
+                if(tipo === "Lugar con escasa iluminacion"){
                     return <IconFA5 name="map-marker-alt" size={40} color="purple"/>
                 }
-
+                if(tipo === "Incidente de robo"){
+                    return <IconFA5 name="map-marker-alt" size={40} color="green"/>
+                }
+                if(tipo === "Incidente de violencia"){
+                    return <IconFA5 name="map-marker-alt" size={40} color="pink"/>
+                }
     }
     const mostrarAlerta = (alerta) => {
-       
         setAlertaSeleccionada(alerta);
         setVerAlerta(true);      
     }
@@ -207,7 +207,7 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
          ):(null)} 
 
        {verAlerta ? (
-            <Alerta setIsVisibleAlerta={setVerAlerta} socket={socket} verAlerta={alertaSeleccionada} />
+            <Alerta setIsVisibleAlerta={setVerAlerta} socket={socket} verAlerta={alertaSeleccionada} permisos={true} />
         ) : (null)} 
 
         {
@@ -325,7 +325,7 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                 style={styles.makerMapa}
 
             /> 
-{/* 
+
             <TouchableOpacity style={styles.botonPregunta} onPress={()=>setIsVisibleTipoAlertas(true)} >
                 <IconAD 
                     name="question"
@@ -333,7 +333,7 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
                     color="#a3a2a0"
                 
                 />
-            </TouchableOpacity> */}
+            </TouchableOpacity> 
             
             <TouchableOpacity style={dimensionesPantalla.height < 700 ? styles.botonPlusPantallaPeque : styles.botonPlusPantallaGrand} onPress={handleClickMap}>
                 <Icon

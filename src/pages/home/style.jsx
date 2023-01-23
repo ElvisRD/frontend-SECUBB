@@ -43,7 +43,22 @@ const styles = StyleSheet.create({
     },
     textBoton: {
         fontSize: 12, 
+    },
+    containerAlerta: {
+        backgroundColor: "white",
+    },
+    containerTituloAlerta: {
+        marginTop: hp(2),
+        alignItems: "center",
+    },
+    textoTituloAlerta: {
+        fontSize: wp(4)
+    },
+    containerTextoAlerta: {
+        alignItems: "center",
+        marginBottom: hp(2),
     }
+
 });
 
 export default styles;

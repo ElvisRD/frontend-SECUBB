@@ -29,58 +29,66 @@ export default function CrearAlerta({setIsVisibleModal,socket,coordenadasAlerta,
                         <View  style={styles.containerBotonesAlerta}>
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>
-                                    <TouchableOpacity style={styles.alertaLuz} onPress={()=>{clickAlerta("Problema de iluminación")}}>
+                                    <TouchableOpacity style={styles.alertaLuz} onPress={()=>{clickAlerta("Falla de iluminacion")}}>
                                         <Icon
                                             name="lightbulb"
-                                            size= {40}
+                                            size= {35}
                                         />
                                     </TouchableOpacity>
-                                    <Text style={styles.textAlertas}>Problemas de iluminación</Text>
+                                    <Text style={styles.textAlertas}>Falla de iluminación</Text>
                                 </View>
                                 
                                 <View style={styles.containerAlerta}>
-                                    <TouchableOpacity style={styles.alertaSospechoso} onPress={()=>{clickAlerta("Actividad sospechosa")}} >
+                                    <TouchableOpacity style={styles.alertaSospechoso} onPress={()=>{clickAlerta("Persona sospechosa")}} >
                                             <Icon
                                                 name="user-secret"
-                                                size={40}
+                                                size={35}
                                             />
                                     </TouchableOpacity>
-                                    <Text style={styles.textAlertas}>Actividad sospechosa</Text>
+                                    <Text style={styles.textAlertas}>Persona sospechosa</Text>
                                 </View> 
                             </View>
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>
-                                    <TouchableOpacity style={styles.alertaPerros} onPress={()=>{clickAlerta("Perros rondando")}}>
+                                    <TouchableOpacity style={styles.alertaActividadSospechosa} onPress={()=>{clickAlerta("Actividad sospechosa")}}>
                                                 <Icon
-                                                    name="dog"
-                                                    size={40}
+                                                    name="shoe-prints"
+                                                    size={33}
                                                 />
                                         </TouchableOpacity>
-                                        <Text style={styles.textAlertas}>Perros rondando</Text>
+                                        <Text style={styles.textAlertas}>Actividad sospechosa</Text>
 
                                 </View>
                                 <View style={styles.containerAlerta}>
-                                    <TouchableOpacity style={styles.alertaEmergencia} onPress={()=>{clickAlerta("Emergencia de salud")}}>
+                                    <TouchableOpacity style={styles.alertaEscasaIluminacion} onPress={()=>{clickAlerta("Lugar con escasa iluminacion")}}>
                                             <Icon
-                                                name="briefcase-medical"
-                                                size={40}
+                                                name="low-vision"
+                                                size={33}
                                             />
                                     </TouchableOpacity>
-                                    <Text style={styles.textAlertas}>Emergencia de salud</Text>
+                                    <Text style={styles.textAlertas}>Lugar con escasa iluminación</Text>
                                 </View>
                             </View> 
                             <View style={styles.fila}>
                                 <View style={styles.containerAlerta}>
-                                        <TouchableOpacity style={styles.alertaEmergencia} onPress={()=>{clickAlerta("Consumo de drogas")}}>
+                                        <TouchableOpacity style={styles.alertaRobo} onPress={()=>{clickAlerta("Incidente de robo")}}>
                                                 <Icon
-                                                    name="cannabis"
-                                                    size={40}
+                                                    name="running"
+                                                    size={33}
                                                 />
                                         </TouchableOpacity>
-                                        <Text style={styles.textAlertas} >Consumo de drogas</Text>
-
+                                        <Text style={styles.textAlertas}>Incidente de robo</Text>
+                                        <Text></Text>
                                 </View>
-                                <View style={styles.containerAlerta}></View>
+                                <View style={styles.containerAlerta}>
+                                    <TouchableOpacity style={styles.alertaViolencia} onPress={()=>{clickAlerta("Incidente de violencia")}}>
+                                            <Icon
+                                                name="user-injured"
+                                                size={32}
+                                            />
+                                    </TouchableOpacity>
+                                    <Text style={styles.textAlertas}>Incidente de violencia</Text>
+                                </View>
                             </View> 
 
                     </View>         

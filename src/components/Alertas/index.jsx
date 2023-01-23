@@ -28,8 +28,6 @@ export default function Alertas({handlePressButtons,socket}) {
         }
     },[alertasRedux]) 
 
-
-
     useEffect(() => {
       if(likesAlertaRedux !== null){
         setLikesAlertas(likesAlertaRedux);
@@ -78,7 +76,7 @@ export default function Alertas({handlePressButtons,socket}) {
 
     return(
         <>
-            {isVisibleAlerta ? <Alerta socket={socket} setIsVisibleAlerta={setIsVisibleAlerta} verAlerta={verAlerta} /> : null }
+            {isVisibleAlerta ? <Alerta socket={socket} setIsVisibleAlerta={setIsVisibleAlerta} verAlerta={verAlerta} permisos={true}/> : null }
             {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={alertaSeleccionada.id} /> : (null)} 
 
             <View style={styles.containerAlertas} >
@@ -96,7 +94,6 @@ export default function Alertas({handlePressButtons,socket}) {
                                 <Text style={styles.textoNoAlertas}>No se encontraron alertas.</Text>
                             </View>
                         )}     
-    
                     </ScrollView> 
                 </View>  
             </View>

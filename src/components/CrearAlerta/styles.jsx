@@ -36,8 +36,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 100,
         paddingVertical: 8,
-        paddingHorizontal: 16,
-        backgroundColor: "gray"
+        paddingHorizontal: 14,
+        backgroundColor: "white",
+        borderColor: "#E5E5E5",
+        borderWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        
     },
     
     alertaSospechoso: {
@@ -45,23 +56,53 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         paddingVertical: 10,
         paddingHorizontal: 14,
-        backgroundColor: "gray"
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
 
     },
-    alertaPerros: {
+    alertaActividadSospechosa: {
         justifyContent: "center",
         borderRadius: 100,
         paddingVertical: 10,
         paddingHorizontal: 8,
-        backgroundColor: "gray"
+        backgroundColor: "white",
+        borderColor: "#E5E5E5",
+        borderWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
 
-    alertaEmergencia: {
+    alertaEscasaIluminacion: {
         justifyContent: "center",
         borderRadius: 100,
         paddingVertical: 10,
-        paddingHorizontal: 12,
-        backgroundColor: "gray"
+        paddingHorizontal: 10,
+        backgroundColor: "white",
+        borderColor: "#E5E5E5",
+        shadowColor: "#000",
+        borderWidth: 1,
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
 
     textAlertas: {
@@ -70,6 +111,40 @@ const styles = StyleSheet.create({
     },
     containerAlertaSola: {
         backgroundColor: "red"
+    },
+    alertaViolencia: {
+        justifyContent: "center",
+        borderRadius: 100,
+        paddingVertical: 10,
+        paddingHorizontal: 13,
+        backgroundColor: "white",
+        borderColor: "#E5E5E5",
+        borderWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    alertaRobo: {
+        justifyContent: "center",
+        borderRadius: 100,
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        backgroundColor: "white",
+        borderColor: "#E5E5E5",
+        borderWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
    
     

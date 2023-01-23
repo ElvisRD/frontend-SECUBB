@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 export default function RepresentacionPin({colorPin, tipoAlerta}) {
     return(
         <View style={styles.pinRepresentado}>
-            <IconE name="location-pin" size={35} color={colorPin}/>
+            <IconE name="location-pin" size={38} color={colorPin}/>
             <Text style={styles.textTipoAlerta}>{tipoAlerta}</Text>
         </View>
     )

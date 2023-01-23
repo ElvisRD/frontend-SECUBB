@@ -25,7 +25,7 @@ export default function ModificarContraseña({setIsVisible}) {
     return (
         <View style={styles.containerModificarContraseña}>
             <Appbar handlePressButtonLeft={()=>{setIsVisible(false)}} iconoIzquierda="arrowleft" />
-            <KeyboardAwareScrollView style={styles.modificarContraseña}>
+            <KeyboardAwareScrollView style={styles.modificarContraseña} keyboardShouldPersistTaps="always">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validacionModificarContrasena}

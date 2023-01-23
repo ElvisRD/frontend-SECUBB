@@ -1,5 +1,5 @@
 import React,{useState} from "react"
-import { View, Text, TouchableOpacity, Image, Linking } from "react-native"
+import { View, Text, TouchableOpacity, Image, Linking, Keyboard } from "react-native"
 import { TextInput, Button, Provider, Portal, Dialog } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -37,6 +37,7 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
     }
   
     const handleBotonImagen = async () => {
+      Keyboard.dismiss();
       setLoading(true)
       const {status} = await Camera.requestCameraPermissionsAsync()
       
@@ -56,8 +57,7 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
 
         <View style={styles.containerModalReportar}>
           <Appbar handlePressButtonLeft={()=>{setModalReportar(false)}} iconoIzquierda="arrowleft" />
-          <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta}>
-          
+          <KeyboardAwareScrollView bounces={false} style={styles.ModalReportarAlerta} keyboardShouldPersistTaps="always">
           <View style={styles.containerTitle}>
             <Text style={styles.title}>Crear alerta</Text>
           </View>
@@ -139,22 +139,22 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
                   </View>
 
                   <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción ubicación" multiline={true} numberOfLines={4} maxLength={200} onBlur={handleBlur('descripcion_ubicacion')} value={values.descripcion_ubicacion} onChangeText={handleChange('descripcion_ubicacion')}/>
-                  </View>
-                  {errors.descripcion_ubicacion && touched.descripcion_ubicacion? 
-                  (
-                    <View style={styles.containerError}>
-                      <Text style={styles.textoError} >{errors.descripcion_ubicacion}</Text>
-                    </View>
-                  ):(null)
-                  }
-                  <View style={styles.containerInputs}>
-                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción" maxLength={200} multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
+                    <TextInput mode="outlined" style={styles.inputs} autoFocus={true} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Descripción" maxLength={200} multiline={true} onBlur={handleBlur('descripcion')} numberOfLines={6} value={values.descripcion} onChangeText={handleChange('descripcion')} />
                   </View>
                   {errors.descripcion && touched.descripcion ? 
                   (
                     <View style={styles.containerError}>
                       <Text style={styles.textoError}>{errors.descripcion}</Text>
+                    </View>
+                  ):(null)
+                  }
+                  <View style={styles.containerInputs}>
+                    <TextInput mode="outlined" style={styles.inputs} outlineColor="#E5E5E5" activeOutlineColor="gray" label="Detalla tu ubicación" multiline={true} numberOfLines={4} maxLength={200} onBlur={handleBlur('descripcion_ubicacion')} value={values.descripcion_ubicacion} onChangeText={handleChange('descripcion_ubicacion')}/>
+                  </View>
+                  {errors.descripcion_ubicacion && touched.descripcion_ubicacion? 
+                  (
+                    <View style={styles.containerError}>
+                      <Text style={styles.textoError} >{errors.descripcion_ubicacion}</Text>
                     </View>
                   ):(null)
                   }

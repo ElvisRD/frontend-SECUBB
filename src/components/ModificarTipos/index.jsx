@@ -1,5 +1,5 @@
 import React,{useState,useRef} from "react";
-import { View, Text } from "react-native";
+import { View, Text, Keyboard } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
@@ -10,7 +10,7 @@ import { Formik } from "formik";
 import Toast  from "react-native-toast-message";
 import Appbar from "../Appbar";
 
-export default function ModificarTipos({setIsVisible}){
+export default function ModificarTipos({setIsVisible,socket}){
     const [valorSeleccionado, setValorSeleccionado] = useState("Usuario");
 
     const initialValues = {
@@ -31,18 +31,18 @@ export default function ModificarTipos({setIsVisible}){
     return (
         <View style={styles.containerModificarTipos}>
             <Appbar handlePressButtonLeft={()=>{setIsVisible(false)}} iconoIzquierda="arrowleft" />
-            <KeyboardAwareScrollView style={styles.modificarTipos}>
+            <KeyboardAwareScrollView style={styles.modificarTipos} keyboardShouldPersistTaps="always">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validacionCorreo}
                     onSubmit={(values) => {
-
+                        Keyboard.dismiss();
                         const body = {
                             correo: values.correo,
                             tipo: valorSeleccionado
                         }
 
-                        modificarTipoUsuario(body).then((result) => {
+                        modificarTipoUsuario(body).then(async (result) => {
                             Toast.show({
                                 type: "success",
                                 text1: "Usuario modificado con éxito.",
@@ -51,6 +51,7 @@ export default function ModificarTipos({setIsVisible}){
                                 topOffset: 60,
                             });
 
+                            await socket.emit("cambioTipo", body)
                             setIsVisible(false);
                             
                         }).catch((err) => {

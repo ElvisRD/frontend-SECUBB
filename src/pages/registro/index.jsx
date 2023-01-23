@@ -1,16 +1,16 @@
 import React, {useState} from "react"
 import { View, Text, Keyboard} from 'react-native';
-import IconAD from 'react-native-vector-icons/AntDesign';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Appbar, TextInput, Button } from "react-native-paper";
-import { styles } from "./style";
+import { TextInput, Button } from "react-native-paper";
+import  styles  from "./styles";
 import { Formik } from "formik";
 import  {validacionesRegistro}  from "../../utils/validaciones";
 import { crearUsuario } from "../../data/usuarios";
 import Toast from "react-native-toast-message";
 import formatText from "../../utils/modificarPrimeraLetra";
+import Appbar from '../../components/Appbar'
 
-export default function Registro({setRegistro}) {
+export default function Registro({navigation}) {
  
     const initialValues = {
         nombre: "",
@@ -20,10 +20,8 @@ export default function Registro({setRegistro}) {
 
     return (
         <View style={styles.containerRegistrar}>
-            <Appbar.Header style={styles.containerNav}>
-                <Appbar.Action animated={false} style={styles.botonCerrar} onPress={()=>{setRegistro(false)}} icon={props => <IconAD name="arrowleft" size={35} color="black" />} />
-            </Appbar.Header>
-            <KeyboardAwareScrollView style={styles.Registrar}>
+            <Appbar handlePressButtonLeft={()=>{navigation.navigate("Login")}} iconoIzquierda="arrowleft" /> 
+            <KeyboardAwareScrollView style={styles.Registrar} keyboardShouldPersistTaps="always">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validacionesRegistro}

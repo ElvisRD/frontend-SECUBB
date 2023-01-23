@@ -33,7 +33,7 @@ export default function ModalSugerencia({setModalSugerencia,socket}){
 
         <View style={styles.containerModalSugerencia}>
             <Appbar handlePressButtonLeft={()=>{setModalSugerencia(false)}} iconoIzquierda="arrowleft" />
-             <KeyboardAwareScrollView bounces={false} style={styles.modalSugerencia}>
+             <KeyboardAwareScrollView bounces={false} keyboardShouldPersistTaps="always" style={styles.modalSugerencia}>
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}>Sugerencia</Text>
                 </View>

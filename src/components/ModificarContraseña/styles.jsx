@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     containerBoton: {
         width: "100%",
-        marginTop: hp(25),
+        marginTop: hp(18),
         marginBottom: hp(10),
         alignItems: "center",
     },

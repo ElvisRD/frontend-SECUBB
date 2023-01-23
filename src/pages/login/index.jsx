@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {styles} from "./style";
+import styles from "./styles";
 import { View, Text, Keyboard, TouchableOpacity, BackHandler} from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import {KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
@@ -8,15 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PortadaAfterLogin from '../portadaAfterLogin';
 import Toast  from 'react-native-toast-message';
 import {validacionesLogin} from '../../utils/validaciones';
-import Registrar from './registro';
 import { Formik } from "formik";
-import RecuperarContra from "./recuperarContra";
 
 export default function Login({navigation}) {
   const [portadaAfterLogin, setPortadaAfterLogin] = useState(false);
-  const [registro, setRegistro] = useState(false);
   const [verContraseña, setVerContraseña] = useState(false);
-  const [recuperarContraseña, setRecuperarContraseña] = useState(false);
 
   useEffect(() => {
     const backAction = () => {
@@ -54,11 +50,9 @@ export default function Login({navigation}) {
   return (
     <>
       {portadaAfterLogin ? <PortadaAfterLogin navigation={navigation} setPortadaAfterLogin={setPortadaAfterLogin}/> : null}
-      {recuperarContraseña ? <RecuperarContra setRecuperarContraseña={setRecuperarContraseña} /> : null }
-      {registro ? <Registrar setRegistro={setRegistro}/> : null}
-
+  
       <View style={styles.containerLogin}>
-        <KeyboardAwareScrollView style={styles.login}> 
+        <KeyboardAwareScrollView style={styles.login} keyboardShouldPersistTaps="always" > 
             <Formik
                       initialValues={initialValues}
                       validationSchema={validacionesLogin}
@@ -73,8 +67,7 @@ export default function Login({navigation}) {
                             if(err.response.status === 401){
                               Toast.show({
                                 type: 'error',
-                                text1: 'Error',
-                                text2: 'El correo ingresado no le pertenece a la universidad',
+                                text1: 'El correo ingresado no pertenece a la universidad',
                                 visibilityTime: 3000,
                                 autoHide: true,
                                 topOffset: 60,
@@ -84,8 +77,7 @@ export default function Login({navigation}) {
                               if(err.response.status === 404){
                                 Toast.show({
                                   type: 'error',
-                                  text1: 'Error',
-                                  text2: 'El correo ingresado no tiene una cuenta asociada',
+                                  text1: 'El correo ingresado no tiene una cuenta asociada',
                                   visibilityTime: 3000,
                                   autoHide: true,
                                   topOffset: 60,
@@ -109,9 +101,9 @@ export default function Login({navigation}) {
                         
                       }}
             >
-              {({ handleChange, handleSubmit, values, errors, handleBlur, touched}) => (
+              {({ handleChange, handleSubmit, values, touched, errors, handleBlur}) => (
                 <>
-                  <View style={styles.containerInputsLogin}>
+                  <View style={styles.containerInputsLogin} >
                         <View style={styles.containerTextoLogin}>
                           <Text style={styles.textBienvenido} >Bienvenido/a</Text>
                         </View>
@@ -124,6 +116,7 @@ export default function Login({navigation}) {
                                   onChangeText={handleChange('correo')}
                                   value={values.correo}
                                   placeholder='Correo'
+                            
                         />
                         {errors.correo && touched.correo ? 
                               (
@@ -158,18 +151,20 @@ export default function Login({navigation}) {
                           Iniciar sesión
                         </Button>
                       </View>
-                      <View style={styles.containerOlvidasteContra}>
-                        <TouchableOpacity onPress={()=>setRecuperarContraseña(true)}><Text style={styles.textRegistrarse} >¿Olvidaste tu contraseña?</Text></TouchableOpacity>
-                      </View>
-                      <View style={styles.containerRegistrateAqui}>
-                        <View style={styles.textRegistrateAqui}>
-                          <Text>¿No tienes cuenta?</Text> 
-                          <TouchableOpacity onPress={()=>{setRegistro(true)}}><Text style={styles.textRegistrarse}>  Registrate aqui!</Text></TouchableOpacity>
-                        </View>
-                      </View>
                 </>
               )}
             </Formik>
+            <View>
+              <View style={styles.containerOlvidasteContra}>
+                        <TouchableOpacity onPress={()=>{Keyboard.dismiss(),navigation.navigate("RecuperarContraseña")}}><Text style={styles.textRegistrarse} >¿Olvidaste tu contraseña?</Text></TouchableOpacity>
+                      </View>
+                      <View style={styles.containerRegistrateAqui}>
+                      <View style={styles.textRegistrateAqui}>
+                        <Text>¿No tienes cuenta?</Text> 
+                        <TouchableOpacity onPress={()=>{Keyboard.dismiss(),navigation.navigate("Registro")}}><Text style={styles.textRegistrarse}>  Registrate aquí!</Text></TouchableOpacity>
+                      </View>
+              </View>
+            </View>
         </KeyboardAwareScrollView>
       </View>
     </>

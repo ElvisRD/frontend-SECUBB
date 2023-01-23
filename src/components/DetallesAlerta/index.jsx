@@ -17,7 +17,7 @@ import Toast from 'react-native-toast-message';
 import Appbar from '../Appbar'
 
 
-export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
+export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket, permisos}){
    
     const [spinnerFoto, setSpinnerFoto] = useState(true);
     const [modalEliminarAlerta, setModalEliminarAlerta] = useState(false);
@@ -88,26 +88,24 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
             });; 
         });
 
-        await socket.emit("eliminarAlerta", verAlerta);
         
-        setIsVisibleAlerta(false);
         dispatch(eliminarAlertaRedux(verAlerta));
         dispatch(eliminarComentarioRedux(verAlerta));
         dispatch(borrarTodosLosLikesAlertaRedux(verAlerta));
+        setIsVisibleAlerta(false)
+        await socket.emit("eliminarAlerta", verAlerta);
+       ;
     
-       
     }
-
      
-
     return(
 
         <>
-            {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id}/> : (null)} 
+            {verComentarios ? <Comentarios socket={socket} setVerComentarios={setVerComentarios} alertaId={verAlerta.id} permisos={permisos}/> : (null)} 
 
             <View style={styles.containerAlerta}>
                 {
-                    verAlerta.usuarioId === usuarioRedux.id ? (
+                    verAlerta.usuarioId === usuarioRedux.id && permisos === true ? (
                     <Appbar handlePressButtonLeft={()=>{setIsVisibleAlerta(false)}} handlePressButtonRight={()=>setModalEliminarAlerta(true)} 
                     iconoIzquierda="arrowleft" iconoDerecha="delete-outline" 
                     />) : (
@@ -143,15 +141,12 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                         <Text style={styles.descripcion}>{verAlerta.descripcion}</Text>
                     </View>
                     
-                    
                     {
                         errorImagen !== true ? (
                             <>
                                 <View style = {styles.containerTituloImagen}>
                                     <Text style={styles.atributoAlerta}>Imagen</Text>
                                 </View>
-                                
-                                    
                                     <View style={styles.containerImagen}>
                                         {spinnerFoto && 
                                             <View style={styles.contenedorSpinner}>
@@ -159,13 +154,9 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
                                             </View> }
                                         <Image style={styles.imagen} onLoad={()=>{setSpinnerFoto(false)}} source={{uri: `${URL_CONNECT_BACKEND}/${imagen}`}} />
                                     </View>
-                                    
-                                
-                               
                             </>
                         ):
                         (null)
-                        
                     } 
                     <View style={styles.containerUsuario}> 
                         <Text style={styles.atributoAlerta}>Creada por </Text>
@@ -174,11 +165,15 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket}){
 
                 </KeyboardAwareScrollView>
 
-                <View style={styles.containerBotonVerComentarios}>
+                { permisos === true ? (
+                    
+                    <View style={styles.containerBotonVerComentarios}>
                         <Button style={styles.botonComentarios} labelStyle={styles.textoBotonComentarios} mode="elevated" onPress={()=>{setVerComentarios(true);}}>
                             Ver comentarios
                         </Button>
-                </View>
+                    </View>
+                ):(null)
+                }
                 
                 <Provider >
                     <Portal>
