@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react"
+import React,{useState} from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import styles from "./styles"
 import MapView,{Marker, PROVIDER_GOOGLE, Polygon} from 'react-native-maps';
@@ -13,6 +13,7 @@ import IconI from "react-native-vector-icons/Ionicons";
 import IconMI from "react-native-vector-icons/MaterialIcons";
 import IconE from "react-native-vector-icons/Entypo";
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
+import { date } from "yup";
 
 export default function MapaProblematico({setMostrarMapa, alertas}) {
     const [coordenadasAlerta, setCoordenadasAlerta] = useState(null);
@@ -54,49 +55,50 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
     }
 
     return (
-        
         <>
-       {verDetallesAlerta ? <DetallesAlerta setIsVisibleAlerta={setVerDetallesAlerta} verAlerta={alertaSeleccionada} permisos={false} /> : (null) }  
+        {verDetallesAlerta ? <DetallesAlerta setIsVisibleAlerta={setVerDetallesAlerta} verAlerta={alertaSeleccionada} permisos={false} /> : (null) }  
 
          <View style={styles.containerMapa}>
              <MapView
                 provider={PROVIDER_GOOGLE}
-                initialRegion={initialRegion} 
-                onRegionChangeComplete={(e)=> {setCoordenadasAlerta(e)}}
+                initialRegion={initialRegion}  
                 style={styles.mapa}
+                onRegionChangeComplete={(e)=> {setCoordenadasAlerta(e)}}
+                moveOnMarkerPress={false}
+                rotateEnabled={false}
                 customMapStyle={mapStyle}
+                zoomTapEnabled={false}
                 showsBuildings={false}
+                showsScale={true}
             >
                { alertas.map((alerta,i) => (
                     <Marker
-                        key={i}
+                        key={'alerta'+i}
+                        tracksViewChanges={false}
                         coordinate={{
-                            latitude: alerta.latitude ,
+                            latitude: alerta.latitude,
                             longitude: alerta.longitude
                         }}
                         onPress={()=>{mostrarAlerta(alerta)}}
-                                
                     > 
                         {pinTipoAlerta(alerta.tipo)}
                     </Marker>
-                    
                 ))
                 }
 
-                {
+             {
                 departamentos.map((depa, i) => (
                     <Marker
                         key={i}
+                        tracksViewChanges={false}
                         title={depa.nombre}
                         coordinate={{
                             latitude: depa.latitud ,
                             longitude: depa.longitud
                         }}
                         opacity={0.5}
-                        
                     >
                         <Text style={{position: "absolute"}}> </Text>
-                        
                         {
                             coordenadasAlerta !== null  ? (
                                 coordenadasAlerta.longitudeDelta < 0.008 && coordenadasAlerta.latitudeDelta < 0.008  ? (
@@ -131,18 +133,17 @@ export default function MapaProblematico({setMostrarMapa, alertas}) {
                         } 
                     </Marker>
                 ))
-              }
+              } 
 
                 {departamentoSiluetas.map((departamento, i) => (
                     <Polygon 
-                        key={i}
+                        key={'departamento'+i}
                         coordinates={departamento.coordenadas}
                         fillColor="rgba(0,0,0,0.1)"
                         strokeColor="rgba(0,0,0,0.1)"
-                
                     />
-                ))}
-  
+                ))}   
+
             </MapView>
 
             <TouchableOpacity style={styles.boton} onPress={()=>setMostrarMapa(false)}>

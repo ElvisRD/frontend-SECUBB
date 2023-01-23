@@ -130,7 +130,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
           if(datosUsuario.tipo === "Administrador"){
             getSugerencias();
           }
-         
+          setPortadaAfterLogin(false);
           navigation.navigate("Home");
         }else{
           setPermisoLocalizacion(true);
@@ -138,11 +138,9 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         }).catch((err) => {
           console.log("error al obtener permiso de localización");
         });  
-        setPortadaAfterLogin(false);
        }
      
       obtenerDatos();
-
     }, [verificarActivacionPermiso])
 
 
