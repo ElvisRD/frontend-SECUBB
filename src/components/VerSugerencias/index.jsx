@@ -21,6 +21,8 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
     useEffect(() => {
         if(sugerenciasRedux !== null){
             setSugerencias(sugerenciasRedux)
+        }else{
+            setSugerencias(null)
         }
     }, [sugerenciasRedux]) 
     
@@ -75,8 +77,8 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
 
                 </ScrollView>
             </View>
-            <Provider >
-                    <Portal>
+            <Provider>
+                    <Portal >
                         <Dialog visible={modalEliminarSugerencia} onDismiss={()=>setModalEliminarSugerencia(false)}>
                             <Dialog.Icon icon="alert" />
                             <Dialog.Title>¿Estás seguro que deseas eliminar la sugerencia?</Dialog.Title>
