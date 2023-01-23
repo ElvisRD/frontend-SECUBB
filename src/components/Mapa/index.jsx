@@ -65,10 +65,10 @@ export default function Mapa({socket, setIsVisibleTipoAlertas, verTipoAlertas}) 
     useEffect(() => {
 
         if(notificacionRedux !== null && notificacionRedux !== undefined && usuarioRedux.notificaciones !== false){
+           /* let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
+                {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100);  */
            let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
-                {latitude: -36.82238193190107, longitude: -73.01337695114863}, 100); 
-           /*  let mostrarNotificacion = geolib.isPointWithinRadius({latitude: notificacionRedux.latitude, longitude: notificacionRedux.longitude}, 
-                    {latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude}, 100); */
+                    {latitude: coordenadasUsuario.coords.latitude, longitude: coordenadasUsuario.coords.longitude}, 100); 
                 //console.log(mostrarNotificacion);
             if(mostrarNotificacion){
                 console.log(usuarioRedux);
