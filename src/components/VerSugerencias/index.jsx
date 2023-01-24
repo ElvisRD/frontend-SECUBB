@@ -81,10 +81,14 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
                     <Portal >
                         <Dialog visible={modalEliminarSugerencia} onDismiss={()=>setModalEliminarSugerencia(false)}>
                             <Dialog.Icon icon="alert" />
-                            <Dialog.Title>¿Estás seguro que deseas eliminar la sugerencia?</Dialog.Title>
+                            <Dialog.Content style={styles.containerTextoAlerta}>
+                                <Text style={styles.textoAlerta}>
+                                    ¿Estás seguro que deseas eliminar la sugerencia?
+                                </Text>
+                            </Dialog.Content>
                             <Dialog.Actions>
-                            <Button onPress={()=>setModalEliminarSugerencia(false)}>Cancelar</Button>
-                            <Button onPress={handleEliminarSugerencia}>Confirmar</Button>
+                            <Button onPress={()=>setModalEliminarSugerencia(false)}><Text style={styles.textoBotonAlerta}>Cancelar</Text></Button>
+                            <Button onPress={handleEliminarSugerencia}><Text style={styles.textoBotonAlerta}>Confirmar</Text></Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>

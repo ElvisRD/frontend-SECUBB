@@ -34,6 +34,16 @@ const styles = StyleSheet.create({
     },
     textoNoSugerencias: {
         fontSize: wp(6),
+    },
+    containerTextoAlerta: {
+        alignItems: "center",
+        marginTop: hp(2),
+    },
+    textoAlerta: {
+        fontSize: wp(4),
+    },
+    textoBotonAlerta: {
+        color: "#01579b"
     }
     
 })
