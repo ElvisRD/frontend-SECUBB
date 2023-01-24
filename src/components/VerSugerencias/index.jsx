@@ -63,9 +63,9 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
                 <ScrollView style={styles.containerSugerencias}>
                     {
                         sugerencias !== null ? (
-                            sugerencias.map((sugerencia, i)=>{
+                            sugerencias.map((suge, i)=>{
                                 return(
-                                    <CardSugerencia key={i} sugerencia={sugerencia} setModalEliminarSugerencia={setModalEliminarSugerencia} setSugerencia={setSugerencia}/>
+                                    <CardSugerencia key={i} sugerencia={suge} setModalEliminarSugerencia={setModalEliminarSugerencia} setSugerencia={setSugerencia}/>
                                 )
                             })
                         ):(

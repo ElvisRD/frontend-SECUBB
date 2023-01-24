@@ -11,7 +11,7 @@ export default function TiposAlertaMapa({setVerTiposAlertas}) {
             <View style={styles.containerAlertas}>
                 <RepresentacionPin colorPin="red" tipoAlerta="Persona sospechosa" />
                 <RepresentacionPin colorPin="orange" tipoAlerta="Actividad sospechosa" />
-                <RepresentacionPin colorPin="blue" tipoAlerta="falla de iluminación" />
+                <RepresentacionPin colorPin="blue" tipoAlerta="Falla de iluminación" />
                 <RepresentacionPin colorPin="green" tipoAlerta="Incidente de robo" />
                 <RepresentacionPin colorPin="pink" tipoAlerta="Incidente de violencia" />
             </View>

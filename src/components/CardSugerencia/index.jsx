@@ -21,7 +21,7 @@ export default function CardSugerencia({sugerencia,setModalEliminarSugerencia,se
                     <View>
                         <Text style={styles.textoNombreUsuario}>
                             {sugerencia.usuario.nombre} {sugerencia.usuario.apellido}
-                        </Text>
+                        </Text> 
                     </View>
                     <TouchableOpacity style={styles.botonEliminar} onPress={handleDeleteSugerencia}>
                         <IconAD name="close" size={30} color="black" />
