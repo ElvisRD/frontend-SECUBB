@@ -15,10 +15,11 @@ const styles = StyleSheet.create({
    
    containerTitle: {
     width: "100%",
+    marginTop: hp(2),
+    alignItems: "center",
     },
     title: {
         fontSize: wp(7),
-        paddingLeft: hp(2),
     },
     containerTextoSugerencia: {
         width: "100%",
