@@ -263,7 +263,7 @@ export default function GenerarReporte({setModalLugaresProblematicos}) {
             </KeyboardAwareScrollView>  
             <Provider >
                     <Portal>
-                        <Dialog style={{backgroundColor: "white"}} visible={visibleAlertaFaltaDatos} onDismiss={()=>setVisibleAlertaFaltaDatos(false)}>
+                        <Dialog contentStyles={{backgroundColor: "white"}} visible={visibleAlertaFaltaDatos} onDismiss={()=>setVisibleAlertaFaltaDatos(false)}>
                             <Dialog.Icon icon="alert-circle-outline" />
                             <Dialog.Title>
                                 <Text style={styles.textoAlerta}>Por favor, rellene las fechas y horas.</Text>
