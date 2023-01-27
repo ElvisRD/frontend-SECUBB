@@ -191,7 +191,7 @@ export default function ReportarAlerta({tipoAlerta, setModalReportar,setIsVisibl
 
           <Provider>
                     <Portal>
-                        <Dialog style={{backgroundColor: "white"}} visible={permisoCamara} dismissable={false} >
+                        <Dialog contentStyles={{backgroundColor: "white"}} visible={permisoCamara} dismissable={false} >
                             <Dialog.Icon icon="alert" />
                             <Dialog.Content style={styles.containerTituloAlerta}><Text style={styles.tituloAlerta}>Permiso de Cámara</Text></Dialog.Content>
                             <Dialog.Content style={styles.containerTextoAlerta}>

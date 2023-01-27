@@ -237,7 +237,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
 
         <Provider >
                 <Portal>
-                        <Dialog style={{backgroundColor: "white"}} visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
+                        <Dialog contentStyles={{backgroundColor: "white"}} visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
                         <Dialog.Content style={styles.containerTituloAlerta}><Text style={styles.textoAlertaEditar}>Editar comentario</Text></Dialog.Content>
                         <Dialog.Content style={styles.containerInputEditComentario}>
                             <TextInput style={styles.textInput} autoFocus={true} multiline={true} activeUnderlineColor="transparent" defaultValue={comentarioEditado !== null ? comentarioEditado.comentario : ""}

@@ -44,9 +44,6 @@ const styles = StyleSheet.create({
     textBoton: {
         fontSize: 12, 
     },
-    containerAlerta: {
-        backgroundColor: "white",
-    },
     containerTituloAlerta: {
         marginTop: hp(2),
         alignItems: "center",

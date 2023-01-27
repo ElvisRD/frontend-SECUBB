@@ -165,7 +165,7 @@ export default function Portada({navigation}){
         </View>
         <Provider >
                 <Portal>
-                         <Dialog style={{backgroundColor: "white"}} visible={permisoLocalizacion} dismissable={false} >
+                         <Dialog contentStyles={{backgroundColor: "white"}} visible={permisoLocalizacion} dismissable={false} >
                               <Dialog.Icon icon="alert" />
                               <Dialog.Content style={styles.containerTituloAlerta}>
                                 <Text style={styles.tituloAlerta}>Permiso de localización</Text>
@@ -176,7 +176,7 @@ export default function Portada({navigation}){
                               </Dialog.Content>
                               <Dialog.Actions style={styles.containerBotonAlerta}>
                                   <Button  onPress={() => Linking.openSettings()}><Text style={styles.textoBotonAlerta}>Ir a Configuraciones</Text></Button>
-                                  <Button  onPress={()=> {setVerificarActivacionPermiso(verificarActivacionPermiso+1),setCargando(true)}}><Text style={styles.textoBotonAlerta}>Verificar</Text></Button>
+                                  <Button  onPress={()=> {setVerificarActivacionPermiso(verificarActivacionPermiso+1), setCargando(true)}}><Text style={styles.textoBotonAlerta}>Verificar</Text></Button>
                               </Dialog.Actions>
                           </Dialog>
                 </Portal>

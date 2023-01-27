@@ -195,7 +195,7 @@ export default function Home({navigation}) {
       </View>
       <Provider >
           <Portal>
-            <Dialog style={styles.containerAlerta} visible={alertaCambioTipo} dismissable={false} >
+            <Dialog contentStyles={{backgroundColor: "white"}} visible={alertaCambioTipo} dismissable={false} >
               <Dialog.Icon icon="alert" />
               <Dialog.Content style={styles.containerTituloAlerta}>
                 <Text style={styles.textoTituloAlerta}>
