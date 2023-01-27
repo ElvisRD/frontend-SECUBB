@@ -94,7 +94,7 @@ export default function Menu({handlePressButtons, navigation, socket}){
         
                 <Provider >
                     <Portal>
-                        <Dialog style={{backgroundColor: "white"}} isible={isVisibleCerrarSesion} onDismiss={()=>setIsVisibleCerrarSesion(false)}>
+                        <Dialog style={{backgroundColor: "red"}} isible={isVisibleCerrarSesion} onDismiss={()=>setIsVisibleCerrarSesion(false)}>
                             <Dialog.Icon icon="alert"  />
                             <Dialog.Content style={styles.containerAlertaCerrarSesion}>
                                 <Text style={styles.textoAlertaCerrarSesion}>¿Estás seguro/a que deseas cerrar sesión?</Text>
