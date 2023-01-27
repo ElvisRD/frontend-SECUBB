@@ -2,10 +2,6 @@ import React,{ useEffect, useState} from "react";
 import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import IconAD from "react-native-vector-icons/AntDesign";
 import styles from "./styles";
-import { Provider, Portal, Dialog, Button } from "react-native-paper";
-
-
-
 
 export default function CardSugerencia({sugerencia,setModalEliminarSugerencia,setSugerencia}){
     

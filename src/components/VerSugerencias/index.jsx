@@ -79,7 +79,7 @@ export default function ModalVerSugerencias({setModalVerSugerencias, socket}){
             </View>
             <Provider>
                     <Portal >
-                        <Dialog visible={modalEliminarSugerencia} onDismiss={()=>setModalEliminarSugerencia(false)}>
+                        <Dialog style={{backgroundColor: "white"}} visible={modalEliminarSugerencia} onDismiss={()=>setModalEliminarSugerencia(false)}>
                             <Dialog.Icon icon="alert" />
                             <Dialog.Content style={styles.containerTextoAlerta}>
                                 <Text style={styles.textoAlerta}>

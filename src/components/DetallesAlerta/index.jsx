@@ -186,7 +186,7 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket, p
                 
                 <Provider >
                     <Portal>
-                        <Dialog visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)} >
+                        <Dialog style={{backgroundColor: "white"}} visible={modalEliminarAlerta} onDismiss={()=>setModalEliminarAlerta(false)} >
                             <Dialog.Icon icon="alert" />
                             <Dialog.Content style={styles.containerTextoAlertaEliminar}>
                                 <Text style={styles.textoAlertaEliminar}>¿Estás seguro/a que deseas eliminar la alerta?</Text>

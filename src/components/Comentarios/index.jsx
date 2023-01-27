@@ -222,7 +222,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
            
         <Provider>
             <Portal>
-            <Dialog visible={confirmacion} onDismiss={()=>setConfirmacion(false)}>
+            <Dialog style={{backgroundColor: "white"}} visible={confirmacion} onDismiss={()=>setConfirmacion(false)}>
                 <Dialog.Title>¿Estas seguro que quieres comentar lo siguiente?</Dialog.Title>
                 <Dialog.Content>
                 <Paragraph>{inputComentario}</Paragraph>
@@ -237,7 +237,7 @@ export default function Comentarios({setVerComentarios, socket, alertaId}) {
 
         <Provider >
                 <Portal>
-                        <Dialog visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
+                        <Dialog style={{backgroundColor: "white"}} visible={modalEditar} onDismiss={()=>setModalEditar(false)}>
                         <Dialog.Content style={styles.containerTituloAlerta}><Text style={styles.textoAlertaEditar}>Editar comentario</Text></Dialog.Content>
                         <Dialog.Content style={styles.containerInputEditComentario}>
                             <TextInput style={styles.textInput} autoFocus={true} multiline={true} activeUnderlineColor="transparent" defaultValue={comentarioEditado !== null ? comentarioEditado.comentario : ""}
