@@ -120,7 +120,7 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket, p
                                 <Text style={styles.tituloAlerta}>Falla de iluminación</Text>
                             ):(
                              verAlerta.tipo === "Lugar con escasa iluminacion" ? 
-                             <Text style={styles.tituloAlerta}>Falla de iluminación</Text> :
+                             <Text style={styles.tituloAlerta}>Lugar con escasa iluminación</Text> :
                              <Text style={styles.tituloAlerta}>{verAlerta.tipo}</Text>
                             )
                         }
