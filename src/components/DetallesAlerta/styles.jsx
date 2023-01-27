@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     alerta: {
         width: "100%",
         marginTop: hp(1.5),
-        height: hp(78),
+        height: hp(70),
     },
     
     containerTituloAlerta: {

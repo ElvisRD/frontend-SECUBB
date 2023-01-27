@@ -115,7 +115,16 @@ export default function DetallesAlerta({setIsVisibleAlerta, verAlerta, socket, p
                 
                 <KeyboardAwareScrollView bounces={false} style={styles.alerta} >
                     <View style={styles.containerTituloAlerta}>
-                        <Text style={styles.tituloAlerta}>{verAlerta.tipo}</Text>
+                        {
+                            verAlerta.tipo === "Falla de iluminacion" ? (
+                                <Text style={styles.tituloAlerta}>Falla de iluminación</Text>
+                            ):(
+                             verAlerta.tipo === "Lugar con escasa iluminacion" ? 
+                             <Text style={styles.tituloAlerta}>Falla de iluminación</Text> :
+                             <Text style={styles.tituloAlerta}>{verAlerta.tipo}</Text>
+                            )
+                        }
+                       
                     </View>
                     <View style={styles.containerFecha}>
                         <Text style={styles.fecha}>Fecha: {verAlerta.fecha.slice(8,10)}/{verAlerta.fecha.slice(5,7)}/{verAlerta.fecha.slice(0,4)}</Text>
