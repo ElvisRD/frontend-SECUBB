@@ -15,7 +15,7 @@ const validacionesRegistro = yup.object().shape({
     correo: yup
     .string().email("Debe ingresar un correo institucional válido")
     .required("Por favor, ingrese su correo institucional")
-    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresado\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
+    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresados\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
 
 });
 
@@ -23,14 +23,14 @@ const validacionCorreo = yup.object().shape({
     correo: yup
     .string().email("Debe ingresar el correo institucional")
     .required("Por favor, ingrese el correo institucional")
-    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresado\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
+    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresados\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
 });
 
 const validacionesLogin = yup.object().shape({
     correo: yup
     .string().email("Debe ingresar su correo institucional")
     .required("Por favor, ingrese su correo institucional")
-    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresado\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
+    .matches(/^[A-Za-z0-9._%+-]+@(alumnos\.ubiobio\.cl|ubiobio\.cl|egresados\.ubiobio\.cl)$/, "Por favor, ingrese su correo institucional de forma correcta"),
 
     contrasena: yup
     .string()
