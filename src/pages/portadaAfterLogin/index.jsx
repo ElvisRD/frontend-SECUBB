@@ -153,7 +153,7 @@ export default function PortadaAfterLogin({navigation, setPortadaAfterLogin}){
         </View>
         <Provider>
                 <Portal>
-                        <Dialog contentStyles={{backgroundColor: "white"}} visible={permisoLocalizacion} dismissable={false} >
+                        <Dialog style={{backgroundColor: "white"}} visible={permisoLocalizacion} dismissable={false} >
                               <Dialog.Icon icon="alert" />
                               <Dialog.Content style={styles.containerTituloAlerta}>
                                 <Text style={styles.tituloAlerta}>Permiso de localización</Text>
