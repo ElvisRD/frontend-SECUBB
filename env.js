@@ -1,5 +1,5 @@
 
-const URL_CONNECT_BACKEND = 'ip del server'
+const URL_CONNECT_BACKEND = 'ip para la conexion con el servidor'
 
 
 module.exports = {
