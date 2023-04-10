@@ -2,8 +2,8 @@
 
 ## Construido con
 
-  - [React Native]
-  - [Javascript]
+  - [React Native](https://reactnative.dev/)
+  - [Javascript](https://www.javascript.com/)
   - [React Native Paper](https://callstack.github.io/react-native-paper/)
   - [Formik](https://formik.org/)
 
